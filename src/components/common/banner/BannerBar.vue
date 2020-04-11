@@ -9,11 +9,12 @@
 	}
 </script>
 <style scoped>
-	/*480*/
+	/*左侧导航栏+轮播图区*/
 	#bannerBar{
 		display: flex;
+		width: 990px;
 		height: 480px;
-		width: 991px;
 		border:1px red solid;
+		background-color: rgb(244,244,244);
 	}
 </style>
