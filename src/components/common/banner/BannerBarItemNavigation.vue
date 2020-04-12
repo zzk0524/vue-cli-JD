@@ -5,8 +5,7 @@
 				<slot name="s0"></slot>
 			</ul>
 			<div class="cate_pop divnone" id="cate_pop">
-				<div class="cate_item" :id="gernerateId(item)" :data-id="item" v-for="item in linum" :key="item">
-					这是第{{item}}个li
+				<div class="cate_item divnone" :id="gernerateId(item)" :data-id="item" v-for="item in linum" :key="item">
 					<slot :name="getslotname(item)"></slot>
 				</div>
 			</div>
@@ -28,7 +27,20 @@
 			getslotname(item){
 				return "s" +item;
 			},
+			findcateitem(cateitemid){//显示当前，关闭其他的列表
+				this.linum.forEach((item)=>{
+					let cateitem_id = "cate_item"+item;
+					if(cateitem_id==cateitemid){
+						let cateitem = document.getElementById(cateitemid);
+						cateitem.classList.remove("divnone");
+					}else{
+						let cateitem = document.getElementById(cateitem_id);
+						cateitem.classList.add("divnone");
+					}
+				});
+			},
 			executebindbannermenu(){
+				let _this = this;
 				let catemenu = document.getElementById("cate_menu");
 				let catepop = document.getElementById("cate_pop");
 				let catemenuitem = catemenu.getElementsByTagName("li");
@@ -37,8 +49,17 @@
 				}
 				catemenu.addEventListener("mouseover",(e)=>{
 					e = e || window.event;
-					if(e.target.tagName.toLowerCase() == "li"||e.target.tagName.toLowerCase() == "a"||e.target.tagName.toLowerCase() == "span"){
+					let index,
+						cateitemid;
+					if(e.target.className == "cate_menu_item"){
+						index = e.target.getAttribute("data-index");
+					}else if(e.target.className == "cate_menu_lk"||e.target.className == "cate_menu_line"){
+						index = e.target.parentNode.getAttribute("data-index");
+					}
+					cateitemid = "cate_item"+index;
+					if(e.target.className == "cate_menu_item"||e.target.className == "cate_menu_lk"||e.target.className == "cate_menu_line"){
 						catepop.classList.remove("divnone");
+						_this.findcateitem(cateitemid);
 						catepop.addEventListener("mouseover",()=>{
 							catepop.classList.remove("divnone");
 							catepop.addEventListener("mouseout",()=>{
@@ -48,7 +69,7 @@
 					}
 					catemenu.addEventListener("mouseout",(e)=>{
 						e = e || window.event;
-						if(e.target.tagName.toLowerCase() == "li"){
+						if(e.target.className == "cate_menu_item"||e.target.className == "cate_menu_lk"||e.target.className == "cate_menu_line"){
 							catepop.classList.add("divnone");
 						}
 					})
@@ -63,6 +84,9 @@
 <style scoped>
 	.divnone{
 		display: none;
+	}
+	.divblock{
+		display: block !important;
 	}
     /*左侧导航栏*/
 	.banner-bar-item-navigation{
@@ -84,15 +108,17 @@
 	    color: #636363;
 	    margin-top: 10px;
 	}
+	/*左侧导航的每个li的颜色变化*/
 	.cate_menu>li:hover{
 		background-color: rgb(217,217,217);
 	}
 	.cate_menu>li>a:hover{
 		color: #c81623;
 	}
+	/*隐藏区域*/
 	.cate_pop{
 		width: 798px;
-		height: 468px;
+		height: 478px;
 		position: absolute;
 		left: 188px;
     	top: -11px;
@@ -101,9 +127,13 @@
 	    -webkit-box-shadow: 2px 0 5px rgba(0,0,0,.3);
 	    box-shadow: 2px 0 5px rgba(0,0,0,.3);
 	}
+	/*隐藏区域内层的大小*/
 	.cate_item{
 		width: 800px;
-		height: 454px;
+		height: 478px;
 		padding: 20px 0 10px;
+	}
+	.cate_item>div{
+		width: 800px;
 	}
 </style>
