@@ -14,7 +14,6 @@
 		display: flex;
 		width: 990px;
 		height: 480px;
-		border:1px red solid;
 		background-color: rgb(244,244,244);
 	}
 </style>

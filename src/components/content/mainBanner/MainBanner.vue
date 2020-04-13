@@ -3320,9 +3320,62 @@
 						</div>
 				</div>
 			</banner-bar-item-navigation>
-			<banner-bar-item-slider></banner-bar-item-slider>          
+			<banner-bar-item-slider>
+				<img class="bannerpic" src="~assets/img/bannerbg1.jpg" alt="bannerbg1">
+				<img class="bannerpic" src="~assets/img/bannerbg2.jpg" alt="bannerbg2">
+				<img class="bannerpic" src="~assets/img/bannerbg3.jpg" alt="bannerbg3">
+				<img class="bannerpic" src="~assets/img/bannerbg4.jpg" alt="bannerbg4">
+				<img class="bannerpic" src="~assets/img/bannerbg5.jpg" alt="bannerbg5">
+				<img class="bannerpic" src="~assets/img/bannerbg6.jpg" alt="bannerbg6">
+			</banner-bar-item-slider>          
 		</banner-bar>
-		<div class="banner_area_right">右侧登录</div>
+		<div class="banner_area_right">
+			<div class="banner_area_right_user">
+				<div class="banner_area_right_user_show">
+					<a href="javascript:void(0);">Hi~欢迎逛淘淘！</a>
+					<p>
+						<a href="" class="banner_area_right_user_login">登录</a>
+						&nbsp;|&nbsp;
+						<a href="" class="banner_area_right_user_reg">注册</a>
+					</p>
+				</div>
+				<div class="banner_area_right_user_profit">
+					<a class="banner_area_right_user_profit_lk" href="javascript:void(0);">新人福利</a>
+					<a class="banner_area_right_user_profit_lk banner_area_right_user_profit_lk_plus" href="javascript:void(0);">PLUS会员</a>
+				</div>
+			</div>
+			<div class="banner_area_right_news">
+				<div class="banner_area_right_news_hd">
+					<h5 class="banner_area_right_news_tit">淘淘快报</h5>
+					<a href="javascript:void(0);" class="banner_area_right_news_more">更多</a>
+				</div>
+				<ul class="banner_area_right_news_list">
+					<li class="banner_area_right_news_item">
+						<a href="javascript:void(0);" class="banner_area_right_news_link">
+							<span class="banner_area_right_news_tag">热议</span>家人温馨的笑容，催促着你回家的脚步。
+						</a>
+					</li>
+					<li class="banner_area_right_news_item">
+						<a href="javascript:void(0);" class="banner_area_right_news_link">
+							<span class="banner_area_right_news_tag">热评</span>荣泰多功能家用按摩椅，给父母一份好的礼物
+						</a>
+					</li>
+					<li class="banner_area_right_news_item">
+						<a href="javascript:void(0);" class="banner_area_right_news_link">
+							<span class="banner_area_right_news_tag">热评</span>实时录音转文字：科大讯飞智能录音笔SR501评测
+						</a>
+					</li>
+					<li class="banner_area_right_news_item">
+						<a href="javascript:void(0);" class="banner_area_right_news_link">
+							<span class="banner_area_right_news_tag">热议</span>“樱”为有它，足不出户也可感受樱花清香
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="banner_area_right_service">
+				<img src="~assets/img/bannerrightservice.png" alt="服务">
+			</div>
+		</div>
   </div>
 	
 </template>
@@ -3345,19 +3398,11 @@
 	.banner_area{
     width: 100%;
     background-color: rgb(244,244,244);
-    border:1px blue solid;
     display: flex;
   }
   /*调整banner组件的位置*/
   #bannerBar{
   	margin: 10px 12px 15px 80px;
-  }
-  /*banner里的右边的登录*/
-  .banner_area_right{
-  	border:1px red solid;
-  	margin-top: 10px;
-  	width: 190px;
-  	height: 480px;
   }
   /*组件中每个li*/
   .cate_menu_item{
@@ -3445,5 +3490,141 @@
     line-height: 16px;
     white-space: nowrap;
     font-size: 12px;
+	}
+	/*banner里的右边的登录模块*/
+  .banner_area_right{
+  	margin-top: 10px;
+  	width: 190px;
+  	height: 480px;
+  }
+	/**banner里的右边用户登录*/
+	.banner_area_right_user{
+		height: 90px;
+    background: #fff;
+    margin-top: 10px;
+    overflow: hidden;
+	}
+	/*文字部分*/
+	.banner_area_right_user_show{
+		width: 106px;
+		height: 38px;
+		margin:6px 0 15px 50px;
+	}
+	/*欢迎逛淘淘*/
+	.banner_area_right_user_show>a{
+		color: #666;
+		font-size: 12px;
+		padding-left: 4px;
+	}
+	/*经过文字变红*/
+	.banner_area_right_user_show>a:hover,
+	.banner_area_right_user_login:hover,
+	.banner_area_right_user_reg:hover,
+	.banner_area_right_news_more:hover,
+	.banner_area_right_news_item:hover{
+		color: #c81623;
+	}
+	/*登录注册*/
+	.banner_area_right_user_show>p{
+		overflow: hidden;
+    height: 20px;
+    line-height: 20px;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #666;
+    padding-left: 13px;
+	}
+	.banner_area_right_user_login,
+	.banner_area_right_user_reg{
+		color: #333;
+		font-size: 12px;
+	}
+	/*两个按钮区域*/
+	.banner_area_right_user_profit{
+		height: 25px;
+    text-align: center;
+	}
+	/*新人福利*/
+	.banner_area_right_user_profit_lk{
+		display: inline-block;
+    margin: 0 5px;
+    width: 70px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 12px;
+    text-align: center;
+    color: #fff;
+    border-radius: 13px;
+    background: #e1251b;
+	}
+	/*plus会员*/
+	.banner_area_right_user_profit_lk_plus {
+    background: #363634;
+    color: #e5d790;
+	}
+	/*快报*/
+	.banner_area_right_news{
+		width: 190px;
+		height: 130px;
+	}
+	/*快报标题*/
+	.banner_area_right_news_hd {
+    height: 20px;
+    padding: 10px 0 0;
+    position: relative;
+    line-height: 20px;
+    font-size: 0;
+    margin-bottom: 20px;
+	}	
+	/*淘淘快报*/
+	.banner_area_right_news_tit {
+    display: inline-block;
+    font-size: 14px;
+    margin-left: 15px;
+    color: #333;
+	}
+	/*更多*/
+	.banner_area_right_news_more {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 12px;
+    color: #999;
+	}
+	/*四条新闻*/
+	.banner_area_right_news_list {
+    position: relative;
+    margin: 0 8px 0 15px;
+    height: 88px;
+	}
+	/*每一条新闻*/
+	.banner_area_right_news_item {
+    height: 16px;
+    line-height: 16px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #999;
+    margin-bottom: 6px;
+    font-size: 12px;
+	}
+	/*热议*/
+	.banner_area_right_news_tag {
+    display: inline-block;
+    position: relative;
+    font-size: 12px;
+    height: 16px;
+    width: 35px;
+    line-height: 16px;
+    text-align: center;
+    vertical-align: 0;
+    color: #e1251b;
+    background-color: rgba(225,37,27,.08);
+    margin-right: 6px;
+	}
+	/*服务*/
+	.banner_area_right_service{
+		padding-left: 6px;
 	}
 </style>

@@ -307,7 +307,7 @@
   	top: 29px;
   	left: -1px;
   	border:rgb(204,204,204) solid 1px;
-		z-index: 2;
+		z-index: 3;
 		background-color: #fff;
   }
   /*位置的子菜单*/

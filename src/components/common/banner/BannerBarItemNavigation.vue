@@ -6,7 +6,7 @@
 			</ul>
 			<div class="cate_pop divnone" id="cate_pop">
 				<div class="cate_item divnone" :id="gernerateId(item)" :data-id="item" v-for="item in linum" :key="item">
-					<slot :name="getslotname(item)"></slot>
+					<slot :name="getslotName(item)"></slot>
 				</div>
 			</div>
 		</div>
@@ -21,10 +21,10 @@
 			}
 		},
 		methods:{
-			gernerateId(item){
+			gernerateId(item){//动态给id
 				return "cate_item" +item;
 			},
-			getslotname(item){
+			getslotName(item){//动态给name
 				return "s" +item;
 			},
 			findcateitem(cateitemid){//显示当前，关闭其他的列表
@@ -39,14 +39,14 @@
 					}
 				});
 			},
-			executebindbannermenu(){
+			executebindbannermenu(){/*绑定选项卡与隐藏菜单*/
 				let _this = this;
 				let catemenu = document.getElementById("cate_menu");
 				let catepop = document.getElementById("cate_pop");
 				let catemenuitem = catemenu.getElementsByTagName("li");
-				for(let i=1;i<=catemenuitem.length;i++){
-					this.linum.push(i);
-				}
+				_this.linum = Array.from(catemenuitem).map((iten,index)=>{
+					return index+1;
+				});
 				catemenu.addEventListener("mouseover",(e)=>{
 					e = e || window.event;
 					let index,
@@ -82,18 +82,16 @@
 	}
 </script>
 <style scoped>
+	/*隐藏类*/
 	.divnone{
 		display: none;
 	}
-	.divblock{
-		display: block !important;
-	}
     /*左侧导航栏*/
 	.banner-bar-item-navigation{
-		border:1px green solid;
 		width: 190px;
 		height: 480px;
 		background-color: rgb(254,254,254);
+		z-index: 2;
 	}
 	/*左侧导航栏*/
 	.navigation_left{
@@ -117,8 +115,8 @@
 	}
 	/*隐藏区域*/
 	.cate_pop{
-		width: 798px;
-		height: 478px;
+		width: 802px;
+		height: 482px;
 		position: absolute;
 		left: 188px;
     	top: -11px;

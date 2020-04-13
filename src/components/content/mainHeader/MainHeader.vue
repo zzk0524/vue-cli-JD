@@ -57,19 +57,19 @@
 		          <a class="navitems-lk" href="#" aria-lable="拍卖">拍卖</a>
 		        </li>
 		        <li class="fore6">
-		          <a class="navitems-lk" href="#" aria-lable="京东家电">京东家电</a>
+		          <a class="navitems-lk" href="#" aria-lable="淘淘家电">淘淘家电</a>
 		        </li>
 		        <li class="fore7">
-		          <a class="navitems-lk" href="#" aria-lable="京东超市">京东超市</a>
+		          <a class="navitems-lk" href="#" aria-lable="淘淘超市">淘淘超市</a>
 		        </li>
 		        <li class="fore8">
-		          <a class="navitems-lk" href="#" aria-lable="京东生鲜">京东生鲜</a>
+		          <a class="navitems-lk" href="#" aria-lable="淘淘生鲜">淘淘生鲜</a>
 		        </li>
 		        <li class="fore9">
-		          <a class="navitems-lk" href="#" aria-lable="京东国际">京东国际</a>
+		          <a class="navitems-lk" href="#" aria-lable="淘淘国际">淘淘国际</a>
 		        </li>
 		        <li class="fore10">
-		          <a class="navitems-lk" href="#" aria-lable="京东金融">京东金融</a>
+		          <a class="navitems-lk" href="#" aria-lable="淘淘金融">淘淘金融</a>
 		        </li>
 		      </ul>
         </div>
