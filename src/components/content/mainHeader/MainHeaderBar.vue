@@ -24,7 +24,9 @@
 				<div>你好，请登录</div>
 			</header-bar-item>
 			<header-bar-item>
-				<div>免费注册</div>
+				<router-link to="/register" class="register">
+					<div>免费注册</div>
+				</router-link>	
 			</header-bar-item>
 			<header-bar-item>
 				<div class="downarrow mine">
@@ -255,7 +257,7 @@
   /*经过你好请登录和免费注册,鼠标经过变成小手和红色的字*/
   .header-bar-item:nth-of-type(2):hover,
   .header-bar-item:nth-of-type(5):hover,
-  .header-bar-item:nth-of-type(3),
+  .header-bar-item:nth-of-type(3) a,
   .location_content:hover,
   .mine_content:hover,
   .location_list_second_item:hover,
