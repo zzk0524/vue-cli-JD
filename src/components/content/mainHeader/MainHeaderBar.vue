@@ -197,6 +197,7 @@
 				let headerBar = document.getElementById("headerBar");
 				//页面内容跟随屏幕分辨率，不随窗口缩放而变化
 				headerBar.style.minWidth = (window.screen.width-17)+"px";
+				document.getElementsByTagName("body")[0].style.minWidth = (window.screen.width-17)+"px";
 			},
 			bindheadmenu(ele,menu){
 				 ele.addEventListener("mouseover",()=>{

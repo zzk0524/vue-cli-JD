@@ -5,7 +5,9 @@
 			<div class="logo_title">欢迎注册</div>
 			<div class="have_account">
 				已有账号？
-				<a href="javascript:void(0)">请登录></a>
+				<router-link to="/login">
+					<a>请登录></a>
+				</router-link>	
 			</div>
 		</div>
 	</div>
@@ -60,5 +62,6 @@
 	/*请登录*/
 	.have_account a {
     color: #e22;
+    cursor: pointer;
 	}
 </style>
