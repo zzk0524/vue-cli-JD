@@ -21,7 +21,9 @@
 				</div>
 			</header-bar-item>
 			<header-bar-item>
-				<div>你好，请登录</div>
+				<router-link to="/login">
+					<div>你好，请登录</div>
+				</router-link>
 			</header-bar-item>
 			<header-bar-item>
 				<router-link to="/register" class="register">
@@ -235,7 +237,7 @@
 			}
 		},
 		mounted(){
-			this.loadMinWith();	
+			// this.loadMinWith();	
 			this.executebindheadmenu();
 		}
 	}
@@ -255,8 +257,12 @@
   	margin-left: 80px;
   	margin-right: 390px;
   }
+  /*请登录*/
+  .header-bar-item:nth-of-type(2) a{
+		color: #999;
+  }
   /*经过你好请登录和免费注册,鼠标经过变成小手和红色的字*/
-  .header-bar-item:nth-of-type(2):hover,
+  .header-bar-item:nth-of-type(2) a:hover,
   .header-bar-item:nth-of-type(5):hover,
   .header-bar-item:nth-of-type(3) a,
   .location_content:hover,

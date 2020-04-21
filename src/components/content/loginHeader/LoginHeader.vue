@@ -1,7 +1,10 @@
 <template>
 	<div class="loginheader">
 		<div class="logo_con clearfix">
-			<a href="javascript:void(0)" class="logo"></a>
+			<router-link to="/home">
+				<a href="javascript:void(0)" class="logo"></a>
+			</router-link>
+			
 			<div class="logo_title">欢迎登录</div>
 			<a href="javascript:void(0)" class="q_link">
 			<b></b>登录页面，问卷调查

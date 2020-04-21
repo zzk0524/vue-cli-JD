@@ -1,7 +1,7 @@
 <template>
 	<div class="maincontainer">
 		<div class="reg_form">
-			<form action="register" method="post">
+			<form>
 				<div class="form_item" id="form_item_account">
 					<label class="account" for="account">用户名</label>
 					<input id="account" v-model="form.account" type="text" class="field" maxlength="20" placeholder="您的账户名和登录名" required="required" @focus="accountfocus($event)" @blur="accountblur($event)" autocomplete="off">
@@ -46,18 +46,18 @@
 				</div>
 				<div class="form_item_favourite_title"><span>选择感兴趣的内容：</span></div>
 				<div class="form_item_favourite">
-					<label><input name="favourite" type="checkbox" value="潮流服饰" v-model="form.favourite"/>潮流服饰</label> 
-					<label><input name="favourite" type="checkbox" value="文学读物" v-model="form.favourite"/>文学读物</label> 
-					<label><input name="favourite" type="checkbox" value="电子设备" v-model="form.favourite"/>电子设备</label> 
-					<label><input name="favourite" type="checkbox" value="居家生活" v-model="form.favourite"/>居家生活</label><br>
-					<label><input name="favourite" type="checkbox" value="美味小吃" v-model="form.favourite"/>美味小吃</label>
-					<label><input name="favourite" type="checkbox" value="萌宠乐园" v-model="form.favourite"/>萌宠乐园</label>
-					<label><input name="favourite" type="checkbox" value="珠宝配饰" v-model="form.favourite"/>珠宝配饰</label>
-					<label><input name="favourite" type="checkbox" value="玩具城" v-model="form.favourite"/>玩具城</label>					
+					<label><input name="favourite" type="checkbox" value="潮流服饰" v-model="favorite"/>潮流服饰</label> 
+					<label><input name="favourite" type="checkbox" value="文学读物" v-model="favorite"/>文学读物</label> 
+					<label><input name="favourite" type="checkbox" value="电子设备" v-model="favorite"/>电子设备</label> 
+					<label><input name="favourite" type="checkbox" value="居家生活" v-model="favorite"/>居家生活</label><br>
+					<label><input name="favourite" type="checkbox" value="美味小吃" v-model="favorite"/>美味小吃</label>
+					<label><input name="favourite" type="checkbox" value="萌宠乐园" v-model="favorite"/>萌宠乐园</label>
+					<label><input name="favourite" type="checkbox" value="珠宝配饰" v-model="favorite"/>珠宝配饰</label>
+					<label><input name="favourite" type="checkbox" value="玩具城" v-model="favorite"/>玩具城</label>					
 				</div>
 				<!-- 裤子上衣鞋      图书      手机     个护清洁汽车用品      食品      宠物      珠宝      玩具 -->
 				        
-				<div><button class="btn_register" @click="registerbtn">立即注册</button></div>
+				<div><button type="button" class="btn_register" @click="registerbtn">立即注册</button></div>
 			</form>
 		</div>
 	</div>
@@ -72,10 +72,13 @@
 					sex:'男',
 					password:'',
 					repassword:'',
-					favourite:['潮流服饰']
+					favourite:''
 				},
-				judge:true,
-				accountnumber:["a123456","b123456","c123456"]//通过ajax存入所有的用户名
+				favorite:['潮流服饰'],
+				judge:false,
+				judge1:false,
+				judge2:false,
+				accountnumber:[]//通过ajax存入所有的用户名
 			}
 		},
 		methods:{
@@ -124,17 +127,17 @@
 						accountstatus = this.getelement("account_status"),
 						accountcancel = this.getelement("account_cancel");
 				let accountjudge = false;
-				let pattern = /^[\u4e00-\u9fff\w]{5,16}$/;//用户名的正则表达式
+				let pattern = /^[\u4e00-\u9fff\w]{6,16}$/;//用户名的正则表达式
 				formitemaccount.classList.remove("focus_border_color");//改边框的颜色
 				formitemaccount.classList.add("slider_border_color");//改边框的颜色
 				if($event.target.value!=""){
 					if(pattern.exec($event.target.value)){
 						this.accountnumber.forEach(function(currentValue){
-							if(currentValue == $event.target.value){
+							if(currentValue.account == $event.target.value){
 								accountjudge = true;
 							}
 						});
-						if(accountjudge){
+						if(accountjudge){//用户名重复
 							formaccountitip.classList.remove("divnone");//显示提示图标
 							formaccountitip.classList.remove("tip_position_gray");//移除灰色图标
 							formaccountitip.classList.add("tip_position_orange");//添加橘色图标
@@ -143,7 +146,7 @@
 							accountcancel.classList.add("divnone");//移除叉号图标
 							accountstatus.classList.add("divnone");//隐藏对号
 							this.judge = false;
-						}else{
+						}else{//用户名正确
 							formaccountitip.classList.add("divnone");//隐藏提示图标
 							formaccounttip.innerHTML = "";//移除文字提示
 							accountcancel.classList.add("divnone");//移除叉号图标
@@ -236,7 +239,7 @@
 							passwordstatus.classList.remove("zhong");//移除中
 							passwordstatus.classList.remove("qiang");//移除强
 							passwordstatus.classList.add("ruo");//显示弱
-							this.judge = true;
+							this.judge1 = true;
 						}else if(!pattern1.exec($event.target.value)&&!pattern2.exec($event.target.value)&&!pattern3.exec($event.target.value)&&(pattern4.exec($event.target.value)||pattern5.exec($event.target.value)||pattern6.exec($event.target.value))){
 							formpassworditip.classList.add("divnone");//隐藏提示图标
 							formpasswordtip.innerHTML = "";//移除文字提示
@@ -246,7 +249,7 @@
 							passwordstatus.classList.add("zhong");//显示中
 							passwordstatus.classList.remove("qiang");//移除强
 							passwordstatus.classList.remove("ruo");//移除弱
-							this.judge = true;
+							this.judge1 = true;
 						}else if(!pattern1.exec($event.target.value)&&!pattern2.exec($event.target.value)&&!pattern3.exec($event.target.value)&&!pattern4.exec($event.target.value)&&!pattern5.exec($event.target.value)&&!pattern6.exec($event.target.value)&&pattern7.exec($event.target.value)){
 							formpassworditip.classList.add("divnone");//隐藏提示图标
 							formpasswordtip.innerHTML = "";//移除文字提示
@@ -256,7 +259,7 @@
 							passwordstatus.classList.remove("zhong");//移除中
 							passwordstatus.classList.add("qiang");//显示强
 							passwordstatus.classList.remove("ruo");//移除弱
-							this.judge = true;
+							this.judge1 = true;
 						}
 					}else{
 						formpassworditip.classList.remove("divnone");//显示提示图标
@@ -266,7 +269,7 @@
 						formpasswordtip.classList.add("form_tip_orange");//添加文字颜色
 						passwordcancel.classList.add("divnone");//移除叉号图标
 						passwordstatus.classList.add("divnone");//隐藏对号
-						this.judge = false;
+						this.judge1 = false;
 					}
 				}else{
 					formpassworditip.classList.remove("divnone");//隐藏
@@ -276,7 +279,7 @@
 					formpasswordtip.classList.add("form_tip_orange");//添加文字颜色
 					passwordcancel.classList.add("divnone");//移除叉号图标
 					passwordstatus.classList.add("divnone");//移除对号
-					this.judge = false;
+					this.judge1 = false;
 				}	
 			},
 			repasswordfocus($event){
@@ -325,7 +328,7 @@
 						formrepasswordtip.innerHTML = "";//移除文字提示
 						repasswordcancel.classList.add("divnone");//移除叉号图标
 						repasswordstatus.classList.remove("divnone");//显示对号
-						this.judge = true;					
+						this.judge2 = true;					
 					}else{
 						formrepassworditip.classList.remove("divnone");//显示提示图标
 						formrepassworditip.classList.remove("tip_position_gray");//移除灰色图标
@@ -334,7 +337,7 @@
 						formrepasswordtip.classList.add("form_tip_orange");//添加文字颜色
 						repasswordcancel.classList.add("divnone");//移除叉号图标
 						repasswordstatus.classList.add("divnone");//隐藏对号
-						this.judge = false;
+						this.judge2 = false;
 					}
 				}else{
 					formrepassworditip.classList.remove("divnone");//显示提示图标
@@ -344,7 +347,7 @@
 					formrepasswordtip.classList.add("form_tip_orange");//添加文字颜色
 					repasswordcancel.classList.add("divnone");//移除叉号图标
 					repasswordstatus.classList.add("divnone");//移除对号
-					this.judge = false;
+					this.judge2 = false;
 				}	
 			},
 			getelement(eleid){
@@ -353,20 +356,50 @@
 			accountcancel(){//删除按钮
 				let account = this.getelement("account");
 				account.value = "";
+				this.form.account = "";
 			},
 			passwordcancel(){
 				let password = this.getelement("password");
 				password.value = "";
+				this.form.password = "";
 			},
 			repasswordcancel(){
 				let repassword = this.getelement("repassword");
 				repassword.value = "";
+				this.form.repassword = "";
 			},
 			registerbtn(){//注册按钮
-				if(this.form.favourite.length != 0&&this.judge == true){//表单满足条件
-					//发送ajax请求
-					
-				}else if(this.form.favourite.length == 0&&this.judge == true){
+				let _this = this;
+				if(_this.favorite.length != 0&&_this.judge == true&&_this.judge1 == true&&_this.judge2 == true){//表单满足条件
+					//跳转路由
+					//console.log("dfda");
+					_this.form.favourite = _this.favorite.join(",");
+					// //this.$router.push({name:'Login',params:{data:this.form}});
+					 //this.$router.replace({path:'/login',params:{data:this.form}});
+					let oAjax = null;
+					if(window.XMLHttpRequest){
+						oAjax = new XMLHttpRequest();
+					}else{
+						oAjax = new ActiveXObject("Microsoft.XMLHTTP");
+					}
+					oAjax.open('POST','http://127.0.0.1/goods/registUser',true);
+					oAjax.setRequestHeader("Content-type","application/json");
+					oAjax.send(JSON.stringify(_this.form));
+					oAjax.onreadystatechange=function(){
+					  if(oAjax.readyState==4){
+					    if(oAjax.status>=200 && oAjax.status<300 || oAjax.status==304){
+					      //对响应进行解析
+					      let users=JSON.parse(oAjax.responseText);
+					      //跳转登录页面
+					      alert(users.message);
+					      _this.$router.replace({path:'/login'});  
+					    }else{
+					      //对响应进行解析
+					      alert("服务器错误");
+					    }
+					  }
+					}
+				}else if(_this.favorite.length == 0&&_this.judge == true){
 					alert("请您至少选择一项感兴趣的内容！");
 				}
 				else{
@@ -375,6 +408,27 @@
 			},
 			acocuntajax(){
 				//ajax请求所有的用户名
+				let _this = this;
+				let oAjax = null;
+				if(window.XMLHttpRequest){
+				  oAjax = new XMLHttpRequest();
+				}else{
+				  oAjax = new ActiveXObject('Microsoft.XMLHTTP');
+				}
+				oAjax.open('GET','http://127.0.0.1/goods/selectAllAccount',true);
+				oAjax.send(null);
+				oAjax.onreadystatechange=function(){
+				  if(oAjax.readyState==4){
+				    if(oAjax.status>=200 && oAjax.status<300 || oAjax.status==304){
+				      //4.对响应进行解析
+				      let users=JSON.parse(oAjax.responseText);
+				      _this.accountnumber = users.data;
+				    }else{
+				      //4.对响应进行解析
+				      alert("服务器错误");
+				    }
+				  }
+				}
 			}
 		},
 		mounted(){

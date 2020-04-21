@@ -26,7 +26,22 @@
 	    MainBanner,
 	    MainRecommend,
 	    MainFooter
-	  }
+	  },
+	  methods:{
+ 	  	cancelBack(){	
+ 	  		history.pushState(null, null, document.URL); 
+	  		window.addEventListener('popstate', function() { 
+	  			history.pushState(null, null, document.URL); 
+	  		});
+ 	  	},
+ 	  	loadMinWith(){
+	  		document.getElementsByTagName("body")[0].style.minWidth = (window.screen.width-17)+"px";
+	  	}
+ 	  },
+ 	  mounted(){
+ 	  	this.cancelBack();
+ 	  	this.loadMinWith();
+ 	  }
 	}
 </script>
 <style scoped>

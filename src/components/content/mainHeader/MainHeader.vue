@@ -8,15 +8,15 @@
 				<div id="search">
 		      <div class="search_content">
 						<div class="form" role="serachbox">
-		          <div id="J_searchbg" class="search_bg">华为盒子</div>
-		          <input type="text" autocomplete="off" id="key" class="text" aria-label="搜索"/>
+		          <input type="text" autocomplete="off" id="key" class="text" placeholder="华为盒子" aria-label="搜索" v-model="search" @focus="searchfocus($event)"/>
 		          <span class="photo_search_bg">
 		          	<img src="~assets/img/photo.png" alt="小相机">
 		          </span>
-		          <button class="search_button" aria-label="搜索">
+		          <button class="search_button" aria-label="搜索" id="search_button" @click="searchbtn">
 		          	<img src="~assets/img/search-icon.png" alt="搜索">
 		          </button>
 		        </div>
+		        <div class="divnone">隐藏</div>
 						<div id="settleup" class="dropdown">
 		          <div class="cw-icon">
 		            <div>
@@ -77,7 +77,6 @@
 					<div id="J_promo_lk" class="promo_lk" aria-label="推广位">
 						<div><img src="~assets/img/phonecode.png" alt="二维码"></div>
 					</div>
-					<div></div>
 				</div>
 		  </div>
 		</div>
@@ -85,10 +84,41 @@
 </template>
 <script>
 	export default{
-		name:"MainHeader"
+		name:"MainHeader",
+		data(){
+			return{
+				search:''
+			}
+		},
+		methods:{
+			getelement(eleid){
+				return document.getElementById(eleid);
+			},
+			searchbtn(){
+				//发送ajax请求
+			},
+			searchfocus($event){
+				let timer;
+		    $event.target.onkeyup = function(e) {
+		      if(timer){
+		      	clearTimeout(timer);
+		      } 
+		      timer = setTimeout(() => {
+		        console.log($event.target.value);
+		        //发送请求
+		      }, 1000)
+		    }
+			}
+		},
+		mounted(){
+
+		}
 	}
 </script>
 <style scoped>
+	.divnone{
+		display: none;
+	}
 	/*头部*/
 	#header{
 		width: 100%;
@@ -131,8 +161,7 @@
     border: 2px solid #e2231a;
     background: #fff;
 	}
-	/*搜索框内容*/
-	.search_content .search_bg, 
+	/*搜索框内容*/ 
 	#key{
     position: absolute;
     top: 0;
@@ -144,14 +173,7 @@
     border: 1px solid transparent;
     line-height: 26px;
     font-size: 12px;
-	}
-	#key{
-		background: transparent;
-	}
-	
-	/*搜索框默认内容*/
-	.search_content .search_bg {
-    color: #989898;
+    background: transparent;
 	}
 	/*相机位置*/
 	.search_content .photo_search_bg {

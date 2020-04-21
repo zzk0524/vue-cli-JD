@@ -3334,9 +3334,13 @@
 				<div class="banner_area_right_user_show">
 					<a href="javascript:void(0);">Hi~欢迎逛淘淘！</a>
 					<p>
-						<a href="" class="banner_area_right_user_login">登录</a>
+						<router-link to="/login">
+							<a href="" class="banner_area_right_user_login">登录</a>
+						</router-link>
 						&nbsp;|&nbsp;
-						<a href="" class="banner_area_right_user_reg">注册</a>
+						<router-link to="/register">
+							<a href="" class="banner_area_right_user_reg">注册</a>
+						</router-link>
 					</p>
 				</div>
 				<div class="banner_area_right_user_profit">
