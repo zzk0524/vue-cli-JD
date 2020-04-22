@@ -21,11 +21,11 @@ public class GoodsController {
 	@Autowired
 	GoodsService service;
 	
-	//查询密码
-	@GetMapping("/selectPassword")
-	public Result selectPassword(String account){
-		//System.out.println(account);
-		return service.selectPassword(account);
+	//登录验证
+	@GetMapping("/loginCheck")
+	public Result loginCheck(String account,String password){
+		System.out.println(account+password);
+		return service.loginCheck(account,password);
 	}
 	//查询所有用户名
 	@GetMapping("/selectAllAccount")
@@ -35,7 +35,7 @@ public class GoodsController {
 	//注册用户
 	@PostMapping("/registUser")
 	public Result registUser(@RequestBody Account user){
-		System.out.println(user);
+		//System.out.println(user);
 		return service.registUser(user);
 	}
 }

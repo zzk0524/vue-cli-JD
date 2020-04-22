@@ -12,9 +12,12 @@ import com.ls.bean.Account;
 @Mapper
 public interface GoodsDao {
 
-	//查询密码
+	//用户名验证
+	@Select("select account from jd_user where account=#{account}")
+	Account accountCheck(String account);
+	//密码验证
 	@Select("select * from jd_user where account=#{account}")
-	Account selectPassword(String account);
+	Account passwordCheck(String account);
 	//查询全部账号
 	@Select("select * from jd_user")
 	List<Account> selectAllAccount();
