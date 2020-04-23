@@ -170,8 +170,9 @@
 					      }else if(users.message == "密码错误"){
 					      	alert(users.message);
 					      }else if(users.message == "登录成功"){
-					      	console.log(users.data);
+					      	//console.log(users.data);
 					      	alert(users.message);
+					      	_this.$router.replace({name:'Home',params:{user:users.data}});
 					      }else{
 					      	alert("服务器错误");
 					      } 

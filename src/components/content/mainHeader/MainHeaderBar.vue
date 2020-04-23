@@ -21,9 +21,19 @@
 				</div>
 			</header-bar-item>
 			<header-bar-item>
-				<router-link to="/login">
-					<div>你好，请登录</div>
-				</router-link>
+				<div id="moren" class="divnone">
+					<router-link to="/login">
+						<div>你好，请登录</div>
+					</router-link>
+				</div>
+				<div id="denglu" class="downarrow" v-model="currentLog">
+					<div class="denglu_content">
+						<div>{{currentLog.account}}abc</div>
+					</div>
+					<div class="denglu_list divnone">
+						<a href="">退出登录</a>
+					</div>
+				</div>
 			</header-bar-item>
 			<header-bar-item>
 				<router-link to="/register" class="register">
@@ -191,16 +201,11 @@
 				teztItems:["新品首发","淘淘金融","全球售","国际站","淘淘会员","淘淘预售","台湾售","俄语站","装机大师","0元评测","港澳售","优惠券","秒杀","闪购","印尼站","淘淘金融科技","陪伴计划","出海招商","拍拍二手","买什么"],
 				hypdItems:["手机","智能数码","玩3C","电脑办公","家用电器","鲸鱼智能","服装城","淘淘生鲜","家装城","母婴","食品","农资频道","整车","图书","劳动防护"],
 				shfwItems:["淘淘众筹","白条","淘淘金融APP","淘淘小金库","理财","话费","水电煤","彩票","旅行","机票酒店","电影票","淘淘到家","游戏","拍拍回收","充值"],
-				gdjxItems:["合作招商","淘淘通信","淘淘E卡","企业采购","服务市场","办公生活馆","乡村招募","校园加盟","淘淘社区","游戏社区","知识产权维权","论坛"]
+				gdjxItems:["合作招商","淘淘通信","淘淘E卡","企业采购","服务市场","办公生活馆","乡村招募","校园加盟","淘淘社区","游戏社区","知识产权维权","论坛"],
+				currentLog:[{id:'',account:'',sex:'',password:'',favourite:''}]
 			}
 		},
 		methods:{
-			loadMinWith(){
-				let headerBar = document.getElementById("headerBar");
-				//页面内容跟随屏幕分辨率，不随窗口缩放而变化
-				headerBar.style.minWidth = (window.screen.width-17)+"px";
-				document.getElementsByTagName("body")[0].style.minWidth = (window.screen.width-17)+"px";
-			},
 			bindheadmenu(ele,menu){
 				 ele.addEventListener("mouseover",()=>{
 					menu.classList.remove("divnone");
@@ -227,19 +232,52 @@
 				    navigationcontent = document.getElementsByClassName("navigation_content")[0],
 				    navigationlist = document.getElementById("navigation_list"),
 				    phonettcontent = document.getElementsByClassName("phonett_content")[0],
-				    phonettlist = document.getElementById("phonett_list");
+				    phonettlist = document.getElementById("phonett_list"),
+				    denglucontent = document.getElementsByClassName("denglu_content")[0],
+				    denglulist = document.getElementsByClassName("denglu_list")[0];
 				this.bindheadmenu(locationcontent,locationlist);
 				this.bindheadmenu(minecontent,minelist);
 				this.bindheadmenu(favoritecontent,favoritelist);
 				this.bindheadmenu(servicecontent,servicelist);
 				this.bindheadmenu(navigationcontent,navigationlist);
 				this.bindheadmenu(phonettcontent,phonettlist);
+				this.bindheadmenu(denglucontent,denglulist);
+			},
+			displayUsername(){
+				let moren = document.getElementById("moren"),
+						denglu = document.getElementById("denglu");
+				moren.classList.add("divnone");
+				denglu.classList.remove("divnone");
+			},
+			morenUsername(){
+				let moren = document.getElementById("moren"),
+						denglu = document.getElementById("denglu");
+				denglu.classList.add("divnone");
+				moren.classList.remove("divnone");
+			},
+			getUserName(){
+				const tempData = localStorage.getItem('tempData')
+				if(tempData){
+					this.currentLog = JSON.parse(tempData);
+					this.displayUsername();
+				}else{
+					if(this.$route.params.user == null){
+						this.morenUsername();
+					}else{
+						this.currentLog = this.$route.params.user;
+					  localStorage.setItem('tempData', JSON.stringify(this.$route.params.user));
+					  this.displayUsername();
+					}
+				} 
 			}
 		},
 		mounted(){
-			// this.loadMinWith();	
 			this.executebindheadmenu();
-		}
+			this.getUserName();
+		},
+		beforeDestroy () {
+    	localStorage.removeItem('tempData');
+  	}
 	}
 </script>
 
@@ -281,16 +319,30 @@
   .navigation_list_second_item:hover,
   .navigation_list_third_item:hover,
   .navigation_list_fourth_item:hover,
-  .phonett_content:hover{
+  .phonett_content:hover,
+  .denglu_content:hover{
   	cursor: pointer;
   	color: #e33333;
+  }
+  /*用户名显示*/
+  .denglu_content{
+  	width: 65px;
+  }
+  .denglu_content div{
+  	overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+  }
+  #denglu{
+  	border: 1px solid transparent;
   }
   /*可以有子菜单框的那几个的背景色和边框*/
   .header-bar-item:first-of-type:hover,
   .header-bar-item:nth-of-type(4):hover,
   .header-bar-item:nth-of-type(6):hover,
   .header-bar-item:nth-of-type(7):hover,
-  .header-bar-item:nth-of-type(8):hover{
+  .header-bar-item:nth-of-type(8):hover,
+  #denglu:hover{
   	background-color: #fff;
   	border:rgb(204,204,204) solid 1px;
   }
@@ -311,7 +363,8 @@
   .favorite_list,
   .service_list,
   .navigation_list,
-  .phonett_list{
+  .phonett_list,
+  .denglu_list{
 		position: absolute;
   	top: 29px;
   	left: -1px;
@@ -329,7 +382,8 @@
   .mine_list:before,
   .favorite_list:before,
   .service_list:before,
-  .navigation_list:before{
+  .navigation_list:before,
+  .denglu_list:before{
   	display: block;
   	position: absolute;
   	top: -2px;
@@ -404,43 +458,43 @@
   .location_list_second_item:nth-of-type(2){
 		margin-right: 38px;
   }
-  /*京东全球*/
+  /*淘淘全球*/
   .location_list_second_item:nth-of-type(3){
   	margin-left: 18px;
   }
-	/*我的京东*/
+	/*我的淘淘*/
 	.mine_list{
 		width: 282px;
 		height: 163px;
 	}
-	/*我的京东内容中遮盖边框的白条*/
+	/*我的淘淘内容中遮盖边框的白条*/
 	.mine_list:before{
 		width: 79px;
 	}
-	/*我的京东第一块内容*/
+	/*我的淘淘第一块内容*/
   .mine_list_first{
 		display: flex;
 		flex-wrap: wrap;
 		margin-left: 15px;
 		margin-top: 10px;
   }
-  /*我的京东隐藏子菜单中的定位*/
+  /*我的淘淘隐藏子菜单中的定位*/
   .mine_list_first_item,
   .mine_list_second_item:nth-of-type(2){
 		margin-right: 70px;
   }
-  /*我的京东隐藏子菜单中的定位*/
+  /*我的淘淘隐藏子菜单中的定位*/
   .mine_list_first_item:nth-of-type(5),
   .mine_list_second_item:nth-of-type(1),
   .mine_list_second_item:nth-of-type(3){
 		margin-right: 82px;
   }
-  /*我的京东隐藏子菜单中的定位*/
+  /*我的淘淘隐藏子菜单中的定位*/
   .mine_list_first_item,
   .mine_list_second_item{
   	height: 25px;
   }
-  /*我的京东中的水平线*/
+  /*我的淘淘中的水平线*/
 	.mine_line{
 		width: 250px;
 		height: 2px;
@@ -449,7 +503,7 @@
 		margin-top: 10px;
 		margin-bottom: 5px;
 	}
-	/*我的京东第二块内容*/
+	/*我的淘淘第二块内容*/
   .mine_list_second{
 		display: flex;
 		flex-wrap: wrap;
@@ -463,6 +517,16 @@
   /*收藏夹内容中遮盖边框的白条*/
   .favorite_list:before{
   	width: 67px;
+  }
+  /*用户名隐藏区*/
+  .denglu_list{
+		width: 90px;
+		height: 35px;
+		left: 7px;
+  }
+  /*白条*/
+  .denglu_list:before{
+		width: 63px;
   }
   /*联系客服*/
   .service_list{

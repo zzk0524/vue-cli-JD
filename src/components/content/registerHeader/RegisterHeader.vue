@@ -1,7 +1,9 @@
 <template>
 	<div class="registerheader">
 		<div class="logo_con clearfix">
-			<a href="javascript:void(0)" class="logo"></a>
+			<router-link to="/home">
+				<a href="javascript:void(0)" class="logo"></a>
+			</router-link>
 			<div class="logo_title">欢迎注册</div>
 			<div class="have_account">
 				已有账号？

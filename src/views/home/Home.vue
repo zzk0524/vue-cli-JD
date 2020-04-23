@@ -41,6 +41,7 @@
  	  mounted(){
  	  	this.cancelBack();
  	  	this.loadMinWith();
+ 	  	//console.log(this.$route.params.user);
  	  }
 	}
 </script>
