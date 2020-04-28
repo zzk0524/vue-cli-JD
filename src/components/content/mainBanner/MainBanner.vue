@@ -3333,7 +3333,7 @@
 			<div class="banner_area_right_user">
 				<div class="banner_area_right_user_show">
 					<a href="javascript:void(0);">Hi~欢迎逛淘淘！</a>
-					<p>
+					<p id="moren1">
 						<router-link to="/login">
 							<a href="" class="banner_area_right_user_login">登录</a>
 						</router-link>
@@ -3341,6 +3341,10 @@
 						<router-link to="/register">
 							<a href="" class="banner_area_right_user_reg">注册</a>
 						</router-link>
+					</p>
+					<p id="denglu1" class="denglu1 divnone" v-model="currentLog1">
+						<a href="javascript:void(0)">{{currentLog1.account}}</a>
+						<a href="javascript:location.reload();" @click="exit1()">退出</a>
 					</p>
 				</div>
 				<div class="banner_area_right_user_profit">
@@ -3394,11 +3398,56 @@
 			BannerBar,
 			BannerBarItemNavigation,
 			BannerBarItemSlider                                                                    
-		}
+		},
+		data(){
+			return{
+				currentLog1:[{id:'',account:'',sex:'',password:'',favourite:''}]
+			}
+		},
+		methods:{
+			displayUsername1(){
+				let moren1 = document.getElementById("moren1"),
+						denglu1 = document.getElementById("denglu1");
+				moren1.classList.add("divnone");
+				denglu1.classList.remove("divnone");
+			},
+			morenUsername1(){
+				let moren1 = document.getElementById("moren1"),
+						denglu1 = document.getElementById("denglu1");
+				denglu1.classList.add("divnone");
+				moren1.classList.remove("divnone");
+			},
+			getUserName1(){
+				const tempData = localStorage.getItem('tempData');
+				if(tempData){
+					this.currentLog1 = JSON.parse(tempData);
+					this.displayUsername1();
+				}else{
+					if(this.$route.params.user == null){
+						this.morenUsername1();
+					}else{
+						this.currentLog1 = this.$route.params.user;
+					  this.displayUsername1();
+					}
+				} 
+			},
+			exit1(){
+				 localStorage.removeItem('tempData');
+			}
+		},
+		mounted(){
+			this.getUserName1();
+		},
+		beforeDestroy() {
+    	localStorage.removeItem('tempData');
+  	}
 	}
 </script>
 <style coped>
-/*banner区*/
+	.divnone{
+		display: none;
+	}
+	/*banner区*/
 	.banner_area{
     width: 100%;
     background-color: rgb(244,244,244);
@@ -3525,11 +3574,12 @@
 	.banner_area_right_user_login:hover,
 	.banner_area_right_user_reg:hover,
 	.banner_area_right_news_more:hover,
-	.banner_area_right_news_item:hover{
+	.banner_area_right_news_item:hover,
+	.denglu1>a:hover{
 		color: #c81623;
 	}
 	/*登录注册*/
-	.banner_area_right_user_show>p{
+	.banner_area_right_user_show>p:nth-of-type(1){
 		overflow: hidden;
     height: 20px;
     line-height: 20px;
@@ -3538,6 +3588,23 @@
     text-overflow: ellipsis;
     color: #666;
     padding-left: 13px;
+	}
+	/*加载的用户名*/
+	.denglu1>a:nth-of-type(1){
+		overflow: hidden;
+		white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    width: 94px;
+    height: 18px;
+    text-align: center;
+	}
+	/*退出登录*/
+	.denglu1>a:nth-of-type(2){
+		display: block;
+		height: 18px;
+		width: 37px;
+		margin: 0 auto;
 	}
 	.banner_area_right_user_login,
 	.banner_area_right_user_reg{
@@ -3631,4 +3698,9 @@
 	.banner_area_right_service{
 		padding-left: 6px;
 	}
+	/*登录*/
+	.denglu1>a{
+		font-size: 12px;
+	}
+	
 </style>

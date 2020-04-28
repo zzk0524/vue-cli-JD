@@ -38,4 +38,9 @@ public class GoodsController {
 		//System.out.println(user);
 		return service.registUser(user);
 	}
+	//获取推荐商品
+	@GetMapping("/recommedGoods")
+	public Result recommedGoods(String account) {
+		return service.recommedGoods(account);
+	}
 }

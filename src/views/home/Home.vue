@@ -41,7 +41,7 @@
  	  mounted(){
  	  	this.cancelBack();
  	  	this.loadMinWith();
- 	  	//console.log(this.$route.params.user);
+ 	  	console.log(localStorage.getItem('tempData'));
  	  }
 	}
 </script>

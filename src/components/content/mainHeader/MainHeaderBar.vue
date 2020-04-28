@@ -21,17 +21,17 @@
 				</div>
 			</header-bar-item>
 			<header-bar-item>
-				<div id="moren" class="divnone">
+				<div id="moren">
 					<router-link to="/login">
 						<div>你好，请登录</div>
 					</router-link>
 				</div>
-				<div id="denglu" class="downarrow" v-model="currentLog">
+				<div id="denglu" class="downarrow divnone" v-model="currentLog">
 					<div class="denglu_content">
-						<div>{{currentLog.account}}abc</div>
+						<div>{{currentLog.account}}</div>
 					</div>
 					<div class="denglu_list divnone">
-						<a href="">退出登录</a>
+						<a href="javascript:location.reload();" @click="exit()">退出登录</a>
 					</div>
 				</div>
 			</header-bar-item>
@@ -269,13 +269,16 @@
 					  this.displayUsername();
 					}
 				} 
+			},
+			exit(){
+				 localStorage.removeItem('tempData');
 			}
 		},
 		mounted(){
 			this.executebindheadmenu();
 			this.getUserName();
 		},
-		beforeDestroy () {
+		beforeDestroy() {
     	localStorage.removeItem('tempData');
   	}
 	}

@@ -94,14 +94,71 @@
 					{name:"【99元两条】牛仔裤男2020春季新款男士修身弹力牛仔长裤小脚裤男裤子男装休闲裤Q13 K159蓝色 送 K01黑色裤子 31",price:"￥99.00"},
 					{name:"【99元两条】牛仔裤男2020春季新款男士修身弹力牛仔长裤小脚裤男裤子男装休闲裤Q13 K159蓝色 送 K01黑色裤子 31",price:"￥99.00"},
 					{name:"【99元两条】牛仔裤男2020春季新款男士修身弹力牛仔长裤小脚裤男裤子男装休闲裤Q13 K159蓝色 送 K01黑色裤子 31",price:"￥99.00"}
-				]
+				],
+				currentUser:[{id:'',account:'',sex:'',password:'',favourite:''}]
 			}
 		},
 		methods:{
-
+			getCurrentUser(){
+				const tempData = localStorage.getItem('tempData');
+				if(tempData){
+					this.currentUser = JSON.parse(tempData);
+					this.recommendGoods();
+				}else{
+					if(this.$route.params.user == null){
+						this.hotGoods();
+					}else{
+						this.currentUser = this.$route.params.user;
+						this.recommendGoods();
+					}
+				} 
+			},
+			recommendGoods(){
+				//推荐商品请求
+				let _this = this;
+				let oAjax = null;
+				if(window.XMLHttpRequest){
+					oAjax = new XMLHttpRequest();
+				}else{
+					oAjax = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				oAjax.open("GET","http://127.0.0.1/goods/recommendGoods?account="+_this.currentUser.account,true);
+				oAjax.send();
+				oAjax.onreadystatechange = function(){
+					if(oAjax.readyState == 4){
+						if(oAjax.state >= 200 && oAjax.state < 300 || oAjax.state == 304){
+							//解析响应
+						}else{
+							//服务器错误
+						}
+					}
+				}
+			},
+			hotGoods(){
+				//热款推荐请求
+				let _this = this;
+				let oAjax = null;
+				if(window.XMLHttpRequest){
+					oAjax = new XMLHttpRequest();
+				}else{
+					oAjax = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				oAjax.open("GET","http://127.0.0.1/goods/hotGoods",true);
+				oAjax.send();
+				oAjax.onreadystatechange = function(){
+					if(oAjax.readyState == 4){
+						if(oAjax.state >= 200 && oAjax.state < 300 || oAjax.state == 304){
+							//解析响应
+						}else{
+							//服务器错误
+						}
+					}
+				}
+			}
 		},
 		mounted(){
 			//获得用户id,并发送ajax请求推荐，存到personrecommend
+			this.getCurrentUser();
 		}
 	}
 </script>
