@@ -5,13 +5,13 @@
 				<li class="listbody_item" v-for="(item,index) in hotgood" :key="index">
 					<a href="" class="listbody_item_lk">
 						<div class="lazyimg listbody_img">
-							<img :src="item.pic" alt="商品图片" class="lazyimg_img">
+							<img :src="item.pic" alt="商品图片" class="lazyimg_img" @click="bindclick($event)">
 						</div>
 						<div class="listbody_info">
-							<p class="listbody_info_name">{{item.title}}</p>
+							<p class="listbody_info_name" @click="bindclick($event)">{{item.title}}</p>
 							<div class="listbody_info_price">
 								<div class="listbody_price">
-									<span class="listbody_info_price_txt">￥{{item.price}}</span>
+									<span class="listbody_info_price_txt" @click="bindclick($event)">￥{{item.price}}</span>
 								</div>
 							</div>
 						</div>
@@ -38,7 +38,7 @@
         }
       }
     },
-    watch: {
+    watch: {//监听值变化
       seagood: function(newVal,oldVal){
       	this.hotgood = [];
         this.hotgood = newVal;  //newVal即是chartData
@@ -82,6 +82,59 @@
 						}
 					}
 				}
+			},
+			bindclick($event){//给每个商品都绑定事件
+				const applyParams = window.localStorage.getItem('applyParams');
+				if($event.target.className == "lazyimg_img"){
+					this.hotgood.forEach(function(currentValue){
+						if('http:'+currentValue.pic == $event.target.currentSrc){
+							//找到了当前的数据存起来，先置空再存
+							//console.log(applyParams);
+							if(applyParams){//如果有数据，先置空再存
+								window.localStorage.removeItem('applyParams');
+								window.localStorage.setItem('applyParams', JSON.stringify(currentValue));
+								console.log(window.localStorage.getItem('applyParams'));
+							}else{//如果没数据，直接存
+								window.localStorage.setItem('applyParams', JSON.stringify(currentValue));
+								console.log(window.localStorage.getItem('applyParams'));
+							}
+						}
+					})
+					// console.log($event.target.currentSrc);
+					// console.log(this.personrecommend[0].pic);
+				}else if($event.target.className == "listbody_info_name"){
+					this.hotgood.forEach(function(currentValue){
+						if(currentValue.title == $event.target.innerHTML){
+							//找到了当前的数据存起来，先置空再存
+							//console.log(applyParams);
+							if(applyParams){//如果有数据，先置空再存
+								window.localStorage.removeItem('applyParams');
+								window.localStorage.setItem('applyParams', JSON.stringify(currentValue));
+								console.log(window.localStorage.getItem('applyParams'));
+							}else{//如果没数据，直接存
+								window.localStorage.setItem('applyParams', JSON.stringify(currentValue));
+								console.log(window.localStorage.getItem('applyParams'));
+							}
+						}
+					})
+				}else{//listbody_info_price_txt
+					this.hotgood.forEach(function(currentValue){
+						if("￥"+currentValue.price == $event.target.innerHTML){
+							//找到了当前的数据存起来，先置空再存
+							//console.log(applyParams);
+							if(applyParams){//如果有数据，先置空再存
+								window.localStorage.removeItem('applyParams');
+								window.localStorage.setItem('applyParams', JSON.stringify(currentValue));
+								console.log(window.localStorage.getItem('applyParams'));
+							}else{//如果没数据，直接存
+								window.localStorage.setItem('applyParams', JSON.stringify(currentValue));
+								console.log(window.localStorage.getItem('applyParams'));
+							}
+						}
+					})
+				}
+				let {href} = this.$router.resolve({name:'Detail',params:{currentLogin:this.currentUser}});
+				window.open(href, '_blank');//打开详情页
 			}
 		},
 		mounted(){
