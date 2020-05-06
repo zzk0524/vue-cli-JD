@@ -39,8 +39,19 @@ public class GoodsController {
 		return service.registUser(user);
 	}
 	//获取推荐商品
-	@GetMapping("/recommedGoods")
-	public Result recommedGoods(String account) {
-		return service.recommedGoods(account);
+	@GetMapping("/recommendGoods")
+	public Result recommendGoods(String account) {
+		return service.recommendGoods(account);
+	}
+	//获取热款商品
+	@GetMapping("/hotGoods")
+	public Result hotGoods() {
+		return service.hotGoods();
+	}
+	//搜索框查询商品
+	@GetMapping("/selectGoods")
+	public Result selectGoods(String title) {
+		System.out.println(title);
+		return service.selectGoods(title);
 	}
 }

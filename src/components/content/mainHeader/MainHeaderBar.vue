@@ -256,7 +256,7 @@
 				moren.classList.remove("divnone");
 			},
 			getUserName(){
-				const tempData = localStorage.getItem('tempData')
+				const tempData = localStorage.getItem('tempData');
 				if(tempData){
 					this.currentLog = JSON.parse(tempData);
 					this.displayUsername();

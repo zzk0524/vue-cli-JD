@@ -27,8 +27,14 @@ public interface GoodsDao {
 	void registUser(@Param("user")Account user);
 	//推荐商品用户喜好
 	@Select("select * from jd_user where account=#{account}")
-	Account recommedGoodsUser(String account);
+	Account recommendGoodsUser(String account);
 	//推荐商品列表
 	@Select("select * from jd_item")
-	List<Goods> recommedGoods();
+	List<Goods> recommendGoods();
+	//热款推荐
+	@Select("select * from jd_item where comments like '%万+'")
+	List<Goods> hotGoods();
+	//按名称的模糊查询
+	@Select("select * from jd_item where title like '%${title}%'")
+	List<Goods> selectGoods(@Param("title")String title);
 }

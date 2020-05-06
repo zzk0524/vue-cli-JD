@@ -54,9 +54,7 @@
 					<label><input name="favourite" type="checkbox" value="萌宠乐园" v-model="favorite"/>萌宠乐园</label>
 					<label><input name="favourite" type="checkbox" value="珠宝配饰" v-model="favorite"/>珠宝配饰</label>
 					<label><input name="favourite" type="checkbox" value="玩具城" v-model="favorite"/>玩具城</label>					
-				</div>
-				<!-- 裤子上衣鞋      图书      手机     个护清洁汽车用品      食品      宠物      珠宝      玩具 -->
-				        
+				</div>  
 				<div><button type="button" class="btn_register" @click="registerbtn">立即注册</button></div>
 			</form>
 		</div>

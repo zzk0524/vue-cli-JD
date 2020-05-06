@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<main-header-Bar></main-header-Bar>
-    <main-header></main-header>
+    <main-header :listbodyhight="listbodyh" @searchgoods="getsearchgoods"></main-header>
     <main-banner></main-banner>
-    <main-recommend></main-recommend>
+    <main-recommend @listbodyoffsettop="getListbodyoffsettop" :segood="searchgood"></main-recommend>
     <main-footer></main-footer>
 	</div>
 </template>
@@ -27,6 +27,12 @@
 	    MainRecommend,
 	    MainFooter
 	  },
+	  data(){
+	  	return{
+	  		listbodyh:"",
+	  		searchgood:[]
+	  	}
+	  },
 	  methods:{
  	  	cancelBack(){	
  	  		history.pushState(null, null, document.URL); 
@@ -36,12 +42,20 @@
  	  	},
  	  	loadMinWith(){
 	  		document.getElementsByTagName("body")[0].style.minWidth = (window.screen.width-17)+"px";
-	  	}
+	  	},
+	  	getListbodyoffsettop(data){
+				this.listbodyh = data;
+			},
+			getsearchgoods(data){
+				this.searchgood = data;
+				//console.log(this.searchgood);
+				//this.$refs.children.say();
+			}
  	  },
  	  mounted(){
  	  	this.cancelBack();
  	  	this.loadMinWith();
- 	  	console.log(localStorage.getItem('tempData'));
+ 	  	//console.log(localStorage.getItem('tempData'));
  	  }
 	}
 </script>

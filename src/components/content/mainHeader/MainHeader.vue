@@ -8,15 +8,20 @@
 				<div id="search">
 		      <div class="search_content">
 						<div class="form" role="serachbox">
-		          <input type="text" autocomplete="off" id="key" class="text" placeholder="华为盒子" aria-label="搜索" v-model="search" @focus="searchfocus($event)"/>
+		          <input type="text" autocomplete="off" id="key" class="" placeholder="华为盒子" aria-label="搜索" v-model="search" @focus="searchfocus($event)" @blur="searchblur($event)"/>
 		          <span class="photo_search_bg">
 		          	<img src="~assets/img/photo.png" alt="小相机">
 		          </span>
 		          <button class="search_button" aria-label="搜索" id="search_button" @click="searchbtn">
 		          	<img src="~assets/img/search-icon.png" alt="搜索">
 		          </button>
+		          <div class="search_list" id="search_list">
+		          	<ul>
+		          		<li v-for="(item,index) in goodslist" :key="index">{{item.title}}</li>
+		          	</ul>
+		          </div>
 		        </div>
-		        <div class="divnone">隐藏</div>
+		        
 						<div id="settleup" class="dropdown">
 		          <div class="cw-icon">
 		            <div>
@@ -29,15 +34,15 @@
 		      </div>
 		    </div>
 		    <div id="hotwords" role aria-label="热搜词">
-		    	<a href="#" id="specHotWord" class="style_red">动态轮播的</a>
-		    	<a href="#">品质钟表</a>
-		    	<a href="#">笔记本</a>
-		    	<a href="#">WIS面膜</a>
-		    	<a href="#">电脑数码</a>
-		    	<a href="#">手机补贴</a>
-		    	<a href="#">家装节</a>
-		    	<a href="#">运动户外</a>
-		    	<a href="#">美妆好物</a>
+		    	<a href="javaScript:void(0)" id="specHotWord" class="style_red">{{achotword}}</a>
+		    	<a href="javaScript:void(0)">品质钟表</a>
+		    	<a href="javaScript:void(0)">笔记本</a>
+		    	<a href="javaScript:void(0)">WIS面膜</a>
+		    	<a href="javaScript:void(0)">电脑数码</a>
+		    	<a href="javaScript:void(0)">手机补贴</a>
+		    	<a href="javaScript:void(0)">家装节</a>
+		    	<a href="javaScript:void(0)">运动户外</a>
+		    	<a href="javaScript:void(0)">美妆好物</a>
 		    </div>
 				<div id="navitems" role="navigation">
 		      <ul id="navitems-group1">
@@ -87,31 +92,132 @@
 		name:"MainHeader",
 		data(){
 			return{
-				search:''
+				achotword:"抢购机神券",
+				achotwords:["春季家装节","抢购机神券"],
+				placeholder:["金龙鱼大米","扫描仪","联想拯救者","无线路由器","花洒套装","华硕笔记本","奥克斯空调"],
+				search:'',
+				goodslist:[]//搜索框聚焦时出现商品列表
 			}
 		},
+		props:["listbodyhight"],
 		methods:{
 			getelement(eleid){
 				return document.getElementById(eleid);
 			},
-			searchbtn(){
+			searchbtn(){//点击搜索按钮
 				//发送ajax请求
+				let _this = this;
+				let oAjax = null;
+				let pattern = /\s/;
+				if(_this.search&&!pattern.exec(_this.search)){
+					if(window.XMLHttpRequest){
+						oAjax = new XMLHttpRequest();
+					}else{
+						oAjax = new ActiveXObject("Microsoft.XMLHTTP");
+					}
+					oAjax.open("Get","http://127.0.0.1/goods/selectGoods?title="+_this.search,true);
+					oAjax.send();
+					oAjax.onreadystatechange = function(){
+						if(oAjax.readyState == 4){
+							if(oAjax.status >= 200 && oAjax.status < 300 || oAjax.status == 304){
+								let goods = JSON.parse(oAjax.responseText);
+								_this.$emit("searchgoods",goods.data);//点击搜索传递数据
+								//跳到展示区
+								let timer = setInterval(() => {//跳到正确的位置
+						      document.documentElement.scrollTop += 163;
+						      if (document.documentElement.scrollTop >= _this.listbodyhight) {
+						        clearInterval(timer);
+						      }
+					    	}, 20);
+					    	window.addEventListener('scroll',function(){})//取消锁定
+							}else{
+								alert("服务器错误");
+							}
+						}
+					}
+				}else{
+					alert("不能为空");
+				}
 			},
 			searchfocus($event){
+				let _this = this;
+				let searchlist = _this.getelement("search_list");
+				let oAjax = null;
 				let timer;
+				let num = 0;
+				/*placeholder颜色*/
+				$event.target.classList.add("text");
+				searchlist.classList.remove("divnone");
 		    $event.target.onkeyup = function(e) {
 		      if(timer){
 		      	clearTimeout(timer);
 		      } 
 		      timer = setTimeout(() => {
-		        console.log($event.target.value);
 		        //发送请求
+		        if(window.XMLHttpRequest){
+							oAjax = new XMLHttpRequest();
+						}else{
+							oAjax = new ActiveXObject("Microsoft.XMLHTTP");
+						}
+						let pattern = /\s/;
+						if(_this.search&&!pattern.exec(_this.search)){
+							oAjax.open("Get","http://127.0.0.1/goods/selectGoods?title="+_this.search,true);
+							oAjax.send();
+							oAjax.onreadystatechange = function(){
+								if(oAjax.readyState == 4){
+									if(oAjax.status >= 200 && oAjax.status < 300 || oAjax.status == 304){
+										//解析响应
+										let goods = JSON.parse(oAjax.responseText);
+										_this.goodslist = [];//存的时候先置空
+									  while(num<8){
+									  	if(goods.data[num]){
+									  		_this.goodslist[num] = goods.data[num];
+									  	}
+									  	num++;
+									  }
+									}else{
+										alert("服务器错误");
+									}
+								}
+							}
+						}
 		      }, 1000)
 		    }
+			},
+			searchblur($event){
+				if(!this.search){
+					this.goodslist = [];
+				}
+				/*placeholder颜色*/
+				$event.target.classList.remove("text");
+				let searchlist = this.getelement("search_list");
+				searchlist.classList.add("divnone");
+			},
+			hotwords(){
+				let _this = this;
+				let i = 0;
+				let j = 0;
+				let key = _this.getelement("key");
+				setInterval(function(){
+					if(i>=2){
+						i = 0;
+					}
+					_this.achotword = "";
+					_this.achotword = _this.achotwords[i];
+					i++;
+				},2000)
+				setInterval(function(){
+					if(j>=7){
+						j = 0;
+					}
+					key.setAttribute("placeholder","");
+					key.setAttribute("placeholder",_this.placeholder[j]);
+					j++;
+				},3000)
 			}
 		},
 		mounted(){
-
+			this.hotwords();
 		}
 	}
 </script>
@@ -175,6 +281,10 @@
     font-size: 12px;
     background: transparent;
 	}
+	/*placeholder颜色*/
+	#key.text::-webkit-input-placeholder {  /*WebKit browsers  */
+		color: rgb(200,200,200);
+	}
 	/*相机位置*/
 	.search_content .photo_search_bg {
     position: absolute;
@@ -206,6 +316,32 @@
 		width: 20px;
 		height: 22px;
 		margin-top: 6px;
+	}
+	/*搜索列表隐藏区*/
+	.search_list{
+		position: absolute;
+		top: 34px;
+		left: -2px;
+		width: 487px;
+		z-index: 2;
+		border: 1px #ccc solid;
+		background-color: #fff;
+	}
+	.search_list>ul>li{
+		list-style: none;
+		height: 24px;
+		line-height: 24px;
+		width: 95%;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		cursor: pointer;
+		padding: 1px 6px;
+		color: #666;
+		font-size: 12px;
+	}
+	.search_list>ul>li:hover {
+    background: #f5f5f5!important;
 	}
 	/*购物车*/
 	#settleup {
