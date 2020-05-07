@@ -76,15 +76,15 @@
 								<div class="dd">
 									<span class="p_price">
 										<span>￥</span>
-										<span class="price">108</span>
+										<span class="price">108.00</span>
 									</span>
-									<a href="" class="fans_price">降价通知</a>
+									<a href="javascript:void(0)" class="fans_price">降价通知</a>
 								</div>
 							</div>
 							<div class="J_summary_info clearfix">
 								<div class="comment_count">
 									<p class="comment">累计评价</p>
-									<a href="" class="J_comm">8万+</a>
+									<a href="javascript:void(0)" class="J_comm">8万+</a>
 								</div>
 							</div>
 							<div class="summary_quan">
@@ -118,7 +118,7 @@
 							<div class="J_summary_top">
 								<div class="summary_promotion">
 									<div class="dt">促销</div>
-									<div class="dd p_promotions_wrap">
+									<div class="dd">
 										<div class="p_promotions">
 											<div class="J_prom">
 												<div class="prom_item">
@@ -144,7 +144,7 @@
 							<div class="dd">
 								<div class="store clearfix">
 									<div class="stock_address">
-										<div class="ui_rea_text_wrap">
+										<div class="ui_area_text_wrap">
 											<div class="ui_area_text">山东济宁市曲阜市时庄街道</div>
 											<b></b>
 										</div>
@@ -168,7 +168,7 @@
 						<div class="SelfAssuredPurchase">
 							<div class="dt">服务支持</div>
 							<div class="dd">
-								<div class="icon-SelfAssuredPurchase"></div>
+								<div class="icon_SelfAssuredPurchase"></div>
 								<div class="services">
 									<div>
 										<a href="javascript:void(0)">闪电退款</a>
@@ -182,7 +182,7 @@
 							</div>
 						</div>
 						<div class="summary_line"></div>
-						<div class="choose_btns">
+						<div class="choose_btns clearfix">
 							<div class="choose_amount">
 								<div class="wrap_input">
 									<input type="text" class="buy_num" value="1" id="buy_num">
@@ -398,6 +398,474 @@
 		width: 658px;
     float: left;
     margin-left: 50px;
-    height: 10px;
+	}
+	/*商品title区*/
+	.sku_name{
+		font: 700 16px Arial,"microsoft yahei";
+    color: #666;
+    padding-top: 10px;
+    line-height: 28px;
+    margin-bottom: 5px;
+	}
+	/*搞活动news*/
+	.news{
+		color: #e4393c;
+    margin-bottom: 5px;
+	}
+	/*前一段文字*/
+	.p_ad{
+		width: 590px;
+    white-space: normal;
+    margin-bottom: 5px;
+		line-height: 1.5em;
+		font-size: 12px;
+	}
+	/*点击*/
+	.p_ad>a{
+		text-decoration: underline;
+		color: #5e69ad;
+	}
+	/*价格促销*/
+	.summary_first{
+		padding-bottom: 5px;
+	}
+	/*内容盒子*/
+	.summary_price_wrap{
+		position: relative;
+		padding: 10px 0 0;
+    background: #f3f3f3;
+	}
+	/*价格区域*/
+	.J_summary_price{
+		margin-bottom: 5px;
+	}
+	/*淘淘价*/
+	.J_summary_price .dt{
+		line-height: 34px;
+		float: left;
+    padding-left: 10px;
+    color: #999;
+    font-size: 12px;
+    letter-spacing: 5px;
+    font-family: simsun;
+	}
+	/*淘淘价右侧区域*/
+	.J_summary_price .dd{
+		margin-left: 70px;
+	}
+	.p_price{
+		color: #e4393c;
+    font-family: "microsoft yahei";
+    margin-right: 10px;
+    overflow: hidden;
+	}
+	.p_price span {
+    font-size: 16px;
+    color: #e4393c;
+	}
+	.price {
+		font-size: 22px !important;
+	} 
+	/*降价通知*/
+	.fans_price{
+		color: #005aa0;
+    vertical-align: 2px;
+    text-decoration: none;
+    font-size: 12px;
+	}
+	/*评论数*/
+	.J_summary_info{
+		position: absolute;
+    z-index: 1;
+    right: 10px;
+    top: 8px;
+    color: #999;
+	}
+	.comment_count{
+		border-left: solid 1px #e6e6e6;
+    text-align: center;
+    padding: 0 10px;
+    line-height: 15px;
+    float: left;
+    color: #999;
+	}
+	/*累计评价*/
+	.comment{
+		font-size: 12px;
+	}
+	/*评价数*/
+	.J_comm{
+		font: 14px verdana;
+    color: #005ea7;
+    margin-left: 5px;
+    text-decoration: none;
+	}
+	/*优惠券区域*/
+	.summary_quan{
+		padding-bottom: 2px;
+		margin-bottom: 3px;
+    line-height: 32px;
+    height: 34px;
+	}
+	/*优惠券*/
+	.summary_quan .dt{
+		float: left;
+    padding-left: 10px;
+    color: #999;
+    line-height: 32px;
+    font-size: 12px;
+    letter-spacing: 5px;
+    font-family: simsun;
+	}
+	/*优惠券右侧区域*/
+	.summary_quan .dd{
+		padding-top: 8px;
+		margin-left: 70px;
+	}
+	.summary_quan .dd dl .fl{
+		float: left;
+	}
+	.quan_item{
+		position: relative;
+    float: left;
+    height: 18px;
+    padding-left: 2px;
+    line-height: 15px;
+    text-align: center;
+    border-top: 1px solid #df3033;
+    border-bottom: 1px solid #df3033;
+    background: #ffdedf;
+    font-size: 14px;
+    white-space: nowrap;
+    margin-right: 13px;
+    cursor: pointer;
+	}
+	/*波浪线*/
+	.quan_item s{
+		position: absolute;
+    top: -1px;
+    display: block;
+    height: 18px;
+    width: 2px;
+    overflow: hidden;
+    background: url(~assets/img/quan-arr.gif) no-repeat;
+    left: 0;
+    background-position: -2px 0;
+	}
+	/*波浪线*/
+	.quan_item b{
+		position: absolute;
+    top: -1px;
+    display: block;
+    height: 18px;
+    width: 2px;
+    overflow: hidden;
+    background: url(~assets/img/quan-arr.gif) no-repeat;
+    right: -2px;
+	}
+	/*满减文字*/
+	.quan_item .text{
+		padding: 0 10px;
+    color: #df3033;
+    font-size: 12px;	
+	}
+	/*更多*/
+	.summary_quan .more_btn {
+    font-family: SimSun;
+    font-size: 12px;
+    color: #999;
+    float: left;
+    height: 16px;
+    line-height: 18px;
+    cursor: pointer;
+	}
+	/*促销区域*/
+	.summary_promotion{
+		padding-bottom: 5px;
+	}
+	/*促销*/
+	.summary_promotion .dt{
+		line-height: 30px;
+		float: left;
+    padding-left: 10px;
+    font-family: simsun;
+    color: #999;
+    font-size: 12px;
+    letter-spacing: 18px;
+	}
+	/*促销右侧*/
+	.summary_promotion .dd{
+		position: relative;
+		margin-left: 70px;
+	}
+	.p_promotions{
+		position: relative;
+    line-height: 30px;
+    padding-right: 90px;
+	}
+	/*限购*/
+	.hl_red_bg{
+		color: #df3033;
+    background: 0 0;
+    border: 1px solid #df3033;
+    padding: 2px 3px;
+    margin-right: 5px;
+    display: inline-block;
+    line-height: 16px;
+    font-style: normal;
+    font-size: 12px;
+	}
+	/*限购内容*/
+	.hl_red{
+		color: #666;
+    line-height: 18px;
+		font-style: normal;
+		font-size: 12px;
+	}
+	/*配送模块*/
+	.p_choose_wrap{
+		padding-bottom: 5px;
+	}
+	/*配送*/
+	.summary_stock .dt{
+		float: left;
+    padding-left: 10px;
+    font-family: simsun;
+    color: #999;
+    font-size: 12px;
+    letter-spacing: 5px;
+	}
+	/*配送右侧*/
+	.summary_stock .dd{
+		margin-left: 70px;
+	}
+	.summary_stock .store {
+    margin-bottom: 5px;
+	}
+	/*地址*/
+	.stock_address {
+    float: left;
+    margin-top: -3px;
+    margin-left: -5px;
+	}
+	.ui_area_text_wrap{
+		float: left;
+    position: relative;
+    top: 0;
+    height: 23px;
+    background: #fff;
+    border: 1px solid #CECBCE;
+    padding: 0 24px 0 4px;
+    line-height: 23px;
+    overflow: hidden;
+	}
+	.ui_area_text{
+		font-size: 12px;
+	}
+	/*向下小箭头*/
+	.ui_area_text_wrap b{
+		display: block;
+    position: absolute;
+    top: 3px;
+    right: 4px;
+    width: 17px;
+    height: 17px;
+    background: url(~assets/img/ui_area_text_wrap.png) no-repeat 3px 5px;
+    overflow: hidden;
+	}
+	/*可配货*/
+	.store_prompt {
+		margin-left: 10px;
+    margin-right: 10px;
+    color: #999;
+    height: 24px;
+    float: left;
+	}
+	.store_prompt strong {
+    margin-right: 5px;
+    float: left;
+    font-size: 12px;
+	}	
+	/*由淘淘发货*/
+	.summary_supply {
+    clear: both;
+    margin-top: -10px;
+    margin-bottom: 3px;
+    line-height: 32px;
+	}
+	.summary_supply .dt{
+		float: left;
+    padding-left: 10px;
+    font-family: simsun;
+    color: #999;
+	}
+	.summary_supply .dd{
+		margin-left: 70px;
+	}
+	.summary_service {
+    color: #999;
+    font-size: 12px;
+	}
+	.summary_service .hl_red {
+    color: #e4393c;
+	}
+	/*服务支持*/
+	.SelfAssuredPurchase{
+		font-family: "Microsoft YaHei";
+		margin-bottom: 3px;
+    line-height: 32px;
+	}
+	.SelfAssuredPurchase .dt{
+		float: left;
+    padding-left: 10px;
+    font-family: simsun;
+    color: #999;
+    font-size: 12px;
+	}
+	.SelfAssuredPurchase .dd{
+		margin-left: 70px;
+	}
+	/*放心购图标*/
+	.icon_SelfAssuredPurchase {
+		position: relative;
+    top: -3px;
+    vertical-align: middle;
+    display: inline-block;
+    width: 84px;
+    height: 16px;
+    background-image: url(~assets/img/fangxingou.png);
+    background-position: 0 -16px;
+    cursor: pointer;
+	}
+	/*闪电退款*/
+	.services {
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 10px;
+    background-color: #fff;
+    font-size: 12px;
+    top: -3px;
+    vertical-align: middle;
+	}
+	.services a{
+    color: #646fb0;
+    font-size: 12px;
+    word-break: keep-all;
+	}
+	/*次日达*/
+	.promises {
+    line-height: 18px;
+    margin-top: -3px;
+    margin-bottom: 3px;
+	}
+	.promises a {
+    margin-right: 5px;
+    color: #999;
+    font-size: 12px;
+    word-break: keep-all;
+	}
+	/*分割线*/
+	.summary_line{
+		height: 0;
+    overflow: hidden;
+    border-bottom: 1px dotted #dfdfdf;
+    margin-bottom: 15px;
+	}
+	/*选择数量的区域*/
+	.choose_btns{
+		margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 0 10px;
+	}
+	.choose_amount{
+		width: 58px;
+    height: 44px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    position: relative;
+    margin-right: 10px;
+    float: left;
+	} 
+	/*数量输入*/
+	.choose_amount .buy_num{
+		display: block;
+    width: 43px;
+    height: 42px;
+    line-height: 42px;
+    position: absolute;
+    top: 1px;
+    left: 0;
+    border: 0;
+    text-align: center;
+	}
+	.choose_amount a {
+    display: block;
+    width: 15px;
+    text-align: center;
+    height: 23px;
+    line-height: 22px;
+    overflow: hidden;
+    background: #f1f1f1;
+    color: #666;
+    position: absolute;
+    right: -1px;
+    border: 1px solid #ccc;
+	}
+	/*减号*/
+	.btn_reduce{
+		bottom: -1px;
+	}
+	/*数量为1时减号的样式*/
+	.choose_amount a.disabled {
+    color: #ccc;
+    cursor: not-allowed;
+	}
+	/*加号*/
+	.btn_add {
+    top: -1px;
+	}
+	/*加入购物车*/
+	.btn_special1{
+		margin-right: 10px;
+    float: left;	
+    height: 46px;
+    line-height: 46px;
+    padding: 0 26px;
+    font-size: 18px;
+    font-family: "microsoft yahei";
+    font-weight: 700;
+    background-color: #df3033;
+    color: #fff;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+	}
+	/*温馨提示*/
+	.summary_tips{
+		margin-bottom: 5px;
+	}
+	.summary_tips .dt{
+		float: left;
+    padding-left: 10px;
+    font-family: simsun;
+    color: #999;
+    font-size: 12px;
+	}
+	.summary_tips .dd{
+		margin-left: 70px;
+	}
+	.tips_list{
+		list-style: none;
+	}
+	.local_txt{
+		float: left;
+    margin-right: 15px;
+    font-family: simsun;
+    color: #999;
+    font-size: 12px;
 	}
 </style>
