@@ -12,9 +12,6 @@
 		components:{
 			DetailBody,
 			MainFooter
-		},
-		mounted(){
-			//获得localstorage中的数据之后要清空
 		}
 	}
 </script>

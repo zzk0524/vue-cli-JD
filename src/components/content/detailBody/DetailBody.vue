@@ -8,7 +8,7 @@
 					</div>
 					<div class="item sep">></div>
 					<div class="item">
-						<a href="javascript:void(0)">动态的商品类型</a>
+						<a href="javascript:void(0)">{{currentGood.type}}</a>
 					</div>
 				</div>
 				<div class="contact clearfix">
@@ -18,7 +18,7 @@
 					<div class="J_hove_wrap">
 						<div class="item">
 							<div class="name">
-								<a href="javascript:void(0)">动态店铺的名字</a>
+								<a href="javascript:void(0)">{{currentGood.shopname}}</a>
 							</div>
 						</div>
 						<div class="item">
@@ -42,7 +42,7 @@
 				<div class="preview_wrap">
 					<div class="preview">
 						<div class="main_img">
-							<img src="//img10.360buyimg.com/n1/jfs/t1/1054/19/3582/94883/5b99fbe2E6a4773f4/fb0563dc6406fd08.jpg" alt="动态的title">
+							<img :src="currentGood.pic" :alt="currentGood.title">
 						</div>
 						<div class="preview_info">
 							<div class="left_btns">
@@ -62,7 +62,7 @@
 					</div>
 				</div>
 				<div class="itemInfo_wrap">
-					<div class="sku_name">安踏 ANTA官方旗舰 安踏运动裤男宽松束脚针织运动长裤休闲时尚卫裤男士裤子 7751基础黑 L(男175) </div>
+					<div class="sku_name">{{currentGood.title}}</div>
 					<div class="news">
 						<div class="p_ad">
 							5.05-5.07五一美好生活#领券叠加立减可得【10元无门槛，200-20、300-50、468-130】
@@ -76,7 +76,7 @@
 								<div class="dd">
 									<span class="p_price">
 										<span>￥</span>
-										<span class="price">108.00</span>
+										<span class="price">{{currentGood.price}}</span>
 									</span>
 									<a href="javascript:void(0)" class="fans_price">降价通知</a>
 								</div>
@@ -84,7 +84,7 @@
 							<div class="J_summary_info clearfix">
 								<div class="comment_count">
 									<p class="comment">累计评价</p>
-									<a href="javascript:void(0)" class="J_comm">8万+</a>
+									<a href="javascript:void(0)" class="J_comm">{{currentGood.comments}}</a>
 								</div>
 							</div>
 							<div class="summary_quan">
@@ -185,12 +185,12 @@
 						<div class="choose_btns clearfix">
 							<div class="choose_amount">
 								<div class="wrap_input">
-									<input type="text" class="buy_num" value="1" id="buy_num">
-									<a href="javascript:void(0)" class="btn_reduce">-</a>
-									<a href="javascript:void(0)" class="btn_add">+</a>
+									<input type="text" class="buy_num" value="1" id="buy_num" @blur="buyNumBlur($event)" v-model="buyNum">
+									<a href="javascript:void(0)" class="btn_reduce disabled" id="btn_reduce" @click="reduceBtn">-</a>
+									<a href="javascript:void(0)" class="btn_add" id="btn_add" @click="addBtn">+</a>
 								</div>
 							</div> 
-							<a href="javascript:void(0)" class="btn_special1" id="InitCartUrl">加入购物车</a>
+							<a href="javascript:void(0)" class="btn_special1" id="InitCartUrl" @click="addShopCar">加入购物车</a>
 						</div>
 						<div class="summary_tips">
 							<div class="dt">温馨提示</div>
@@ -209,15 +209,82 @@
 <script>
 	export default{
 		name:"DetailBody",
-		components:{
-			
+		data(){
+			return{
+				currentGood:[],
+				currentUser:[],
+				buyNum:1
+			}
+		},
+		methods:{
+			getApplyParams(){
+				this.currentGood = JSON.parse(window.localStorage.getItem('applyParams'));//存入商品数据
+				this.currentUser = JSON.parse(window.localStorage.getItem('tempData'));
+			},
+			reduceBtn(){
+				let buynum = document.getElementById("buy_num");
+				let btnadd = document.getElementById("btn_add");
+				let btnreduce = document.getElementById("btn_reduce");
+				if(buynum.value>=2){
+					buynum.value--;
+					btnadd.classList.remove("disabled");
+					if(buynum.value==1){
+						btnreduce.classList.add("disabled");
+					}	
+				}	
+			},
+			addBtn(){
+				let buynum = document.getElementById("buy_num");
+				let btnadd = document.getElementById("btn_add");
+				let btnreduce = document.getElementById("btn_reduce");
+				if(buynum.value<200){
+					btnreduce.classList.remove("disabled");
+					buynum.value++;
+					if(buynum.value==200){
+						btnadd.classList.add("disabled");
+					}
+				}
+			},
+			buyNumBlur($event){
+				let btnreduce = document.getElementById("btn_reduce");
+				let btnadd = document.getElementById("btn_add");
+				if($event.target.value <= 1){
+					$event.target.value = 1;
+					btnreduce.classList.add("disabled");
+				}else if($event.target.value >= 200){
+					$event.target.value = 200;
+					btnadd.classList.add("disabled");
+				}else{
+					btnadd.classList.remove("disabled");
+					btnreduce.classList.remove("disabled");
+				}
+				
+			},
+			addShopCar(){//点击加入购物车
+				//判断有没有用户登录，没有转到登录页，有直接转购物车，用路由在当前页变化
+				if(this.currentUser){//有用户去到购物车中,传值商品信息和数量
+					//console.log("进入到购物车");
+					this.$router.replace({name:'Cart',params:{currentuser:this.currentUser,currentgood:this.currentGood,goodnum:this.buyNum}});
+				}else{//没用户
+					this.$router.replace({name:'Login'});
+				}
+			}
 		},
 		mounted(){
-			//获得localstorage中的数据之后要清空
+			this.getApplyParams();
 		}
 	}
 </script>
 <style scoped>
+	.crumb_wrap .item a:hover,
+	.customer_service:hover,
+	.follow span:hover,
+	.follow em:hover,
+	.share em:hover,
+	.report_btn:hover,
+	.promises a:hover{
+		color: #e4393c;
+	}
 	/*头部灰色条*/
 	.crumb_wrap{
 		height: 40px;
@@ -347,6 +414,10 @@
 	.main_img{
 		border: 1px solid #eee;
     margin-bottom: 20px;
+	}
+	.main_img img{
+		width: 100%;
+		height: 100%;
 	}
 	/*图片下面的分享*/
 	.preview_info {
@@ -817,6 +888,7 @@
 	/*减号*/
 	.btn_reduce{
 		bottom: -1px;
+		outline: none;
 	}
 	/*数量为1时减号的样式*/
 	.choose_amount a.disabled {
@@ -826,6 +898,7 @@
 	/*加号*/
 	.btn_add {
     top: -1px;
+    outline: none;
 	}
 	/*加入购物车*/
 	.btn_special1{

@@ -218,11 +218,14 @@
 							//console.log(applyParams);
 							if(applyParams){//如果有数据，先置空再存
 								window.localStorage.removeItem('applyParams');
+								window.localStorage.removeItem('tempData');
 								window.localStorage.setItem('applyParams', JSON.stringify(currentValue));
-								console.log(window.localStorage.getItem('applyParams'));
+								window.localStorage.setItem('tempData', JSON.stringify(this.currentUser));
+								//console.log(window.localStorage.getItem('applyParams'));
 							}else{//如果没数据，直接存
 								window.localStorage.setItem('applyParams', JSON.stringify(currentValue));
-								console.log(window.localStorage.getItem('applyParams'));
+								window.localStorage.setItem('tempData', JSON.stringify(this.currentUser));
+								//console.log(window.localStorage.getItem('applyParams'));
 							}
 						}
 					})

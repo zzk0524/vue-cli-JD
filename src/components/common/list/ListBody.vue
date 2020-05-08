@@ -3,7 +3,7 @@
 		<div class="listbody_inner">
 			<ul class="listbody_list">
 				<li class="listbody_item" v-for="(item,index) in hotgood" :key="index">
-					<a href="" class="listbody_item_lk">
+					<a href="javascript:void(0)" class="listbody_item_lk">
 						<div class="lazyimg listbody_img">
 							<img :src="item.pic" alt="商品图片" class="lazyimg_img" @click="bindclick($event)">
 						</div>
