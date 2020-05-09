@@ -220,6 +220,9 @@
 			getApplyParams(){
 				this.currentGood = JSON.parse(window.localStorage.getItem('applyParams'));//存入商品数据
 				this.currentUser = JSON.parse(window.localStorage.getItem('tempData'));
+				//用完就清空，只在页面切换之间使用
+				window.remove.localStorage("applyParams");
+				window.remove.localStorage("tempData");
 			},
 			reduceBtn(){
 				let buynum = document.getElementById("buy_num");
