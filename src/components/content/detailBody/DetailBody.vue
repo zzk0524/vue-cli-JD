@@ -213,7 +213,17 @@
 			return{
 				currentGood:[],
 				currentUser:[],
-				buyNum:1
+				buyNum:1,
+				form:{
+					accountid:'',
+					goodid:'',
+					goodtitle:'',
+					goodprice:'',
+					goodpic:'',
+					shopname:'',
+					goodnum:'',
+					goodsumprice:''
+				}
 			}
 		},
 		methods:{
@@ -261,13 +271,43 @@
 					btnadd.classList.remove("disabled");
 					btnreduce.classList.remove("disabled");
 				}
-				
 			},
 			addShopCar(){//点击加入购物车
 				//判断有没有用户登录，没有转到登录页，有直接转购物车，用路由在当前页变化
-				if(this.currentUser){//有用户去到购物车中,传值商品信息和数量
-					//console.log("进入到购物车");
-					this.$router.replace({name:'Cart',params:{currentuser:this.currentUser,currentgood:this.currentGood,goodnum:this.buyNum}});
+				if(this.currentUser){//有用户先存数据库去到购物车中,传值商品信息和数量
+					//更新数据请求
+					let _this = this;
+					let oAjax = null;
+					_this.form.accountid = _this.currentUser.id;
+					_this.form.goodid = _this.currentGood.id;
+					_this.form.goodtitle = _this.currentGood.title;
+					_this.form.goodprice = _this.currentGood.price;
+					_this.form.goodpic = _this.currentGood.pic;
+					_this.form.shopname = _this.currentGood.shopname;
+					_this.form.goodnum = _this.buyNum;
+					_this.form.goodsumprice = (_this.currentGood.price*_this.buyNum).toFixed(2);
+					if(window.XMLHttpRequest){
+						oAjax = new XMLHttpRequest();
+					}else{
+						oAjax = new ActiveXObject("Microsoft.XMLHTTP");
+					}
+					oAjax.open('POST','http://127.0.0.1/goods/updateCart',true);
+					oAjax.setRequestHeader("Content-type","application/json");
+					oAjax.send(JSON.stringify(_this.form));//创建一个form，把数据都存好一起发出去
+					oAjax.onreadystatechange=function(){
+					  if(oAjax.readyState==4){
+					    if(oAjax.status>=200 && oAjax.status<300 || oAjax.status==304){
+					      //对响应进行解析
+					      let goodscart=JSON.parse(oAjax.responseText);
+					      if(goodscart.code == 1){
+					      	 _this.$router.replace({name:'Cart',params:{goodscart:_this.form}});
+					      } 
+					    }else{
+					      //对响应进行解析
+					      alert("服务器错误");
+					    }
+					  }
+					}
 				}else{//没用户
 					this.$router.replace({name:'Login'});
 				}

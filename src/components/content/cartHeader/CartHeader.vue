@@ -9,7 +9,7 @@
 			</div>
 			<div class="cart_search">
 				<div class="form">
-					<input type="text" class="itxt">
+					<input type="text" class="itxt" placeholder="自营">
 					<input type="button" class="button" value="搜索">
 				</div>
 			</div>
@@ -86,6 +86,7 @@
     width: 270px;
     padding: 3px 5px;
     outline: 0;
+    font-size: 12px;
 	}
 	/*搜索按钮*/
 	.cart_search .button {

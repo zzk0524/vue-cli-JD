@@ -43,13 +43,13 @@
 							<div class="column t_action">操作</div>
 						</div>
 						<div class="cart_list">
-							<div class="cart_item_list">
+							<div class="cart_item_list" v-for="(item,index) in cartgoods">
 								<div class="cart_tbody">
 									<div class="item_list">
 										<div class="item_full">
 											<div class="item_header">
 												<div class="f_txt">
-													<span>森马旗舰店</span>
+													<span>{{item.shopname}}</span>
 												</div>
 											</div>
 											<div class="item_item">
@@ -63,30 +63,30 @@
 														<div class="goods_item">
 															<div class="p_img">
 																<a href="javascript:void(0)">
-																	<img src="//img10.360buyimg.com/cms/s80x80_jfs/t1/99599/10/13078/135225/5e55034dEd9ea2796/1d038e08cfe6b80c.jpg" alt="">
+																	<img :src="item.pic" :alt="item.title">
 																</a>
 															</div>
 															<div class="item_msg">
 																<div class="p_name">
-																	<a href="javascript:void(0)">短袖t恤男条纹针织衫新款衣服春季打底衫时尚男士上衣圆领套头半袖 851 卡其 聚酯纤维 XL</a>
+																	<a href="javascript:void(0)">{{item.title}}</a>
 																</div>
 															</div>
 														</div>
 													</div>
 													<div class="cell p_price">
 														<p class="plus_switch">
-															<strong>￥198.00</strong>
+															<strong>￥<span :id="priceid(index)" :data-index="getindex(index)">{{item.price}}</span></strong>
 														</p>
 													</div>
 													<div class="cell p_quantity">
 														<div class="quantity_form">
-															<a href="javascript:void(0)" class="decrement disabled">-</a>
-															<input type="text" class="itxt" value="1">
-															<a href="javascript:void(0)" class="increment">+</a>
+															<a href="javascript:void(0)" class="decrement disabled" :id="decrementId(index)" @click="decrementClick($event)" :data-index="getindex(index)">-</a>
+															<input type="text" class="itxt" value="1" @blur="numBlur($event)" :id="numId(index)" :data-index="getindex(index)">
+															<a href="javascript:void(0)" class="increment" :id="incrementId(index)" @click="incrementClick($event)" :data-index="getindex(index)">+</a>
 														</div>
 													</div>
 													<div class="cell p_sum">
-														<strong>￥198.00</strong>
+														<strong>￥<span :id="pricesumid(index)" :data-index="getindex(index)"></span></strong>
 													</div>
 													<div class="cell p_ops">
 														<a href="javascript:void(0)" class="cart_remove">删除</a>
@@ -101,7 +101,48 @@
 						</div>
 					</div>
 				</div>
-				<div class="cart_floatbar"></div>
+				<div class="cart_floatbar" id="cart_floatbar">
+					<div class="ui_ceilinglamp">
+						<div class="cart_toolbar" id="cart_toolbar">
+							<div class="toolbar_wrap">
+								<div class="options_box">
+									<div class="select_all">
+										<div class="cart_checkbox">
+											<input type="checkbox" class="jdcheckbox">
+										</div>全选
+									</div>
+									<div class="operation">
+										<a href="javascript:void(0)">删除选中商品</a>
+									</div>
+									<div class="clr"></div>
+									<div class="toolbar_right">
+										<div class="normal">
+											<div class="comm_right">
+												<div class="btn_area">
+													<a href="javascript:void(0)" class="submit_btn">
+														去结算
+													</a>
+												</div>
+												<div class="price_sum">
+													<div>
+														<span class="txt_new">总价：</span>
+														<span class="sumPrice">
+															<em>￥198.00</em>
+														</span>
+													</div>
+												</div>
+												<div class="amount_sum">
+													已选择<em>0</em>件商品
+												</div>
+												<div class="clr"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -109,19 +150,132 @@
 <script>
 	export default{
 		name:"CartContainer",
+		data(){
+			return{
+				cartgoods:[{shopname:"森马旗舰店",pic:"//img10.360buyimg.com/cms/s80x80_jfs/t1/99599/10/13078/135225/5e55034dEd9ea2796/1d038e08cfe6b80c.jpg",title:"短袖t恤男条纹针织衫新款衣服春季打底衫时尚男士上衣圆领套头半袖 851 卡其 聚酯纤维 XL",price:"198.00"},{shopname:"森马旗舰店",pic:"//img10.360buyimg.com/cms/s80x80_jfs/t1/99599/10/13078/135225/5e55034dEd9ea2796/1d038e08cfe6b80c.jpg",title:"短袖t恤男条纹针织衫新款衣服春季打底衫时尚男士上衣圆领套头半袖 851 卡其 聚酯纤维 XL",price:"198.00"},{shopname:"森马旗舰店",pic:"//img10.360buyimg.com/cms/s80x80_jfs/t1/99599/10/13078/135225/5e55034dEd9ea2796/1d038e08cfe6b80c.jpg",title:"短袖t恤男条纹针织衫新款衣服春季打底衫时尚男士上衣圆领套头半袖 851 卡其 聚酯纤维 XL",price:"198.00"}],
+				num:1
+			}
+		},
 		methods:{
+			pricesumid(index){
+				return "pricesum"+(index+1);
+			},
+			priceid(index){
+				return "price"+(index+1);
+			},
+			getindex(index){
+				return index+1;
+			},
+			decrementId(index){//动态给id
+				return "decrement"+(index+1);
+			},
+			numId(index){
+				return "num"+(index+1);
+			},
+			incrementId(index){
+				return "increment"+(index+1);
+			},
 			getMessage(){
 				console.log(this.$route.params.currentuser);
 				console.log(this.$route.params.currentgood);
 				console.log(this.$route.params.goodnum);
+			},
+			fixedBottom(){
+				let cartfloatbar = this.getEle("cart_floatbar");
+				let carttoolbar = this.getEle("cart_toolbar");
+				if(cartfloatbar.offsetTop>570){
+					carttoolbar.classList.add("fixed_bottom");
+				}else{
+					carttoolbar.classList.remove("fixed_bottom");
+				}
+				document.addEventListener("scroll",function(){
+					if(cartfloatbar.offsetTop-document.documentElement.scrollTop<=document.documentElement.clientHeight){
+						carttoolbar.classList.remove("fixed_bottom");
+					}else{
+						carttoolbar.classList.add("fixed_bottom");
+					}
+				})
+			},
+			getEle(id){
+				return document.getElementById(id);
+			},
+			decrementClick($event){//减号
+				let index = $event.target.getAttribute("data-index");
+				let numid = "num"+index;
+				let incrementid = "increment"+index;
+				let decrementid = "decrement"+index;
+				let priceid = "price"+index;
+				let pricesumid = "pricesum"+index;
+				let num = this.getEle(numid);
+				let increment = this.getEle(incrementid);
+				let decrement = this.getEle(decrementid);
+				let price = this.getEle(priceid);
+				let pricesum = this.getEle(pricesumid);
+				if(num.value>=2){
+					num.value--;
+					increment.classList.remove("disabled");
+					pricesum.innerHTML = (num.value*price.innerHTML).toFixed(2);
+					if(num.value==1){
+						decrement.classList.add("disabled");
+					}	
+				}	
+			},
+			incrementClick($event){//加号
+				let index = $event.target.getAttribute("data-index");
+				let numid = "num"+index;
+				let incrementid = "increment"+index;
+				let decrementid = "decrement"+index;
+				let priceid = "price"+index;
+				let pricesumid = "pricesum"+index;
+				let num = this.getEle(numid);
+				let increment = this.getEle(incrementid);
+				let decrement = this.getEle(decrementid);
+				let price = this.getEle(priceid);
+				let pricesum = this.getEle(pricesumid);
+				if(num.value<200){
+					decrement.classList.remove("disabled");
+					num.value++;
+					pricesum.innerHTML = (num.value*price.innerHTML).toFixed(2);
+					if(num.value==200){
+						increment.classList.add("disabled");
+					}
+				}
+			},
+			numBlur($event){
+				let index = $event.target.getAttribute("data-index");
+				let numid = "num"+index;
+				let incrementid = "increment"+index;
+				let decrementid = "decrement"+index;
+				let priceid = "price"+index;
+				let pricesumid = "pricesum"+index;
+				let num = this.getEle(numid);
+				let increment = this.getEle(incrementid);
+				let decrement = this.getEle(decrementid);
+				let price = this.getEle(priceid);
+				let pricesum = this.getEle(pricesumid);
+				if(num.value <= 1){
+					num.value = 1;
+					decrement.classList.add("disabled");
+				}else if(num.value >= 200){
+					num.value = 200;
+					increment.classList.add("disabled");
+				}else{
+					increment.classList.remove("disabled");
+					decrement.classList.remove("disabled");
+				}
+				pricesum.innerHTML = (num.value*price.innerHTML).toFixed(2);
 			}
 		},
 		mounted(){
 			this.getMessage();//获得相关信息
+			this.fixedBottom();//底部付款fixed布局
 		}
 	}
 </script>
 <style scoped>
+	a{
+		outline: none;
+	}
 	/*清除浮动*/
 	.clr {
     display: block;
@@ -421,6 +575,10 @@
 		color: #333;
 		font-size: 12px;
 	}
+	.p_name a:hover,
+	.cart_remove:hover{
+		color: #E2231A;
+	}
 	/*单价*/
 	.p_price {
     width: 150px;
@@ -446,10 +604,6 @@
     overflow: hidden;
     height: 22px;
     width: 84px;
-	}
-	.disabled{
-    cursor: not-allowed;
-    color: #e9e9e9;
 	}
 	/*减号*/
 	.decrement {
@@ -498,6 +652,10 @@
     background: #fff;
     outline: none;
 	}
+	.disabled{
+    cursor: not-allowed;
+    color: #bdbaba;
+	}
 	/*总价*/
 	.p_sum {
     width: 100px;
@@ -528,5 +686,158 @@
 	.item_extra {
     position: relative;
     margin-bottom: 10px;
+	}
+	/*结算区*/
+	.cart_floatbar{
+		position: relative;
+	}
+	.ui_ceilinglamp{
+		width: 990px;
+    height: 52px;
+    
+	}
+	.cart_toolbar {
+		width: 988px;
+    height: 50px;
+    border: 1px solid #f0f0f0;
+    background: #fff;
+    position: relative;
+	}
+	.toolbar_wrap {
+    position: relative;
+    width: 988px;
+    margin: 0 auto;
+	}
+	.options_box {
+    position: relative;
+    height: 50px;
+	}
+	/*全选*/
+	.select_all {
+    float: left;
+    height: 18px;
+    line-height: 18px;
+    padding: 16px 0 16px 9px;
+    white-space: nowrap;
+    font-size: 12px;
+	}
+	.cart_checkbox {
+    position: relative;
+    float: left;
+    margin-right: 5px;
+	}
+	.jdcheckbox {
+    position: relative;
+    float: none;
+    vertical-align: middle;
+    margin: 0 3px 0 0;
+    padding: 0;
+	}
+	/*删除商品*/
+	.operation{
+    float: left;
+    height: 50px;
+    width: 310px;
+    line-height: 50px;
+	}
+	.operation a {
+    float: left;
+    margin-left: 5px;
+    color: #666;
+    font-size: 12px;
+	}
+	/*右侧*/
+	.toolbar_right{
+    position: absolute;
+    height: 52px;
+    right: 0;
+    top: -1px;
+    width: 720px;
+	}
+	.normal {
+    height: 52px;
+	}
+	.comm_right {
+    float: right;
+    width: 650px;
+	}
+	/*结算按钮*/
+	.btn_area {
+    float: right;
+	}
+	.submit_btn {
+    display: block;
+    position: relative;
+    width: 94px;
+    height: 52px;
+    line-height: 52px;
+    color: #fff;
+    text-align: center;
+    font-size: 18px;
+    font-family: "Microsoft YaHei";
+    background: #e54346;
+    overflow: hidden;
+    font-weight: 700;
+	}
+	/*总价*/
+	.price_sum {
+    float: right;
+    height: 50px;
+    line-height: 50px;
+    margin: 0 5px 0 10px;
+    color: #666;
+    width: auto;
+    position: relative;
+	}
+	.price_sum div {
+    white-space: nowrap;
+	}
+	/*总价：*/
+	.txt_new {
+    width: 50px;
+    float: left;
+    text-align: right;
+    color: #999;
+    font-size: 12px;
+	}
+	/*价格数字*/
+	.sumPrice {
+    display: inline-block;
+    text-align: right;
+    font-family: verdana;
+	}
+	.sumPrice em {
+    font-size: 16px;
+    color: #E2231A;
+    font-weight: 700;
+    font-style: normal;
+	}
+	/*已选择商品数*/
+	.amount_sum {
+    float: right;
+    color: #999;
+    height: 50px;
+    line-height: 50px;
+    cursor: pointer;
+    font-size: 12px;
+	}
+	.amount_sum em {
+    color: #E2231A;
+    font-family: verdana;
+    font-weight: 700;
+    margin: 0 3px;
+    font-style: normal;
+	}
+	/*结算浮动*/
+	.fixed_bottom {
+    position: fixed;
+    bottom: 0px;
+    z-index: 999;
+    background: #fff;
+    left: 0;
+    border-width: 1px 0;
+    box-shadow: 0 -1px 8px rgba(0,1,1,.08);
+    width: 1349px;
+    height: 50px;
 	}
 </style>
