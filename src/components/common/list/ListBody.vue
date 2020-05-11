@@ -26,7 +26,7 @@
 		name:"ListBody",
 		data(){
 			return{
-				currentU:[{id:'',account:'',sex:'',password:'',favourite:''}],
+				currentU:[],
 				hotgood:[]
 			}
 		},
@@ -48,7 +48,7 @@
 			getCurrentU(){
 				let listbody=document.getElementById('listbody');   
 				this.$emit("listbodyoffsettop",listbody.offsetTop);
-				const tempData = localStorage.getItem('tempData');
+				const tempData = sessionStorage.getItem('tempData');
 				if(tempData){//如果内存中有用户数据
 					this.currentU = JSON.parse(tempData);
 				}else{
@@ -85,55 +85,65 @@
 			},
 			bindclick($event){//给每个商品都绑定事件
 				const applyParams = window.localStorage.getItem('applyParams');
+				let _this = this;
 				if($event.target.className == "lazyimg_img"){
-					this.hotgood.forEach(function(currentValue){
+					_this.hotgood.forEach(function(currentValue){
 						if('http:'+currentValue.pic == $event.target.currentSrc){
 							//找到了当前的数据存起来，先置空再存
 							//console.log(applyParams);
 							if(applyParams){//如果有数据，先置空再存
 								window.localStorage.removeItem('applyParams');
+								window.localStorage.removeItem('tempDate');
 								window.localStorage.setItem('applyParams', JSON.stringify(currentValue));
-								console.log(window.localStorage.getItem('applyParams'));
+								window.localStorage.setItem('tempDate', JSON.stringify(_this.currentU));
+								//console.log(window.localStorage.getItem('applyParams'));
 							}else{//如果没数据，直接存
 								window.localStorage.setItem('applyParams', JSON.stringify(currentValue));
-								console.log(window.localStorage.getItem('applyParams'));
+								window.localStorage.setItem('tempDate', JSON.stringify(_this.currentU));
+								//console.log(window.localStorage.getItem('applyParams'));
 							}
 						}
 					})
 					// console.log($event.target.currentSrc);
 					// console.log(this.personrecommend[0].pic);
 				}else if($event.target.className == "listbody_info_name"){
-					this.hotgood.forEach(function(currentValue){
+					_this.hotgood.forEach(function(currentValue){
 						if(currentValue.title == $event.target.innerHTML){
 							//找到了当前的数据存起来，先置空再存
 							//console.log(applyParams);
 							if(applyParams){//如果有数据，先置空再存
 								window.localStorage.removeItem('applyParams');
+								window.localStorage.removeItem('tempDate');
 								window.localStorage.setItem('applyParams', JSON.stringify(currentValue));
-								console.log(window.localStorage.getItem('applyParams'));
+								window.localStorage.setItem('tempDate', JSON.stringify(_this.currentU));
+								//console.log(window.localStorage.getItem('applyParams'));
 							}else{//如果没数据，直接存
 								window.localStorage.setItem('applyParams', JSON.stringify(currentValue));
-								console.log(window.localStorage.getItem('applyParams'));
+								window.localStorage.setItem('tempDate', JSON.stringify(_this.currentU));
+								//console.log(window.localStorage.getItem('applyParams'));
 							}
 						}
 					})
 				}else{//listbody_info_price_txt
-					this.hotgood.forEach(function(currentValue){
+					_this.hotgood.forEach(function(currentValue){
 						if("￥"+currentValue.price == $event.target.innerHTML){
 							//找到了当前的数据存起来，先置空再存
 							//console.log(applyParams);
 							if(applyParams){//如果有数据，先置空再存
 								window.localStorage.removeItem('applyParams');
+								window.localStorage.removeItem('tempDate');
 								window.localStorage.setItem('applyParams', JSON.stringify(currentValue));
-								console.log(window.localStorage.getItem('applyParams'));
+								window.localStorage.setItem('tempDate', JSON.stringify(_this.currentU));
+								//console.log(window.localStorage.getItem('applyParams'));
 							}else{//如果没数据，直接存
 								window.localStorage.setItem('applyParams', JSON.stringify(currentValue));
-								console.log(window.localStorage.getItem('applyParams'));
+								window.localStorage.setItem('tempDate', JSON.stringify(_this.currentU));
+								//console.log(window.localStorage.getItem('applyParams'));
 							}
 						}
 					})
 				}
-				let {href} = this.$router.resolve({name:'Detail',params:{currentLogin:this.currentUser}});
+				let {href} = this.$router.resolve({name:'Detail',params:{currentLogin:this._currentU}});
 				window.open(href, '_blank');//打开详情页
 			}
 		},

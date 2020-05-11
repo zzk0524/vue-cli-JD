@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ls.service.GoodsService;
 import com.ls.util.Result;
 import com.ls.bean.Account;
+import com.ls.bean.Cart;
 
 @RestController
 @RequestMapping("/goods")
@@ -24,7 +25,7 @@ public class GoodsController {
 	//登录验证
 	@GetMapping("/loginCheck")
 	public Result loginCheck(String account,String password){
-		System.out.println(account+password);
+		//System.out.println(account+password);
 		return service.loginCheck(account,password);
 	}
 	//查询所有用户名
@@ -51,7 +52,19 @@ public class GoodsController {
 	//搜索框查询商品
 	@GetMapping("/selectGoods")
 	public Result selectGoods(String title) {
-		System.out.println(title);
+		//System.out.println(title);
 		return service.selectGoods(title);
+	}
+	//加入购物车
+	@PostMapping("/addCart")
+	public Result addCart(@RequestBody Cart cart){
+		//System.out.println(cart);
+		return service.addCart(cart);
+	}
+	//查询购物车
+	@GetMapping("/selectCart")
+	public Result selectCart(String accountid) {
+		//System.out.println(accountid);
+		return service.selectCart(accountid);
 	}
 }

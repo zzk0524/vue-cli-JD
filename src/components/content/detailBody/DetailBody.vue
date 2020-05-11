@@ -227,12 +227,19 @@
 			}
 		},
 		methods:{
+			loadMinWith(){
+	  		document.getElementsByClassName("crumb_wrap")[0].style.minWidth = (window.screen.width-17)+"px";
+	  	},
 			getApplyParams(){
 				this.currentGood = JSON.parse(window.localStorage.getItem('applyParams'));//存入商品数据
-				this.currentUser = JSON.parse(window.localStorage.getItem('tempData'));
+				this.currentUser = JSON.parse(window.localStorage.getItem('tempDate'));
+				window.localStorage.removeItem("applyParams");
+				window.localStorage.removeItem("tempDate");
+				// console.log(window.localStorage.getItem('applyParams'));
+				// console.log(window.localStorage.getItem('tempData'));
+				 // console.log(this.currentGood);
+				 // console.log(this.currentUser);
 				//用完就清空，只在页面切换之间使用
-				window.remove.localStorage("applyParams");
-				window.remove.localStorage("tempData");
 			},
 			reduceBtn(){
 				let buynum = document.getElementById("buy_num");
@@ -278,20 +285,23 @@
 					//更新数据请求
 					let _this = this;
 					let oAjax = null;
+					let buynum = document.getElementById("buy_num");
 					_this.form.accountid = _this.currentUser.id;
 					_this.form.goodid = _this.currentGood.id;
 					_this.form.goodtitle = _this.currentGood.title;
 					_this.form.goodprice = _this.currentGood.price;
 					_this.form.goodpic = _this.currentGood.pic;
 					_this.form.shopname = _this.currentGood.shopname;
-					_this.form.goodnum = _this.buyNum;
-					_this.form.goodsumprice = (_this.currentGood.price*_this.buyNum).toFixed(2);
+					_this.form.goodnum = buynum.value;
+					_this.form.goodsumprice = (_this.currentGood.price*buynum.value).toFixed(2);
+					console.log(_this.form);
+					console.log(JSON.stringify(_this.form));
 					if(window.XMLHttpRequest){
 						oAjax = new XMLHttpRequest();
 					}else{
 						oAjax = new ActiveXObject("Microsoft.XMLHTTP");
 					}
-					oAjax.open('POST','http://127.0.0.1/goods/updateCart',true);
+					oAjax.open('POST','http://127.0.0.1/goods/addCart',true);
 					oAjax.setRequestHeader("Content-type","application/json");
 					oAjax.send(JSON.stringify(_this.form));//创建一个form，把数据都存好一起发出去
 					oAjax.onreadystatechange=function(){
@@ -314,6 +324,7 @@
 			}
 		},
 		mounted(){
+			this.loadMinWith();
 			this.getApplyParams();
 		}
 	}

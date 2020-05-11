@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ls.bean.Account;
+import com.ls.bean.Cart;
 import com.ls.bean.Goods;
 import com.ls.util.ID3;
 import com.ls.dao.GoodsDao;
@@ -46,7 +47,7 @@ public class GoodsService {
 			// TODO: handle exception
 			result.setSuccess(false);
 			result.setMessage("服务器错误！！");
-			System.out.println(e);
+			//System.out.println(e);
 			return result;
 		}
 	}
@@ -97,26 +98,16 @@ public class GoodsService {
 			}
 			ArrayList<String> favarr0 = new ArrayList<String>();//把用户所有喜好的符合条件的商品id都存到里面
 			for(int i=0;i<favarr.length;i++) {//有几个喜好，执行几遍
-				//System.out.println(favarr[i]);
 				ID3 id = new ID3(favarr[i],alist);
 				String[] recommend = id.getKind();//获取每一个喜好的结果
 				for(int j=0;j<recommend.length;j++) {
-					//System.out.println("商品id为"+(j+1)+"的是:"+recommend[j]);
 					if(recommend[j].equals(favarr[i])) {
 						favarr0.add(Integer.toString(j));
-						//System.out.println("商品id为"+(j+1)+"的是:"+recommend[j]);
-						//System.out.println(favarr0.get(j));
 					}
 				}
-//				for(int j=0;i<favarr0.size();i++) {
-//					System.out.println(favarr0.get(j));
-//					//recommendgood.add(blist.get(Integer.parseInt(favarr0.get(i))));
-//				}
 			}
-			//System.out.println(favarr0);
 			List<Goods> recommendgood = new ArrayList<Goods>();
 			for(int i=0;i<favarr0.size();i++) {
-				System.out.println(favarr0.get(i));
 				recommendgood.add(blist.get(Integer.parseInt(favarr0.get(i))));
 			}
 			result.setCode(1);
@@ -126,7 +117,7 @@ public class GoodsService {
 			return result;
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println(e);
+			//System.out.println(e);
 			result.setSuccess(false);
 			result.setMessage("服务器错误！！");
 			return result;
@@ -152,7 +143,7 @@ public class GoodsService {
 		} catch (Exception e) {
 			// TODO: handle exception
 			result.setSuccess(false);
-			System.out.println(e);
+			//System.out.println(e);
 			result.setMessage("服务器错误！！");
 			return result;
 		}
@@ -168,7 +159,47 @@ public class GoodsService {
 			return result;
 		}catch(Exception e) {
 			result.setSuccess(false);
+			//System.out.println(e);
+			result.setMessage("服务器错误！！");
+			return result;
+		}
+	}
+	//加入购物车
+	public Result addCart(Cart cart){
+		Result result=new Result();
+		try {
+			if(!dao.selectCartgood(cart.getAccountid(),cart.getGoodid()).isEmpty()) {//如果购物车中有这件商品，只加数量
+				dao.updateCart(cart.getAccountid(),cart.getGoodid(),cart.getGoodnum(),cart.getGoodsumprice());
+				result.setCode(1);
+				result.setSuccess(true);
+				result.setMessage("加入成功");
+			}else {//直接加
+				dao.addCart(cart);
+				result.setCode(1);
+				result.setSuccess(true);
+				result.setMessage("加入成功");
+			}
+			return result;
+		} catch (Exception e) {
+			// TODO: handle exception
 			System.out.println(e);
+			result.setSuccess(false);
+			result.setMessage("服务器错误！！");
+			return result;
+		}
+	}
+	//查询某个用户的购物车
+	public Result selectCart(String accountid){
+		Result result=new Result();
+		try {
+			result.setCode(1);
+			result.setSuccess(true);
+			result.setMessage("查询成功");
+			result.setData(dao.selectCart(accountid));
+			return result;
+		} catch (Exception e) {
+			// TODO: handle exception
+			result.setSuccess(false);
 			result.setMessage("服务器错误！！");
 			return result;
 		}

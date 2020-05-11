@@ -174,7 +174,15 @@
 </template>
 <script>
 	export default{
-		name:"MainFooter"
+		name:"MainFooter",
+		methods:{
+			loadMinWith(){
+	  		document.getElementsByClassName("footer")[0].style.minWidth = (window.screen.width-17)+"px";
+	  	}	
+		},
+		mounted(){
+			this.loadMinWith();
+		}
 	}
 </script>
 <style scoped>

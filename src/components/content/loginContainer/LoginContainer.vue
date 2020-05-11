@@ -158,7 +158,7 @@
 					} 
 					let url = "http://127.0.0.1/goods/loginCheck";
 					let data = "account="+_this.form.loginname+"&password="+_this.form.loginpwd;
-					oAjax.open("Get",url+"?"+data,true);
+					oAjax.open("GET",url+"?"+data,true);
 					oAjax.send();
 					oAjax.onreadystatechange=function(){
 					  if(oAjax.readyState==4){

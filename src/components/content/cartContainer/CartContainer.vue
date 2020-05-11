@@ -63,30 +63,30 @@
 														<div class="goods_item">
 															<div class="p_img">
 																<a href="javascript:void(0)">
-																	<img :src="item.pic" :alt="item.title">
+																	<img :src="item.goodpic" :alt="item.goodtitle">
 																</a>
 															</div>
 															<div class="item_msg">
 																<div class="p_name">
-																	<a href="javascript:void(0)">{{item.title}}</a>
+																	<a href="javascript:void(0)">{{item.goodtitle}}</a>
 																</div>
 															</div>
 														</div>
 													</div>
 													<div class="cell p_price">
 														<p class="plus_switch">
-															<strong>￥<span :id="priceid(index)" :data-index="getindex(index)">{{item.price}}</span></strong>
+															<strong>￥<span :id="priceid(index)" :data-index="getindex(index)">{{item.goodprice}}</span></strong>
 														</p>
 													</div>
 													<div class="cell p_quantity">
 														<div class="quantity_form">
 															<a href="javascript:void(0)" class="decrement disabled" :id="decrementId(index)" @click="decrementClick($event)" :data-index="getindex(index)">-</a>
-															<input type="text" class="itxt" value="1" @blur="numBlur($event)" :id="numId(index)" :data-index="getindex(index)">
+															<input type="text" class="itxt" :value="item.goodnum" @blur="numBlur($event)" :id="numId(index)" :data-index="getindex(index)">
 															<a href="javascript:void(0)" class="increment" :id="incrementId(index)" @click="incrementClick($event)" :data-index="getindex(index)">+</a>
 														</div>
 													</div>
 													<div class="cell p_sum">
-														<strong>￥<span :id="pricesumid(index)" :data-index="getindex(index)"></span></strong>
+														<strong>￥<span :id="pricesumid(index)" :data-index="getindex(index)">{{item.goodsumprice}}</span></strong>
 													</div>
 													<div class="cell p_ops">
 														<a href="javascript:void(0)" class="cart_remove">删除</a>
@@ -152,8 +152,8 @@
 		name:"CartContainer",
 		data(){
 			return{
-				cartgoods:[{shopname:"森马旗舰店",pic:"//img10.360buyimg.com/cms/s80x80_jfs/t1/99599/10/13078/135225/5e55034dEd9ea2796/1d038e08cfe6b80c.jpg",title:"短袖t恤男条纹针织衫新款衣服春季打底衫时尚男士上衣圆领套头半袖 851 卡其 聚酯纤维 XL",price:"198.00"},{shopname:"森马旗舰店",pic:"//img10.360buyimg.com/cms/s80x80_jfs/t1/99599/10/13078/135225/5e55034dEd9ea2796/1d038e08cfe6b80c.jpg",title:"短袖t恤男条纹针织衫新款衣服春季打底衫时尚男士上衣圆领套头半袖 851 卡其 聚酯纤维 XL",price:"198.00"},{shopname:"森马旗舰店",pic:"//img10.360buyimg.com/cms/s80x80_jfs/t1/99599/10/13078/135225/5e55034dEd9ea2796/1d038e08cfe6b80c.jpg",title:"短袖t恤男条纹针织衫新款衣服春季打底衫时尚男士上衣圆领套头半袖 851 卡其 聚酯纤维 XL",price:"198.00"}],
-				num:1
+				cartgoods:[],
+				cartmessage:[]
 			}
 		},
 		methods:{
@@ -176,9 +176,40 @@
 				return "increment"+(index+1);
 			},
 			getMessage(){
-				console.log(this.$route.params.currentuser);
-				console.log(this.$route.params.currentgood);
-				console.log(this.$route.params.goodnum);
+				if(this.$route.params.goodscart){//点击加入购物车过来的
+					this.cartmessage = this.$route.params.goodscart;
+					this.selectCart(this.cartmessage.accountid);
+					window.sessionStorage.setItem('cartmessage', JSON.stringify(this.$route.params.goodscart));
+				}else{
+					console.log("刷新");
+					this.cartmessage = JSON.parse(window.sessionStorage.getItem('cartmessage'));
+					this.selectCart(this.cartmessage.accountid);
+				}
+			},
+			selectCart(userid){//查找该用户的购物车
+				let _this = this;
+				let oAjax = null;
+				if(window.XMLHttpRequest){
+				  oAjax = new XMLHttpRequest();
+				}else{
+				  oAjax = new ActiveXObject('Microsoft.XMLHTTP');
+				}
+				oAjax.open('GET','http://127.0.0.1/goods/selectCart?accountid='+userid,true);
+				oAjax.send();
+				oAjax.onreadystatechange=function(){
+				  if(oAjax.readyState==4){
+				    if(oAjax.status>=200 && oAjax.status<300 || oAjax.status==304){
+				      //4.对响应进行解析
+				      let goodslist=JSON.parse(oAjax.responseText);
+				      console.log(goodslist);
+				      _this.cartgoods = [];
+				      _this.cartgoods = goodslist.data;
+				    }else{
+				      //4.对响应进行解析
+				      alert("服务器错误");
+				    }
+				  }
+				}
 			},
 			fixedBottom(){
 				let cartfloatbar = this.getEle("cart_floatbar");
@@ -264,9 +295,14 @@
 					decrement.classList.remove("disabled");
 				}
 				pricesum.innerHTML = (num.value*price.innerHTML).toFixed(2);
-			}
+			},
+			loadMinWith(){
+	  		document.getElementsByClassName("cartheader")[0].style.minWidth = (window.screen.width-17)+"px";
+	  		document.getElementsByClassName("cart")[0].style.minWidth = (window.screen.width-17)+"px";
+	  	}
 		},
 		mounted(){
+			this.loadMinWith();
 			this.getMessage();//获得相关信息
 			this.fixedBottom();//底部付款fixed布局
 		}
@@ -561,6 +597,10 @@
     padding: 0;
     text-align: center;
     overflow: hidden;
+	}
+	.p_img a img{
+		width: 100%;
+		height: 100%;
 	}
 	img {
     border: 0;

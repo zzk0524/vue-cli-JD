@@ -3418,7 +3418,7 @@
 				moren1.classList.remove("divnone");
 			},
 			getUserName1(){
-				const tempData = localStorage.getItem('tempData');
+				const tempData = sessionStorage.getItem('tempData');
 				if(tempData){
 					this.currentLog1 = JSON.parse(tempData);
 					this.displayUsername1();
@@ -3432,14 +3432,14 @@
 				} 
 			},
 			exit1(){
-				 localStorage.removeItem('tempData');
+				 sessionStorage.removeItem('tempData');
 			}
 		},
 		mounted(){
 			this.getUserName1();
 		},
 		beforeDestroy() {
-    	localStorage.removeItem('tempData');
+    	sessionStorage.removeItem('tempData');
   	}
 	}
 </script>
