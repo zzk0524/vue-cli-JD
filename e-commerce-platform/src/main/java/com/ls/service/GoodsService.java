@@ -204,4 +204,38 @@ public class GoodsService {
 			return result;
 		}
 	}
+	//更新购物车
+	public Result updateCart(Cart cart){
+		Result result=new Result();
+		try {
+			dao.optCart(cart.getAccountid(),cart.getGoodid(),cart.getGoodnum(),cart.getGoodsumprice());
+			result.setCode(1);
+			result.setSuccess(true);
+			result.setMessage("加入成功");
+			return result;
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+			result.setSuccess(false);
+			result.setMessage("服务器错误！！");
+			return result;
+		}
+	}
+	//删除购物车某个商品
+	public Result deleteCart(Cart cart){
+		Result result=new Result();
+		try {
+			dao.deleteGood(cart.getAccountid(),cart.getGoodid());
+			result.setCode(1);
+			result.setSuccess(true);
+			result.setMessage("删除成功");
+			return result;
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+			result.setSuccess(false);
+			result.setMessage("服务器错误！！");
+			return result;
+		}
+	}
 }

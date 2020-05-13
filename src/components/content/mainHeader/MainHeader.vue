@@ -26,9 +26,9 @@
 		          <div class="cw-icon">
 		            <div>
 		            	<img src="~assets/img/buycar.png" alt="购物车">
-									<i class="ci-count" id="shopping-amount">0</i>
+									<i class="ci-count" id="shopping-amount">{{usercartnum}}</i>
 		            </div>
-		            <a target="_blank" href="#">我的购物车</a>
+		            <a href="javascript:void(0)" @click="myCart()" class="mycart">我的购物车</a>
 		        	</div>
 		        </div>
 		      </div>
@@ -47,34 +47,34 @@
 				<div id="navitems" role="navigation">
 		      <ul id="navitems-group1">
 		        <li class="fore1">
-		          <a class="navitems-lk" href="#" aria-lable="秒杀">秒杀</a>
+		          <a class="navitems-lk" href="javascript:void(0)" aria-lable="秒杀">秒杀</a>
 		        </li>
 		        <li class="fore2">
-		          <a class="navitems-lk" href="#" aria-lable="优惠券">优惠券</a>
+		          <a class="navitems-lk" href="javascript:void(0)" aria-lable="优惠券">优惠券</a>
 		        </li>
 		        <li class="fore3">
-		          <a class="navitems-lk" href="#" aria-lable="PLUS会员">PLUS会员</a>
+		          <a class="navitems-lk" href="javascript:void(0)" aria-lable="PLUS会员">PLUS会员</a>
 		        </li>
 		        <li class="fore4">
-		          <a class="navitems-lk" href="#" aria-lable="品牌闪购">品牌闪购</a>
+		          <a class="navitems-lk" href="javascript:void(0)" aria-lable="品牌闪购">品牌闪购</a>
 		        </li>
 		        <li class="fore5">
-		          <a class="navitems-lk" href="#" aria-lable="拍卖">拍卖</a>
+		          <a class="navitems-lk" href="javascript:void(0)" aria-lable="拍卖">拍卖</a>
 		        </li>
 		        <li class="fore6">
-		          <a class="navitems-lk" href="#" aria-lable="淘淘家电">淘淘家电</a>
+		          <a class="navitems-lk" href="javascript:void(0)" aria-lable="淘淘家电">淘淘家电</a>
 		        </li>
 		        <li class="fore7">
-		          <a class="navitems-lk" href="#" aria-lable="淘淘超市">淘淘超市</a>
+		          <a class="navitems-lk" href="javascript:void(0)" aria-lable="淘淘超市">淘淘超市</a>
 		        </li>
 		        <li class="fore8">
-		          <a class="navitems-lk" href="#" aria-lable="淘淘生鲜">淘淘生鲜</a>
+		          <a class="navitems-lk" href="javascript:void(0)" aria-lable="淘淘生鲜">淘淘生鲜</a>
 		        </li>
 		        <li class="fore9">
-		          <a class="navitems-lk" href="#" aria-lable="淘淘国际">淘淘国际</a>
+		          <a class="navitems-lk" href="javascript:void(0)" aria-lable="淘淘国际">淘淘国际</a>
 		        </li>
 		        <li class="fore10">
-		          <a class="navitems-lk" href="#" aria-lable="淘淘金融">淘淘金融</a>
+		          <a class="navitems-lk" href="javascript:void(0)" aria-lable="淘淘金融">淘淘金融</a>
 		        </li>
 		      </ul>
         </div>
@@ -96,7 +96,9 @@
 				achotwords:["春季家装节","抢购机神券"],
 				placeholder:["金龙鱼大米","扫描仪","联想拯救者","无线路由器","花洒套装","华硕笔记本","奥克斯空调"],
 				search:'',
-				goodslist:[]//搜索框聚焦时出现商品列表
+				goodslist:[],//搜索框聚焦时出现商品列表
+				getuser:[],
+				usercartnum:"0"
 			}
 		},
 		props:["listbodyhight"],
@@ -214,10 +216,73 @@
 					key.setAttribute("placeholder",_this.placeholder[j]);
 					j++;
 				},3000)
+			},
+			getUser(){
+				const tempData = window.sessionStorage.getItem('tempData');
+				if(tempData){//如果内存中有用户数据
+					this.getuser = JSON.parse(tempData);
+					this.selectUserCart(this.getuser.id);//查询该用户的购物车商品数
+				}else{
+					if(this.$route.params.user == null){//没登录显示热品
+						this.usercartnum = "0";//购物车数量就为0
+					}else{
+						this.getuser = this.$route.params.user;
+						this.selectUserCart(this.getuser.accountid);//查询该用户的购物车商品数
+					}
+				} 
+			},
+			selectUserCart(userid){
+				let _this = this;
+				let oAjax = null;
+				if(window.XMLHttpRequest){
+				  oAjax = new XMLHttpRequest();
+				}else{
+				  oAjax = new ActiveXObject('Microsoft.XMLHTTP');
+				}
+				oAjax.open('GET','http://127.0.0.1/goods/selectCart?accountid='+userid,true);
+				oAjax.send();
+				oAjax.onreadystatechange=function(){
+				  if(oAjax.readyState==4){
+				    if(oAjax.status>=200 && oAjax.status<300 || oAjax.status==304){
+				      //4.对响应进行解析
+				      let goodslist=JSON.parse(oAjax.responseText);
+				      //console.log(goodslist);
+				      _this.usercartnum = goodslist.data.length;
+				    }else{
+				      //4.对响应进行解析
+				      alert("服务器错误");
+				    }
+				  }
+				}
+			},
+			myCart(){
+				window.sessionStorage.removeItem("userid");
+				window.sessionStorage.setItem("userid",JSON.stringify(this.getuser.id));
+					//console.log(window.sessionStorage.getItem("userid"));
+				if(window.sessionStorage.getItem("userid")){
+					let {href} = this.$router.resolve({name:'Cart',params:{currentLogin:this.getuser}});
+					window.open(href, '_blank');//打开购物车页面
+				}
+				let _this = this;
+				setInterval(function(){
+					const tempData = window.sessionStorage.getItem('tempData');
+					if(tempData){//如果内存中有用户数据
+						_this.getuser = JSON.parse(tempData);
+						_this.selectUserCart(_this.getuser.id);//查询该用户的购物车商品数
+					}else{
+						if(_this.$route.params.user == null){//没登录显示热品
+							_this.usercartnum = "0";//购物车数量就为0
+						}else{
+							_this.getuser = _this.$route.params.user;
+							_this.selectUserCart(_this.getuser.accountid);//查询该用户的购物车商品数
+						}
+					} 
+				},3000)
 			}
 		},
 		mounted(){
 			this.hotwords();
+			this.getUser();
 		}
 	}
 </script>
@@ -488,5 +553,8 @@
   .promo_lk div img {
   	width: 100%;
   	height: 100%;
+  }
+  .mycart{
+  	outline: none;
   }
 </style>

@@ -6,7 +6,7 @@
 					<li class="switch_cart_item">
 						<a href="Javascript:void(0)">
 							<em>全部商品</em>
-							<span class="number">5</span>
+							<span class="number" id="number">{{goodsnum}}</span>
 						</a>
 					</li>
 				</ul>
@@ -32,7 +32,7 @@
 						<div class="cart_thead">
 							<div class="column t_checkbox">
 								<div class="cart_checkbox">
-									<input type="checkbox" class="jdcheckbox">
+									<input type="checkbox" class="jdcheckbox" id="maincheckbox" @click="mainCheckBox($event)">
 								</div>全选
 							</div>
 							<div class="column t_goods">商品</div>
@@ -56,7 +56,7 @@
 												<div class="item_form">
 													<div class="cell p_checkbox">
 														<div class="cart_checkbox">
-															<input type="checkbox" class="jdcheckbox">
+															<input type="checkbox" class="jdcheckbox singlejdcheckbox" :data-index="getindex(index)" :id="getcheckboxId(index)" @click="singleCheckbox($event)">
 														</div>
 													</div>
 													<div class="cell p_goods">
@@ -75,21 +75,21 @@
 													</div>
 													<div class="cell p_price">
 														<p class="plus_switch">
-															<strong>￥<span :id="priceid(index)" :data-index="getindex(index)">{{item.goodprice}}</span></strong>
+															<strong>￥<span :id="priceId(index)" :data-index="getindex(index)">{{item.goodprice}}</span></strong>
 														</p>
 													</div>
 													<div class="cell p_quantity">
 														<div class="quantity_form">
 															<a href="javascript:void(0)" class="decrement disabled" :id="decrementId(index)" @click="decrementClick($event)" :data-index="getindex(index)">-</a>
-															<input type="text" class="itxt" :value="item.goodnum" @blur="numBlur($event)" :id="numId(index)" :data-index="getindex(index)">
+															<input type="text" class="itxt" :value="item.goodnum" @blur="numBlur($event)" :id="numId(index)" :data-index="getindex(index)" @focus="numFocus($event)">
 															<a href="javascript:void(0)" class="increment" :id="incrementId(index)" @click="incrementClick($event)" :data-index="getindex(index)">+</a>
 														</div>
 													</div>
 													<div class="cell p_sum">
-														<strong>￥<span :id="pricesumid(index)" :data-index="getindex(index)">{{item.goodsumprice}}</span></strong>
+														<strong>￥<span :id="pricesumId(index)" :data-index="getindex(index)">{{item.goodsumprice}}</span></strong>
 													</div>
 													<div class="cell p_ops">
-														<a href="javascript:void(0)" class="cart_remove">删除</a>
+														<a href="javascript:void(0)" class="cart_remove" @click="deleteClick($event)" :data-index="getindex(index)" :id="removeId(index)">删除</a>
 													</div>
 												</div>
 												<div class="item_extra"></div>
@@ -98,6 +98,7 @@
 									</div>
 								</div>
 							</div>
+							<div v-show="empty" class="goodsempty">空空如也~</div>
 						</div>
 					</div>
 				</div>
@@ -108,11 +109,11 @@
 								<div class="options_box">
 									<div class="select_all">
 										<div class="cart_checkbox">
-											<input type="checkbox" class="jdcheckbox">
+											<input type="checkbox" class="jdcheckbox" @click="mainCheckBox($event)" id="maincheckbox1">
 										</div>全选
 									</div>
 									<div class="operation">
-										<a href="javascript:void(0)">删除选中商品</a>
+										<a href="javascript:void(0)"></a>
 									</div>
 									<div class="clr"></div>
 									<div class="toolbar_right">
@@ -127,12 +128,12 @@
 													<div>
 														<span class="txt_new">总价：</span>
 														<span class="sumPrice">
-															<em>￥198.00</em>
+															<em>￥<span>{{sumprice}}</span></em>
 														</span>
 													</div>
 												</div>
 												<div class="amount_sum">
-													已选择<em>0</em>件商品
+													已选择<em>{{amountsum}}</em>件商品
 												</div>
 												<div class="clr"></div>
 											</div>
@@ -153,17 +154,29 @@
 		data(){
 			return{
 				cartgoods:[],
-				cartmessage:[]
+				cartmessage:[],
+				optgood:[],
+				goodsnum:'',
+				sumprice:'0.00',
+				empty:false,
+				originalnum:'',
+				amountsum:'0'
 			}
 		},
 		methods:{
-			pricesumid(index){
+			getcheckboxId(index){//每个商品的选择框设置动态id
+				return "checkbox"+(index+1);
+			},
+			removeId(index){//每个商品的删除设置动态id
+				return "remove"+(index+1);
+			},
+			pricesumId(index){//每个商品总价设置动态id
 				return "pricesum"+(index+1);
 			},
-			priceid(index){
+			priceId(index){//每个商品单价设置动态id
 				return "price"+(index+1);
 			},
-			getindex(index){
+			getindex(index){//data-index属性
 				return index+1;
 			},
 			decrementId(index){//动态给id
@@ -178,12 +191,23 @@
 			getMessage(){
 				if(this.$route.params.goodscart){//点击加入购物车过来的
 					this.cartmessage = this.$route.params.goodscart;
-					this.selectCart(this.cartmessage.accountid);
 					window.sessionStorage.setItem('cartmessage', JSON.stringify(this.$route.params.goodscart));
-				}else{
-					console.log("刷新");
-					this.cartmessage = JSON.parse(window.sessionStorage.getItem('cartmessage'));
 					this.selectCart(this.cartmessage.accountid);
+				}else{
+					if(window.sessionStorage.getItem("userid")){
+						this.selectCart(JSON.parse(window.sessionStorage.getItem("userid")));
+						let _this = this;
+						setTimeout(function(){
+							if(_this.goodsnum == 0){
+								_this.empty = true;
+							}else{
+								_this.empty = false;
+							}
+						},200)
+					}else{
+						this.cartmessage = JSON.parse(window.sessionStorage.getItem('cartmessage'));
+						this.selectCart(this.cartmessage.accountid);
+					}
 				}
 			},
 			selectCart(userid){//查找该用户的购物车
@@ -201,9 +225,11 @@
 				    if(oAjax.status>=200 && oAjax.status<300 || oAjax.status==304){
 				      //4.对响应进行解析
 				      let goodslist=JSON.parse(oAjax.responseText);
-				      console.log(goodslist);
+				      //console.log(goodslist);
 				      _this.cartgoods = [];
 				      _this.cartgoods = goodslist.data;
+				      //console.log(_this.cartgoods);
+				      _this.goodsnum = _this.cartgoods.length;
 				    }else{
 				      //4.对响应进行解析
 				      alert("服务器错误");
@@ -214,7 +240,7 @@
 			fixedBottom(){
 				let cartfloatbar = this.getEle("cart_floatbar");
 				let carttoolbar = this.getEle("cart_toolbar");
-				if(cartfloatbar.offsetTop>570){
+				if(cartfloatbar.offsetTop>550){
 					carttoolbar.classList.add("fixed_bottom");
 				}else{
 					carttoolbar.classList.remove("fixed_bottom");
@@ -231,21 +257,34 @@
 				return document.getElementById(id);
 			},
 			decrementClick($event){//减号
+				console.log("减号"+this.cartgoods);
 				let index = $event.target.getAttribute("data-index");
 				let numid = "num"+index;
 				let incrementid = "increment"+index;
 				let decrementid = "decrement"+index;
 				let priceid = "price"+index;
 				let pricesumid = "pricesum"+index;
+				let checkboxid = "checkbox"+index;
 				let num = this.getEle(numid);
 				let increment = this.getEle(incrementid);
 				let decrement = this.getEle(decrementid);
 				let price = this.getEle(priceid);
 				let pricesum = this.getEle(pricesumid);
+				let checkbox = this.getEle(checkboxid);
 				if(num.value>=2){
 					num.value--;
 					increment.classList.remove("disabled");
+					decrement.classList.remove("disabled");
 					pricesum.innerHTML = (num.value*price.innerHTML).toFixed(2);
+					this.optgood = [];
+					this.optgood = this.cartgoods[index-1];
+					this.optgood.goodnum = (parseInt(this.cartgoods[index-1].goodnum)-1).toString();
+					this.optgood.goodsumprice = (parseInt(this.optgood.goodnum)*parseInt(this.optgood.goodprice)).toFixed(2);
+					if(checkbox.checked){//该商品以被选中
+						this.sumprice = (parseInt(this.sumprice) - parseInt(this.optgood.goodprice)).toFixed(2);
+					}
+					//console.log(this.optgood);
+					this.updateCart(this.optgood);//更新数据库
 					if(num.value==1){
 						decrement.classList.add("disabled");
 					}	
@@ -258,19 +297,34 @@
 				let decrementid = "decrement"+index;
 				let priceid = "price"+index;
 				let pricesumid = "pricesum"+index;
+				let checkboxid = "checkbox"+index;
 				let num = this.getEle(numid);
 				let increment = this.getEle(incrementid);
 				let decrement = this.getEle(decrementid);
 				let price = this.getEle(priceid);
 				let pricesum = this.getEle(pricesumid);
+				let checkbox = this.getEle(checkboxid);
 				if(num.value<200){
 					decrement.classList.remove("disabled");
 					num.value++;
 					pricesum.innerHTML = (num.value*price.innerHTML).toFixed(2);
+					this.optgood = [];
+					this.optgood = this.cartgoods[index-1];
+					this.optgood.goodnum = (parseInt(this.cartgoods[index-1].goodnum)+1).toString();
+					this.optgood.goodsumprice = (parseInt(this.optgood.goodnum)*parseInt(this.optgood.goodprice)).toFixed(2);
+					if(checkbox.checked){//该商品以被选中
+						this.sumprice = (parseInt(this.sumprice) + parseInt(this.optgood.goodprice)).toFixed(2);
+					}
+					//console.log(this.optgood);
+					this.updateCart(this.optgood);//更新数据库
 					if(num.value==200){
 						increment.classList.add("disabled");
 					}
 				}
+			},
+			numFocus($event){
+				this.originalnum = "";
+				this.originalnum = $event.target.value;
 			},
 			numBlur($event){
 				let index = $event.target.getAttribute("data-index");
@@ -279,36 +333,212 @@
 				let decrementid = "decrement"+index;
 				let priceid = "price"+index;
 				let pricesumid = "pricesum"+index;
+				let checkboxid = "checkbox"+index;
 				let num = this.getEle(numid);
 				let increment = this.getEle(incrementid);
 				let decrement = this.getEle(decrementid);
 				let price = this.getEle(priceid);
 				let pricesum = this.getEle(pricesumid);
+				let checkbox = this.getEle(checkboxid);
 				if(num.value <= 1){
 					num.value = 1;
 					decrement.classList.add("disabled");
+					this.optgood = [];
+					this.optgood = this.cartgoods[index-1];
+					this.optgood.goodnum = "1";
+					this.optgood.goodsumprice = (parseInt(this.optgood.goodnum)*parseInt(this.optgood.goodprice)).toFixed(2);
+					if(checkbox.checked == true){
+						this.sumprice = (parseInt(this.sumprice)-((parseInt(this.originalnum)-1)*parseInt(this.optgood.goodprice))).toFixed(2);
+					}
+										//console.log(this.optgood);
+					this.updateCart(this.optgood);//更新数据库
 				}else if(num.value >= 200){
 					num.value = 200;
 					increment.classList.add("disabled");
+					this.optgood = [];
+					this.optgood = this.cartgoods[index-1];
+					this.optgood.goodnum = "200";
+					this.optgood.goodsumprice = (parseInt(this.optgood.goodnum)*parseInt(this.optgood.goodprice)).toFixed(2);
+					if(checkbox.checked == true){
+						this.sumprice = (parseInt(this.sumprice)+((200-parseInt(this.originalnum))*parseInt(this.optgood.goodprice))).toFixed(2);
+					}
+					//console.log(this.optgood);
+					this.updateCart(this.optgood);//更新数据库
 				}else{
+					let nums = num.value;
+					//console.log(nums instanceof String);
 					increment.classList.remove("disabled");
 					decrement.classList.remove("disabled");
+					this.optgood = [];
+					this.optgood = this.cartgoods[index-1];
+					this.optgood.goodnum = nums;
+					this.optgood.goodsumprice = (parseInt(this.optgood.goodnum)*parseInt(this.optgood.goodprice)).toFixed(2);
+					if(checkbox.checked == true){
+						if(parseInt(this.originalnum)<=parseInt(this.optgood.goodnum)){//增加
+							this.sumprice = (parseInt(this.sumprice)+((parseInt(this.optgood.goodnum)-parseInt(this.originalnum))*parseInt(this.optgood.goodprice))).toFixed(2);
+						}else{
+							this.sumprice = (parseInt(this.sumprice)-((parseInt(this.originalnum)-parseInt(this.optgood.goodnum))*parseInt(this.optgood.goodprice))).toFixed(2);
+						}
+					}
+					//console.log(this.optgood);
+					this.updateCart(this.optgood);//更新数据库
 				}
 				pricesum.innerHTML = (num.value*price.innerHTML).toFixed(2);
 			},
 			loadMinWith(){
 	  		document.getElementsByClassName("cartheader")[0].style.minWidth = (window.screen.width-17)+"px";
 	  		document.getElementsByClassName("cart")[0].style.minWidth = (window.screen.width-17)+"px";
+	  	},
+	  	updateCart(optgood){
+	  		let _this = this;
+				let oAjax = null;
+				if(window.XMLHttpRequest){
+				  oAjax = new XMLHttpRequest();
+				}else{
+				  oAjax = new ActiveXObject('Microsoft.XMLHTTP');
+				}
+				oAjax.open('POST','http://127.0.0.1/goods/updateCart',true);
+				oAjax.setRequestHeader("Content-type","application/json");
+				oAjax.send(JSON.stringify(optgood));
+				oAjax.onreadystatechange=function(){
+				  if(oAjax.readyState==4){
+				    if(oAjax.status>=200 && oAjax.status<300 || oAjax.status==304){
+				      //4.对响应进行解析
+				      let optgoods=JSON.parse(oAjax.responseText);
+				      if(optgoods.code == 1){//更新成功
+				      	_this.selectCart(optgood.accountid);//查询数据库重新渲染
+				      }
+				    }else{
+				      //4.对响应进行解析
+				      alert("服务器错误");
+				    }
+				  }
+				}
+	  	},
+	  	jiajianStyle(){
+	  		// let decrementlist = document.getElementById("decrement1");
+	  		// console.log(decrementlist);
+	  		 //console.log(this.cartgoods[0]);
+	  		 let _this = this;
+	  		 //console.log(_this.cartgoods);
+	  		_this.cartgoods.forEach(function(currentValue,index){//数量为1或者200时有样式变动
+				  //console.log(index);
+				  //console.log("decrement"+(index+1).toString());
+				  let decrement = "decrement"+((index+1).toString());
+				  let decrementid = _this.getEle(decrement);//获得当前的减号
+				  //console.log(decrementid);
+					let increment = "increment"+((index+1).toString());
+					let incrementid = _this.getEle(increment);//获得当前的加号
+			  	if(currentValue.goodnum == 1){
+			  		decrementid.classList.add("disabled");
+			  		incrementid.classList.remove("disabled");
+			  	}else if(currentValue.goodnum == 200){
+			  		decrementid.classList.remove("disabled");
+			  		incrementid.classList.add("disabled");
+			  	}else{
+			  		decrementid.classList.remove("disabled");
+			  		incrementid.classList.remove("disabled");
+			  	}
+			  })
+	  	},
+	  	deleteClick($event){//单个删除
+	  		let index = $event.target.getAttribute("data-index");
+	  		let _this = this;
+	  		let oAjax = null;
+	  		_this.optgood = [];
+				_this.optgood = _this.cartgoods[index-1];
+				_this.sumprice = (parseInt(_this.sumprice) - parseInt(_this.optgood.goodsumprice)).toFixed(2);
+				if(window.XMLHttpRequest){
+				  oAjax = new XMLHttpRequest();
+				}else{
+				  oAjax = new ActiveXObject('Microsoft.XMLHTTP');
+				}
+				oAjax.open('POST','http://127.0.0.1/goods/deleteCart',true);
+				oAjax.setRequestHeader("Content-type","application/json");
+				oAjax.send(JSON.stringify(_this.optgood));
+				oAjax.onreadystatechange=function(){
+				  if(oAjax.readyState==4){
+				    if(oAjax.status>=200 && oAjax.status<300 || oAjax.status==304){
+				      //4.对响应进行解析
+				      let optgoods=JSON.parse(oAjax.responseText);
+				      if(optgoods.code == 1){//更新成功
+				      	_this.selectCart(_this.optgood.accountid);//查询数据库重新渲染
+				      }
+				    }else{
+				      //4.对响应进行解析
+				      alert("服务器错误");
+				    }
+				  }
+				}
+	  	},
+	  	mainCheckBox($event){//全选按钮
+	  		let jdcheckbox = document.getElementsByClassName("jdcheckbox");
+	  		if($event.target.checked){//true
+	  			let calsumprice = 0;
+	  			jdcheckbox.forEach(function(currentValue){
+	  				currentValue.checked = true
+	  			})
+	  			this.cartgoods.forEach(function(currentValue){
+	  				calsumprice += parseInt(currentValue.goodsumprice);
+	  			})
+	  			this.sumprice = calsumprice.toFixed(2);
+	  			this.amountsum = (document.getElementsByClassName("singlejdcheckbox").length).toString();
+	  		}else{//false
+	  			jdcheckbox.forEach(function(currentValue){
+	  				currentValue.checked = false;
+	  			})
+	  			this.sumprice = "0.00";
+	  			this.amountsum = "0";
+	  		}
+	  	},
+	  	singleCheckbox($event){
+	  		let index = $event.target.getAttribute("data-index");
+	  		let maincheckbox = this.getEle("maincheckbox");
+	  		let maincheckbox1 = this.getEle("maincheckbox1");
+	  		let singlejdcheckbox = document.getElementsByClassName("singlejdcheckbox");
+	  		let i = 0;
+	  		if($event.target.checked){
+	  			$event.target.checked = true;
+	  			this.sumprice = (parseInt(this.sumprice) + parseInt(this.cartgoods[index-1].goodsumprice)).toFixed(2);
+	  			this.amountsum = (parseInt(this.amountsum) + 1).toString();
+	  		}else{
+	  			$event.target.checked = false;
+	  			maincheckbox.checked = false;
+	  			maincheckbox1.checked = false;
+	  			this.sumprice = (parseInt(this.sumprice) - parseInt(this.cartgoods[index-1].goodsumprice)).toFixed(2);
+	  			this.amountsum = (parseInt(this.amountsum) - 1).toString();
+	  		}
+	  		//每当点击的时候判断是否全选了
+	  		singlejdcheckbox.forEach(function(currentValue){
+	  			if(currentValue.checked){
+	  				i++;
+	  			}
+	  		})
+	  		if(i == singlejdcheckbox.length){
+	  			maincheckbox.checked = true;
+	  			maincheckbox1.checked = true;
+	  		}
 	  	}
 		},
 		mounted(){
 			this.loadMinWith();
 			this.getMessage();//获得相关信息
-			this.fixedBottom();//底部付款fixed布局
+			let that = this;
+			setTimeout(function(){
+				that.fixedBottom();//底部付款fixed布局
+				that.jiajianStyle();
+			},300)
 		}
 	}
 </script>
 <style scoped>
+	.goodsempty{
+		height: 50px;
+		line-height: 50px;
+		font-size: 20px;
+		text-align: center;
+		font-weight: 700;
+	}
 	a{
 		outline: none;
 	}

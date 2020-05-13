@@ -2,6 +2,7 @@ package com.ls.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -51,4 +52,10 @@ public interface GoodsDao {
 	//查询书否存在该商品
 	@Select("select * from jd_cart where accountid=#{accountid} and goodid=#{goodid}")
 	List<Cart> selectCartgood(@Param("accountid")int accountid,@Param("goodid")int goodid);
+	//加减购物车商品街
+	@Update("update jd_cart set goodnum=#{goodnum},goodsumprice=#{goodsumprice} where accountid=#{accountid} and goodid=#{goodid}")
+	void optCart(@Param("accountid")int accountid,@Param("goodid")int goodid,@Param("goodnum")String goodnum,@Param("goodsumprice")String goodsumprice);
+	//删除购物车某个商品
+	@Delete("delete from jd_cart where accountid=#{accountid} and goodid=#{goodid}")
+	void deleteGood(@Param("accountid")int accountid,@Param("goodid")int goodid);
 }

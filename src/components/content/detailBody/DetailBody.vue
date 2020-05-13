@@ -293,7 +293,7 @@
 					_this.form.goodpic = _this.currentGood.pic;
 					_this.form.shopname = _this.currentGood.shopname;
 					_this.form.goodnum = buynum.value;
-					_this.form.goodsumprice = (_this.currentGood.price*buynum.value).toFixed(2);
+					_this.form.goodsumprice = (parseInt(_this.currentGood.price)*parseInt(buynum.value)).toFixed(2);
 					console.log(_this.form);
 					console.log(JSON.stringify(_this.form));
 					if(window.XMLHttpRequest){

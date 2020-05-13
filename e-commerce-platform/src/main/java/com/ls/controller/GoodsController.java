@@ -67,4 +67,16 @@ public class GoodsController {
 		//System.out.println(accountid);
 		return service.selectCart(accountid);
 	}
+	//更新购物车
+	@PostMapping("/updateCart")
+	public Result updateCart(@RequestBody Cart cart){
+		//System.out.println(cart);
+		return service.updateCart(cart);
+	}
+	//删除购物车单个东西
+	@PostMapping("/deleteCart")
+	public Result deleteCart(@RequestBody Cart cart){
+		System.out.println(cart);
+		return service.deleteCart(cart);
+	}
 }
