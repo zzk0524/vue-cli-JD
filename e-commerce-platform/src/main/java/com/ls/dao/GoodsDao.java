@@ -31,9 +31,12 @@ public interface GoodsDao {
 	//推荐商品用户喜好
 	@Select("select * from jd_user where account=#{account}")
 	Account recommendGoodsUser(String account);
-	//推荐商品列表
+	//推荐商品列表，查询所有商品
 	@Select("select * from jd_item")
 	List<Goods> recommendGoods();
+	//该用户的购物车中是否有商品,查询该用户购物车中所有商品
+	@Select("select * from jd_cart where accountid=(select id from jd_user where account=#{account})")
+	List<Cart> currentUserCart(@Param("account")String account);
 	//热款推荐
 	@Select("select * from jd_item where comments like '%万+'")
 	List<Goods> hotGoods();
