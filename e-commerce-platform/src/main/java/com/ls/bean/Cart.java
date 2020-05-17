@@ -10,6 +10,7 @@ public class Cart {
 	private String shopname;
 	private String goodnum;
 	private String goodsumprice;
+	private String goodtype;
 	public int getId() {
 		return id;
 	}
@@ -64,11 +65,18 @@ public class Cart {
 	public void setGoodsumprice(String goodsumprice) {
 		this.goodsumprice = goodsumprice;
 	}
+	public String getGoodtype() {
+		return goodtype;
+	}
+	public void setGoodtype(String goodtype) {
+		this.goodtype = goodtype;
+	}
 	@Override
 	public String toString() {
 		return "Cart [id=" + id + ", accountid=" + accountid + ", goodid=" + goodid + ", goodtitle=" + goodtitle
 				+ ", goodprice=" + goodprice + ", goodpic=" + goodpic + ", shopname=" + shopname + ", goodnum="
-				+ goodnum + ", goodsumprice=" + goodsumprice + "]";
+				+ goodnum + ", goodsumprice=" + goodsumprice + ", goodtype=" + goodtype + "]";
 	}
+	
 	
 }

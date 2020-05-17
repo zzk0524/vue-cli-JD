@@ -92,68 +92,78 @@ public class GoodsService {
 		try {
 			List<Cart> usercart = dao.currentUserCart(account);
 //			System.out.println(usercart);
-//			System.out.println(usercart.size()==0);
-			if(usercart.size()==0) {//该用户购物车里没东西，基于用户喜好推荐
-				ArrayList<String> alist = new ArrayList<String>();
-				List<Goods> blist = dao.recommendGoods();
-				Account user = dao.recommendGoodsUser(account);
-				String[] favarr = user.getFavourite().toString().split(",");//favarr数组存用户的每个喜好
-				for(int i=0;i<blist.size();i++) {
-					alist.add(blist.get(i).getTitle().toString());
-				}
-				ArrayList<String> favarr0 = new ArrayList<String>();//把用户所有喜好的符合条件的商品id都存到里面
-				for(int i=0;i<favarr.length;i++) {//有几个喜好，执行几遍
-					ID3 id = new ID3(favarr[i],alist);
-					String[] recommend = id.getKind();//获取每一个喜好的结果
-					for(int j=0;j<recommend.length;j++) {
-						if(recommend[j].equals(favarr[i])) {
-							favarr0.add(Integer.toString(j));
-						}
-					}
-				}
-				List<Goods> recommendgood = new ArrayList<Goods>();
-				for(int i=0;i<favarr0.size();i++) {
-					recommendgood.add(blist.get(Integer.parseInt(favarr0.get(i))));
-				}
-				result.setCode(1);
-				result.setSuccess(true);
-				result.setMessage("推荐成功");
-				result.setData(recommendgood);//关于此用户的所有喜好推荐的所有商品
-			}else {//该用户购物车中有东西，基于购物车中商品推荐+喜好推荐
-				List<Goods> alist = dao.recommendGoods();//所有商品
-				ArrayList<String> blist = new ArrayList<String>();//所有商品
-				ArrayList<String> clist = new ArrayList<String>();//存用户购物车中的商品
-				for(int i=0;i<alist.size();i++) {
-					blist.add(alist.get(i).getTitle().toString());
+			System.out.println(usercart.size()==0);
+			List<Goods> recommendgood = new ArrayList<Goods>();
+			List<Goods> recommendgood1 = new ArrayList<Goods>();
+			List<Goods> recommendgood2 = new ArrayList<Goods>();
+			if(usercart.size()!=0) {//该用户购物车里面有东西
+				List<Goods> alist1 = dao.recommendGoods();//所有商品
+				ArrayList<String> blist1 = new ArrayList<String>();//所有商品
+				ArrayList<String> clist1 = new ArrayList<String>();//存用户购物车中的商品
+				ArrayList<String> favarr1 = new ArrayList<String>();
+				for(int i=0;i<alist1.size();i++) {
+					blist1.add(alist1.get(i).getTitle().toString());
 				}
 				for(int i=0;i<usercart.size();i++) {
-					clist.add(usercart.get(i).getGoodtitle().toString());
+					clist1.add(usercart.get(i).getGoodtitle().toString());
+					favarr1.add("目标"+usercart.get(i).getGoodtype().toString());
 				}
-				ArrayList<String> favarr0 = new ArrayList<String>();//把根据用户购物车每一条商品推荐出来的商品id都存到里面
-				for(int i=0;i<clist.size();i++) {//有几个商品，执行几遍
-					CartID3 cartid = new CartID3(clist.get(i),blist);
+				ArrayList<String> favarr2 = new ArrayList<String>();//把根据用户购物车每一条商品推荐出来的商品id都存到里面
+				for(int i=0;i<clist1.size();i++) {//有几个商品，执行几遍
+					CartID3 cartid = new CartID3(clist1.get(i).toString(),blist1);
 					String[] recommend = cartid.getKind();//获取每一个喜好的结果
 					for(int j=0;j<recommend.length;j++) {
-						if(recommend[j].equals(clist.get(i))) {
-							favarr0.add(Integer.toString(j));
+						if(recommend[j].equals(favarr1.get(i).toString())) {
+							System.out.println(recommend[j]);
+							favarr2.add(Integer.toString(j));
 						}
 					}
 				}
-				List<Goods> recommendgood = new ArrayList<Goods>();
-				for(int i=0;i<favarr0.size();i++) {
-					recommendgood.add(alist.get(Integer.parseInt(favarr0.get(i))));
+				for(int i=0;i<favarr2.size();i++) {
+					recommendgood1.add(alist1.get(Integer.parseInt(favarr2.get(i))));
 				}
-				result.setCode(1);
-				result.setSuccess(true);
-				result.setMessage("推荐成功");
-				result.setData(recommendgood);//关于此用户的购物车推荐的所有商品
-				System.out.println(clist);
-				System.out.println(clist.get(0));
 			}
+			ArrayList<String> alist = new ArrayList<String>();
+			List<Goods> blist = dao.recommendGoods();
+			Account user = dao.recommendGoodsUser(account);
+			String[] favarr = user.getFavourite().toString().split(",");//favarr数组存用户的每个喜好
+			for(int i=0;i<blist.size();i++) {
+				alist.add(blist.get(i).getTitle().toString());
+			}
+			ArrayList<String> favarr0 = new ArrayList<String>();//把用户所有喜好的符合条件的商品id都存到里面
+			for(int i=0;i<favarr.length;i++) {//有几个喜好，执行几遍
+				ID3 id = new ID3(favarr[i],alist);
+				String[] recommend = id.getKind();//获取每一个喜好的结果
+				for(int j=0;j<recommend.length;j++) {
+					if(recommend[j].equals(favarr[i])) {
+						favarr0.add(Integer.toString(j));
+					}
+				}
+			}
+			for(int i=0;i<favarr0.size();i++) {
+				recommendgood2.add(blist.get(Integer.parseInt(favarr0.get(i))));
+			}
+			if(recommendgood1.size()!=0) {//购物车推荐+喜好推荐
+				for(int i=0;i<recommendgood1.size();i++) {
+					recommendgood.add(recommendgood1.get(i));
+				}
+				for(int i=0;i<recommendgood2.size();i++) {
+					recommendgood.add(recommendgood2.get(i));
+				}
+			}else {
+				for(int i=0;i<recommendgood2.size();i++) {
+					recommendgood.add(recommendgood2.get(i));
+				}
+			}
+			System.out.println(recommendgood.size());
+			result.setCode(1);
+			result.setSuccess(true);
+			result.setMessage("推荐成功");
+			result.setData(recommendgood);//关于此用户的所有喜好推荐的所有商品
 			return result;
 		} catch (Exception e) {
 			// TODO: handle exception
-			//System.out.println(e);
+			System.out.println(e);
 			result.setSuccess(false);
 			result.setMessage("服务器错误！！");
 			return result;

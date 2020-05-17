@@ -11,7 +11,7 @@ class treeNode1{//树节点
 		return sname;
 	}
 	ArrayList<String> label=new ArrayList<String>();//和子节点间的边标签，集合中元素类型为string
-	ArrayList<treeNode> node=new ArrayList<treeNode>();//对应子节点，集合中元素类型为treeNode
+	ArrayList<treeNode1> node=new ArrayList<treeNode1>();//对应子节点，集合中元素类型为treeNode
 }
 
 public class CartID3 {
@@ -251,7 +251,7 @@ public class CartID3 {
 			if(favourite.indexOf("打底")!=-1) {
 				for(int i=0;i<length;i++) {//过滤每一条数据并且给上特征值,保存在teststr这个二维数组中
 					if(datelist.get(i).indexOf("裤")!=-1&&datelist.get(i).indexOf("打底")!=-1) {
-						teststr1[i]="打底";	
+						teststr1[i]="打底裤";	
 					}else{
 						teststr1[i]="其他";
 					}
@@ -265,7 +265,7 @@ public class CartID3 {
 			}else if(favourite.indexOf("小脚")!=-1){
 				for(int i=0;i<length;i++) {//过滤每一条数据并且给上特征值,保存在teststr这个二维数组中
 					if(datelist.get(i).indexOf("裤")!=-1&&datelist.get(i).indexOf("小脚")!=-1) {
-						teststr1[i]="小脚";	
+						teststr1[i]="小脚裤";	
 					}else{
 						teststr1[i]="其他";
 					}
@@ -279,7 +279,7 @@ public class CartID3 {
 			}else if(favourite.indexOf("牛仔")!=-1){
 				for(int i=0;i<length;i++) {//过滤每一条数据并且给上特征值,保存在teststr这个二维数组中
 					if(datelist.get(i).indexOf("裤")!=-1&&datelist.get(i).indexOf("牛仔")!=-1) {
-						teststr1[i]="牛仔";	
+						teststr1[i]="牛仔裤";	
 					}else{
 						teststr1[i]="其他";
 					}
@@ -293,7 +293,7 @@ public class CartID3 {
 			}else if(favourite.indexOf("运动")!=-1){
 				for(int i=0;i<length;i++) {//过滤每一条数据并且给上特征值,保存在teststr这个二维数组中
 					if(datelist.get(i).indexOf("裤")!=-1&&datelist.get(i).indexOf("运动")!=-1) {
-						teststr1[i]="运动";	
+						teststr1[i]="运动裤";	
 					}else{
 						teststr1[i]="其他";
 					}
@@ -307,7 +307,7 @@ public class CartID3 {
 			}else if(favourite.indexOf("休闲")!=-1){
 				for(int i=0;i<length;i++) {//过滤每一条数据并且给上特征值,保存在teststr这个二维数组中
 					if(datelist.get(i).indexOf("裤")!=-1&&datelist.get(i).indexOf("休闲")!=-1) {
-						teststr1[i]="休闲";	
+						teststr1[i]="休闲裤";	
 					}else{
 						teststr1[i]="其他";
 					}
@@ -683,25 +683,132 @@ public class CartID3 {
 					test.add(lines);//存的测试数据
 				}
 			}
-		}else {
-			for(int i=0;i<length;i++) {//过滤每一条数据并且给上特征值,保存在teststr这个二维数组中
-				if(datelist.get(i).indexOf("车载")!=-1||datelist.get(i).indexOf("万向轮")!=-1||datelist.get(i).indexOf("氨基酸洗面奶")!=-1||datelist.get(i).indexOf("沐浴露")!=-1||datelist.get(i).indexOf("桌椅")!=-1) {
-					teststr1[i]="居家用品";	
-				}else{
-					teststr1[i]="其他";
+		}else if(favourite.indexOf("玩具")!=-1){
+			if(favourite.indexOf("益智")!=-1) {
+				for(int i=0;i<length;i++) {//过滤每一条数据并且给上特征值,保存在teststr这个二维数组中
+					if(datelist.get(i).indexOf("玩具")!=-1&&datelist.get(i).indexOf("益智")!=-1) {
+						teststr1[i]="益智";	
+					}else{
+						teststr1[i]="其他";
+					}
+				}
+				ArrayList<String> lines = null;
+				for(int i=0;i<teststr1.length;i++) {//将二维数组转到一个ArrayList中
+					lines = new ArrayList<String>();
+					lines.add(teststr1[i]);
+					test.add(lines);//存的测试数据
+				}
+			}else {
+				for(int i=0;i<length;i++) {//过滤每一条数据并且给上特征值,保存在teststr这个二维数组中
+					if(datelist.get(i).indexOf("玩具")!=-1&&datelist.get(i).indexOf("益智")==-1) {
+						teststr1[i]="非益智";	
+					}else{
+						teststr1[i]="其他";
+					}
+				}
+				ArrayList<String> lines = null;
+				for(int i=0;i<teststr1.length;i++) {//将二维数组转到一个ArrayList中
+					lines = new ArrayList<String>();
+					lines.add(teststr1[i]);
+					test.add(lines);//存的测试数据
 				}
 			}
-			ArrayList<String> lines = null;
-			for(int i=0;i<teststr1.length;i++) {//将二维数组转到一个ArrayList中
-				lines = new ArrayList<String>();
-				lines.add(teststr1[i]);
-				test.add(lines);//存的测试数据
+		}else if(favourite.indexOf("宠物")!=-1){
+			if(favourite.indexOf("猫")!=-1) {
+				for(int i=0;i<length;i++) {//过滤每一条数据并且给上特征值,保存在teststr这个二维数组中
+					if(datelist.get(i).indexOf("宠物")!=-1&&datelist.get(i).indexOf("猫")!=-1) {
+						teststr1[i]="猫类";	
+					}else{
+						teststr1[i]="其他";
+					}
+				}
+				ArrayList<String> lines = null;
+				for(int i=0;i<teststr1.length;i++) {//将二维数组转到一个ArrayList中
+					lines = new ArrayList<String>();
+					lines.add(teststr1[i]);
+					test.add(lines);//存的测试数据
+				}
+			}else {
+				for(int i=0;i<length;i++) {//过滤每一条数据并且给上特征值,保存在teststr这个二维数组中
+					if(datelist.get(i).indexOf("宠物")!=-1&&datelist.get(i).indexOf("猫")==-1) {
+						teststr1[i]="非猫类";	
+					}else{
+						teststr1[i]="其他";
+					}
+				}
+				ArrayList<String> lines = null;
+				for(int i=0;i<teststr1.length;i++) {//将二维数组转到一个ArrayList中
+					lines = new ArrayList<String>();
+					lines.add(teststr1[i]);
+					test.add(lines);//存的测试数据
+				}
+			}
+		}else if(favourite.indexOf("汽车")!=-1){
+			if(favourite.indexOf("汽车用品")!=-1||favourite.indexOf("车载")!=-1) {
+				for(int i=0;i<length;i++) {//过滤每一条数据并且给上特征值,保存在teststr这个二维数组中
+					if(datelist.get(i).indexOf("汽车")!=-1&&(datelist.get(i).indexOf("汽车用品")!=-1||favourite.indexOf("车载")!=-1)) {
+						teststr1[i]="车载";	
+					}else{
+						teststr1[i]="其他";
+					}
+				}
+				ArrayList<String> lines = null;
+				for(int i=0;i<teststr1.length;i++) {//将二维数组转到一个ArrayList中
+					lines = new ArrayList<String>();
+					lines.add(teststr1[i]);
+					test.add(lines);//存的测试数据
+				}
+			}else {
+				for(int i=0;i<length;i++) {//过滤每一条数据并且给上特征值,保存在teststr这个二维数组中
+					if(datelist.get(i).indexOf("汽车")!=-1&&datelist.get(i).indexOf("汽车用品")==-1&&datelist.get(i).indexOf("车载")==-1) {
+						teststr1[i]="非车载";	
+					}else{
+						teststr1[i]="其他";
+					}
+				}
+				ArrayList<String> lines = null;
+				for(int i=0;i<teststr1.length;i++) {//将二维数组转到一个ArrayList中
+					lines = new ArrayList<String>();
+					lines.add(teststr1[i]);
+					test.add(lines);//存的测试数据
+				}
+			}
+		}else {//图书
+			if(favourite.indexOf("册")!=-1) {
+				for(int i=0;i<length;i++) {//过滤每一条数据并且给上特征值,保存在teststr这个二维数组中
+					if(((datelist.get(i).indexOf("老人手机")==-1||datelist.get(i).indexOf("GB")==-1)&&datelist.get(i).indexOf("裤")==-1&&(datelist.get(i).indexOf("外套")==-1||datelist.get(i).indexOf("上衣")==-1)&&datelist.get(i).indexOf("鞋")==-1&&datelist.get(i).indexOf("零食")==-1&&(datelist.get(i).indexOf("家具")==-1||datelist.get(i).indexOf("桌")==-1||datelist.get(i).indexOf("床")==-1)&&(datelist.get(i).indexOf("清洁")==-1||datelist.get(i).indexOf("洗面奶")==-1||datelist.get(i).indexOf("沐浴露")==-1||datelist.get(i).indexOf("洗发")==-1)&&(datelist.get(i).indexOf("拉杆箱")==-1||datelist.get(i).indexOf("旅行箱")==-1)&&(datelist.get(i).indexOf("项链")==-1||datelist.get(i).indexOf("戒指")==-1||datelist.get(i).indexOf("吊坠")==-1)&&datelist.get(i).indexOf("玩具")==-1&&datelist.get(i).indexOf("宠物")==-1&&datelist.get(i).indexOf("汽车")==-1)&&datelist.get(i).indexOf("册")!=-1) {
+						teststr1[i]="成册";	
+					}else{
+						teststr1[i]="其他";
+					}
+				}
+				ArrayList<String> lines = null;
+				for(int i=0;i<teststr1.length;i++) {//将二维数组转到一个ArrayList中
+					lines = new ArrayList<String>();
+					lines.add(teststr1[i]);
+					test.add(lines);//存的测试数据
+				}
+			}else {
+				for(int i=0;i<length;i++) {//过滤每一条数据并且给上特征值,保存在teststr这个二维数组中
+					if(((datelist.get(i).indexOf("老人手机")==-1||datelist.get(i).indexOf("GB")==-1)&&datelist.get(i).indexOf("裤")==-1&&(datelist.get(i).indexOf("外套")==-1||datelist.get(i).indexOf("上衣")==-1)&&datelist.get(i).indexOf("鞋")==-1&&datelist.get(i).indexOf("零食")==-1&&(datelist.get(i).indexOf("家具")==-1||datelist.get(i).indexOf("桌")==-1||datelist.get(i).indexOf("床")==-1)&&(datelist.get(i).indexOf("清洁")==-1||datelist.get(i).indexOf("洗面奶")==-1||datelist.get(i).indexOf("沐浴露")==-1||datelist.get(i).indexOf("洗发")==-1)&&(datelist.get(i).indexOf("拉杆箱")==-1||datelist.get(i).indexOf("旅行箱")==-1)&&(datelist.get(i).indexOf("项链")==-1||datelist.get(i).indexOf("戒指")==-1||datelist.get(i).indexOf("吊坠")==-1)&&datelist.get(i).indexOf("玩具")==-1&&datelist.get(i).indexOf("宠物")==-1&&datelist.get(i).indexOf("汽车")==-1)&&datelist.get(i).indexOf("册")==-1) {
+						teststr1[i]="不成册";	
+					}else{
+						teststr1[i]="其他";
+					}
+				}
+				ArrayList<String> lines = null;
+				for(int i=0;i<teststr1.length;i++) {//将二维数组转到一个ArrayList中
+					lines = new ArrayList<String>();
+					lines.add(teststr1[i]);
+					test.add(lines);//存的测试数据
+				}
 			}
 		}
 	}
 	//获取训练数据集
 	public void getDate(String favourite){
 		//String[] favarr = favourite.split(",");//把用户爱好字符串存到数组中去
+		System.out.println(favourite);
 		if(favourite.indexOf("老人手机")!=-1||favourite.indexOf("GB")!=-1) {//确认一下是手机
 			String[] labelstr = new String[] {"品牌","目标手机"};
 			for(int i=0;i<labelstr.length;i++){//小米，荣耀，iPhone，华为，Redmi,vivo,OPPO ,魅族，锤子，黑鲨，中兴，诺基亚，三星，杂牌
@@ -850,6 +957,7 @@ public class CartID3 {
 				}
 			}			
 		}else if(favourite.indexOf("裤")!=-1) {//裤子
+			System.out.println("是裤子");
 			String[] labelstr = new String[] {"类型","目标裤子"};//运动,休闲，牛仔，小脚，打底	
 			for(int i=0;i<labelstr.length;i++){
 				label.add(labelstr[i]);//存的特征标签
@@ -866,6 +974,7 @@ public class CartID3 {
 					date.add(line);//存的训练数据
 				}
 			}else if(favourite.indexOf("小脚")!=-1) {
+				System.out.println("是小脚裤");
 				String[][] datestr = new String[][] {{"小脚裤","目标裤子"},{"其他","其他裤子"}};
 				ArrayList<String> line=null;
 				for(int i=0;i<datestr.length;i++) {
@@ -984,12 +1093,12 @@ public class CartID3 {
 			}
 			//存训练数据
 		}else if(favourite.indexOf("鞋")!=-1) {//这是一个鞋子
-			String[] labelstr = new String[] {"类型","目标鞋子"};//运动休闲
+			String[] labelstr = new String[] {"类型","目标鞋"};//运动休闲
 			for(int i=0;i<labelstr.length;i++){
 				label.add(labelstr[i]);//存的特征标签
 			}
 			if(favourite.indexOf("运动")!=-1&&favourite.indexOf("休闲")!=-1) {
-				String[][] datestr = new String[][] {{"运动休闲","目标鞋子"},{"其他","其他鞋子"}};
+				String[][] datestr = new String[][] {{"运动休闲","目标鞋"},{"其他","其他鞋"}};
 				ArrayList<String> line=null;
 				for(int i=0;i<datestr.length;i++) {
 					line = new ArrayList<String>();
@@ -999,7 +1108,7 @@ public class CartID3 {
 					date.add(line);//存的训练数据
 				}
 			}else {
-				String[][] datestr = new String[][] {{"杂牌","目标鞋子"},{"其他","其他鞋子"}};
+				String[][] datestr = new String[][] {{"杂牌","目标鞋"},{"其他","其他鞋"}};
 				ArrayList<String> line=null;
 				for(int i=0;i<datestr.length;i++) {
 					line = new ArrayList<String>();
@@ -1202,20 +1311,110 @@ public class CartID3 {
 					date.add(line);//存的训练数据
 				}
 			}
-		}else {//图书
-			String[] labelstr = new String[] {"类型","居家生活"};
+		}else if(favourite.indexOf("玩具")!=-1){//这是一个玩具
+			String[] labelstr = new String[] {"类型","目标玩具"};
 			for(int i=0;i<labelstr.length;i++){
 				label.add(labelstr[i]);//存的特征标签
 			}
-			//存训练数据
-			String[][] datestr = new String[][] {{"居家用品","居家生活"},{"其他","其他物品"}};
-			ArrayList<String> line=null;
-			for(int i=0;i<datestr.length;i++) {
-				line = new ArrayList<String>();
-				for(int j=0;j<datestr[i].length;j++) {
-					line.add(datestr[i][j]);
+			if(favourite.indexOf("益智")!=-1) {
+				String[][] datestr = new String[][] {{"益智","目标玩具"},{"其他","其他玩具"}};
+				ArrayList<String> line=null;
+				for(int i=0;i<datestr.length;i++) {
+					line = new ArrayList<String>();
+					for(int j=0;j<datestr[i].length;j++) {
+						line.add(datestr[i][j]);
+					}
+					date.add(line);//存的训练数据
 				}
-				date.add(line);//存的训练数据
+			}else {
+				String[][] datestr = new String[][] {{"非益智","目标玩具"},{"其他","其他玩具"}};
+				ArrayList<String> line=null;
+				for(int i=0;i<datestr.length;i++) {
+					line = new ArrayList<String>();
+					for(int j=0;j<datestr[i].length;j++) {
+						line.add(datestr[i][j]);
+					}
+					date.add(line);//存的训练数据
+				}
+			}
+		}else if(favourite.indexOf("宠物")!=-1){
+			String[] labelstr = new String[] {"类型","目标宠物"};
+			for(int i=0;i<labelstr.length;i++){
+				label.add(labelstr[i]);//存的特征标签
+			}
+			if(favourite.indexOf("猫")!=-1) {
+				String[][] datestr = new String[][] {{"猫类","目标宠物"},{"其他","其他宠物"}};
+				ArrayList<String> line=null;
+				for(int i=0;i<datestr.length;i++) {
+					line = new ArrayList<String>();
+					for(int j=0;j<datestr[i].length;j++) {
+						line.add(datestr[i][j]);
+					}
+					date.add(line);//存的训练数据
+				}
+			}else {
+				String[][] datestr = new String[][] {{"非猫类","目标宠物"},{"其他","其他宠物"}};
+				ArrayList<String> line=null;
+				for(int i=0;i<datestr.length;i++) {
+					line = new ArrayList<String>();
+					for(int j=0;j<datestr[i].length;j++) {
+						line.add(datestr[i][j]);
+					}
+					date.add(line);//存的训练数据
+				}
+			}
+		}else if(favourite.indexOf("汽车")!=-1){//这可能是一个汽车\
+			String[] labelstr = new String[] {"类型","目标汽车用品"};
+			for(int i=0;i<labelstr.length;i++){
+				label.add(labelstr[i]);//存的特征标签
+			}
+			if(favourite.indexOf("汽车")!=-1||favourite.indexOf("车载")!=-1) {
+				String[][] datestr = new String[][] {{"车载","目标汽车用品"},{"其他","其他汽车用品"}};
+				ArrayList<String> line=null;
+				for(int i=0;i<datestr.length;i++) {
+					line = new ArrayList<String>();
+					for(int j=0;j<datestr[i].length;j++) {
+						line.add(datestr[i][j]);
+					}
+					date.add(line);//存的训练数据
+				}
+			}else {
+				String[][] datestr = new String[][] {{"非车载","目标汽车用品"},{"其他","其他汽车用品"}};
+				ArrayList<String> line=null;
+				for(int i=0;i<datestr.length;i++) {
+					line = new ArrayList<String>();
+					for(int j=0;j<datestr[i].length;j++) {
+						line.add(datestr[i][j]);
+					}
+					date.add(line);//存的训练数据
+				}
+			}
+		}else {//图书
+			String[] labelstr = new String[] {"类型","目标书"};
+			for(int i=0;i<labelstr.length;i++){
+				label.add(labelstr[i]);//存的特征标签
+			}
+			if(favourite.indexOf("册")!=-1) {
+				//存训练数据
+				String[][] datestr = new String[][] {{"成册","目标书"},{"其他","其他书"}};
+				ArrayList<String> line=null;
+				for(int i=0;i<datestr.length;i++) {
+					line = new ArrayList<String>();
+					for(int j=0;j<datestr[i].length;j++) {
+						line.add(datestr[i][j]);
+					}
+					date.add(line);//存的训练数据
+				}
+			}else {
+				String[][] datestr = new String[][] {{"不成册","目标书"},{"其他","其他书"}};
+				ArrayList<String> line=null;
+				for(int i=0;i<datestr.length;i++) {
+					line = new ArrayList<String>();
+					for(int j=0;j<datestr[i].length;j++) {
+						line.add(datestr[i][j]);
+					}
+					date.add(line);//存的训练数据
+				}
 			}
 		}
 	}
@@ -1286,9 +1485,9 @@ public class CartID3 {
 		return index;//返回最大值的下标
 	}
 	//构建决策树
-	public treeNode creattree(ArrayList<ArrayList<String>> dat) {//传入的训练数据二维['衣服裤子鞋子','新款潮流韩版','潮流服饰']
+	public treeNode1 creattree(ArrayList<ArrayList<String>> dat) {//传入的训练数据二维['衣服裤子鞋子','新款潮流韩版','潮流服饰']
 		int index=Gain(dat);//取到了最大增益属性的下标
-		treeNode node=new treeNode(label.get(index));//['服饰','潮流','潮流服饰']
+		treeNode1 node=new treeNode1(label.get(index));//['服饰','潮流','潮流服饰']
 		ArrayList<String> s=new ArrayList<String>();//那个最优属性的各种分类，比如衣裤鞋和非衣裤鞋
 		s.add(dat.get(0).get(index));//存入第一行的最大下标的那个属性
 		//System.out.println(dat.get(0).get(index));
@@ -1320,7 +1519,7 @@ public class CartID3 {
 				}
 			}
 			if(k==count.get(i).size()) {//2，如果k为总数就划分为一个节点
-				treeNode dd=new treeNode(str);
+				treeNode1 dd=new treeNode1(str);
 				node.node.add(dd);
 			}
 			else {
@@ -1337,7 +1536,7 @@ public class CartID3 {
 		//put(node);//递归调用，输出节点	
 	}
 	//用于递归的函数
-	public void put(treeNode node) {
+	public void put(treeNode1 node) {
 		System.out.println("结点："+node.getsname()+"\n");
 		for(int i=0;i<node.label.size();i++) {//01
 				System.out.println(node.getsname()+"的标签属性:"+node.label.get(i));
@@ -1351,14 +1550,14 @@ public class CartID3 {
 	}
 	//用于对待决策数据进行预测并将结果保存在指定路径
 	public void testdate(ArrayList<ArrayList<String>> test){
-		treeNode node=null;
+		treeNode1 node=null;
 		node=creattree(this.date);//类
 		for(int i=0;i<test.size();i++) {
 			testput(node,test.get(i));//递归调用
 		}
 	}
 	//用于测试的递归调用
-	public void testput(treeNode node,ArrayList<String> t) {
+	public void testput(treeNode1 node,ArrayList<String> t) {
 		int index=0;
 		for(int i=0;i<this.label.size();i++) {
 			if(this.label.get(i).equals(node.getsname())==true) {
@@ -1371,7 +1570,7 @@ public class CartID3 {
 				continue;
 			}
 			if(node.node.get(i).node.isEmpty()==true) {
-				//System.out.println("分类结果为："+node.node.get(i).getsname());
+				System.out.println("分类结果为："+node.node.get(i).getsname());
 				//System.out.println(i);
 				this.kind[this.x]=node.node.get(i).getsname();//取出分类结果
 				this.x++;
