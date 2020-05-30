@@ -158,21 +158,27 @@
     margin: 0 auto;
     width: 98%;
 	}	
+	.listbody_inner{
+		width: 100%;
+	}
 	.listbody:after{
-		display: block;
 		content: "";
+		display: block;
 		clear: both;
+		overflow: hidden;
 	}
 	.listbody_list {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-start;
     margin: 0 -5px;
 	}
 	/*每个商品框*/
 	.listbody_item {
     position: relative;
-    float: left;
     width: 230px;
     height: 322px;
-    margin: 0 5px 10px;
+    margin: 0 4px 10px;
     background: #fff;
     list-style: none;
 	}

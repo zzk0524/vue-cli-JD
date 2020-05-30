@@ -198,10 +198,15 @@ public class GoodsService {
 	public Result selectGoods(String title) {
 		Result result=new Result();
 		try {
-			result.setCode(1);
+			if(!dao.selectGoods(title).isEmpty()) {
+				result.setCode(1);
+				result.setData(dao.selectGoods(title));
+			}else {
+				result.setCode(0);
+				result.setData(dao.selectGoods(title));
+			}
 			result.setSuccess(true);
 			result.setMessage("≤È—Ø≥…π¶");
-			result.setData(dao.selectGoods(title));
 			return result;
 		}catch(Exception e) {
 			result.setSuccess(false);

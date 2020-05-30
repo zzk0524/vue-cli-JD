@@ -256,8 +256,12 @@
 		display: block;
 		content: "";
 		clear: both;
+		overflow: hidden;
 	}
 	.recommendbody_list {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-start;
     margin: 0 -5px;
 	}
 	/*每个商品框*/
@@ -266,7 +270,7 @@
     float: left;
     width: 230px;
     height: 322px;
-    margin: 0 5px 10px;
+    margin: 0 4px 10px;
     background: #fff;
     list-style: none;
 	}

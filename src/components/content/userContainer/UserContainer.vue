@@ -154,10 +154,20 @@
 				formitemnewpassword.classList.add("focus_border_color");//边框颜色
 				if($event.target.value!=""){
 					if(pattern.exec($event.target.value)){	
-						formnewpassworditip.classList.add("divnone");//隐藏提示图标
-						formnewpasswordtip.innerHTML = "";//移除文字提示
-						newpasswordcancel.classList.remove("divnone");//显示叉号
-						newpasswordstatus.classList.add("divnone");//隐藏对号
+						if($event.target.value==this.currentUser.password){
+							formnewpassworditip.classList.remove("divnone");//显示提示图标
+							formnewpassworditip.classList.remove("tip_position_gray");//移除灰色图标
+							formnewpassworditip.classList.add("tip_position_orange");//添加橘色图标
+							formnewpasswordtip.innerHTML = "不能和原密码相同";//添加提示文字
+							formnewpasswordtip.classList.add("form_tip_orange");//添加文字颜色
+							newpasswordcancel.classList.remove("divnone");//显示叉号
+							newpasswordstatus.classList.add("divnone");//移除对号
+						}else{
+							formnewpassworditip.classList.add("divnone");//隐藏提示图标
+							formnewpasswordtip.innerHTML = "";//移除文字提示
+							newpasswordcancel.classList.remove("divnone");//显示叉号
+							newpasswordstatus.classList.add("divnone");//隐藏对号
+						}
 					}else{
 						formnewpassworditip.classList.remove("divnone");//显示提示图标
 						formnewpassworditip.classList.remove("tip_position_gray");//移除灰色图标
@@ -198,36 +208,47 @@
 				formitemnewpassword.classList.add("slider_border_color");//改边框的颜色
 				if($event.target.value!=""){
 					if(pattern.exec($event.target.value)){
-						if(pattern1.exec($event.target.value)||pattern2.exec($event.target.value)||pattern3.exec($event.target.value)){//一级强度验证
-							formnewpassworditip.classList.add("divnone");//隐藏提示图标
-							formnewpasswordtip.innerHTML = "";//移除文字提示
+						if($event.target.value==this.currentUser.password){
+							formnewpassworditip.classList.remove("divnone");//显示提示图标
+							formnewpassworditip.classList.remove("tip_position_gray");//移除灰色图标
+							formnewpassworditip.classList.add("tip_position_orange");//添加橘色图标
+							formnewpasswordtip.innerHTML = "不能和原密码相同";//提示文字
+							formnewpasswordtip.classList.add("form_tip_orange");//添加文字颜色
 							newpasswordcancel.classList.add("divnone");//移除叉号图标
-							newpasswordstatus.classList.remove("divnone");//显示图标
-							newpasswordstatus.classList.remove("bas");//移除基础
-							newpasswordstatus.classList.remove("zhong");//移除中
-							newpasswordstatus.classList.remove("qiang");//移除强
-							newpasswordstatus.classList.add("ruo");//显示弱
-							this.judge1 = true;
-						}else if(!pattern1.exec($event.target.value)&&!pattern2.exec($event.target.value)&&!pattern3.exec($event.target.value)&&(pattern4.exec($event.target.value)||pattern5.exec($event.target.value)||pattern6.exec($event.target.value))){
-							formnewpassworditip.classList.add("divnone");//隐藏提示图标
-							formnewpasswordtip.innerHTML = "";//移除文字提示
-							newpasswordcancel.classList.add("divnone");//移除叉号图标
-							newpasswordstatus.classList.remove("divnone");//显示图标
-							newpasswordstatus.classList.remove("bas");//移除基础
-							newpasswordstatus.classList.add("zhong");//显示中
-							newpasswordstatus.classList.remove("qiang");//移除强
-							newpasswordstatus.classList.remove("ruo");//移除弱
-							this.judge1 = true;
-						}else if(!pattern1.exec($event.target.value)&&!pattern2.exec($event.target.value)&&!pattern3.exec($event.target.value)&&!pattern4.exec($event.target.value)&&!pattern5.exec($event.target.value)&&!pattern6.exec($event.target.value)&&pattern7.exec($event.target.value)){
-							formnewpassworditip.classList.add("divnone");//隐藏提示图标
-							formnewpasswordtip.innerHTML = "";//移除文字提示
-							newpasswordcancel.classList.add("divnone");//移除叉号图标
-							newpasswordstatus.classList.remove("divnone");//显示图标
-							newpasswordstatus.classList.remove("bas");//移除基础
-							newpasswordstatus.classList.remove("zhong");//移除中
-							newpasswordstatus.classList.add("qiang");//显示强
-							newpasswordstatus.classList.remove("ruo");//移除弱
-							this.judge1 = true;
+							newpasswordstatus.classList.add("divnone");//隐藏对号
+							this.judge1 = false;
+						}else{
+							if(pattern1.exec($event.target.value)||pattern2.exec($event.target.value)||pattern3.exec($event.target.value)){//一级强度验证
+								formnewpassworditip.classList.add("divnone");//隐藏提示图标
+								formnewpasswordtip.innerHTML = "";//移除文字提示
+								newpasswordcancel.classList.add("divnone");//移除叉号图标
+								newpasswordstatus.classList.remove("divnone");//显示图标
+								newpasswordstatus.classList.remove("bas");//移除基础
+								newpasswordstatus.classList.remove("zhong");//移除中
+								newpasswordstatus.classList.remove("qiang");//移除强
+								newpasswordstatus.classList.add("ruo");//显示弱
+								this.judge1 = true;
+							}else if(!pattern1.exec($event.target.value)&&!pattern2.exec($event.target.value)&&!pattern3.exec($event.target.value)&&(pattern4.exec($event.target.value)||pattern5.exec($event.target.value)||pattern6.exec($event.target.value))){
+								formnewpassworditip.classList.add("divnone");//隐藏提示图标
+								formnewpasswordtip.innerHTML = "";//移除文字提示
+								newpasswordcancel.classList.add("divnone");//移除叉号图标
+								newpasswordstatus.classList.remove("divnone");//显示图标
+								newpasswordstatus.classList.remove("bas");//移除基础
+								newpasswordstatus.classList.add("zhong");//显示中
+								newpasswordstatus.classList.remove("qiang");//移除强
+								newpasswordstatus.classList.remove("ruo");//移除弱
+								this.judge1 = true;
+							}else if(!pattern1.exec($event.target.value)&&!pattern2.exec($event.target.value)&&!pattern3.exec($event.target.value)&&!pattern4.exec($event.target.value)&&!pattern5.exec($event.target.value)&&!pattern6.exec($event.target.value)&&pattern7.exec($event.target.value)){
+								formnewpassworditip.classList.add("divnone");//隐藏提示图标
+								formnewpasswordtip.innerHTML = "";//移除文字提示
+								newpasswordcancel.classList.add("divnone");//移除叉号图标
+								newpasswordstatus.classList.remove("divnone");//显示图标
+								newpasswordstatus.classList.remove("bas");//移除基础
+								newpasswordstatus.classList.remove("zhong");//移除中
+								newpasswordstatus.classList.add("qiang");//显示强
+								newpasswordstatus.classList.remove("ruo");//移除弱
+								this.judge1 = true;
+							}
 						}
 					}else{
 						formnewpassworditip.classList.remove("divnone");//显示提示图标
@@ -346,7 +367,7 @@
 						oAjax = new ActiveXObject("Microsoft.XMLHTTP");
 					}
 					oAjax.open('POST','http://127.0.0.1/goods/updateUser',true);
-					oAjax.setRequestHeader("Content-type","application/json");
+					oAjax.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 					oAjax.send("id="+_this.currentUser.id+"&password="+_this.form.newPassword);
 					oAjax.onreadystatechange=function(){
 					  if(oAjax.readyState==4){

@@ -82,7 +82,7 @@ public class GoodsController {
 	//ĞŞ¸ÄÃÜÂë
 	@PostMapping("/updateUser")
 	public Result updateUser(String id,String password){
-		//System.out.println(cart);
+		System.out.println(id+password);
 		return service.updateUser(id,password);
 	}
 }

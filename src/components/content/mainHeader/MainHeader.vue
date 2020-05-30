@@ -123,15 +123,19 @@
 						if(oAjax.readyState == 4){
 							if(oAjax.status >= 200 && oAjax.status < 300 || oAjax.status == 304){
 								let goods = JSON.parse(oAjax.responseText);
-								_this.$emit("searchgoods",goods.data);//点击搜索传递数据
-								//跳到展示区
-								let timer = setInterval(() => {//跳到正确的位置
-						      document.documentElement.scrollTop += 163;
-						      if (document.documentElement.scrollTop >= _this.listbodyhight) {
-						        clearInterval(timer);
-						      }
-					    	}, 20);
-					    	window.addEventListener('scroll',function(){})//取消锁定
+								if(goods.code==1){
+									_this.$emit("searchgoods",goods.data);//点击搜索传递数据
+									//跳到展示区
+									let timer = setInterval(() => {//跳到正确的位置
+							      document.documentElement.scrollTop += 163;
+							      if (document.documentElement.scrollTop >= _this.listbodyhight) {
+							        clearInterval(timer);
+							      }
+						    	}, 20);
+						    	window.addEventListener('scroll',function(){})//取消锁定
+								}else{
+									alert("没有该商品!");
+								}
 							}else{
 								alert("服务器错误");
 							}
@@ -327,7 +331,7 @@
 	/*搜索区域*/
 	.search_content .form {
     position: absolute;
-    left: 260px;
+    left: 22%;
     top: 25px;
     width: 546px;
     height: 36px;
@@ -413,7 +417,7 @@
 	/*购物车*/
 	#settleup {
     position: absolute;
-    right: 230px;
+    right: 16%;
     top: 25px;
 	}
 	/*购物车边框*/
@@ -472,7 +476,7 @@
 	#hotwords {
     overflow: hidden;
     position: absolute;
-    left: 260px;
+    left: 22%;
     top: 65px;
     width: 550px;
     height: 20px;
@@ -499,7 +503,7 @@
 	#navitems {
     overflow: hidden;
     position: absolute;
-    left: 203px;
+    left: 17%;
     bottom: 0;
     height: 60px;
     padding-top: 20px;
