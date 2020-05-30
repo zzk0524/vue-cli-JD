@@ -378,7 +378,7 @@
 </script>
 <style scoped>
 	.usercontainer{
-		width: 1210px;
+		width: 90%;
 		margin: 0 auto;
 	}
 	.divnone{

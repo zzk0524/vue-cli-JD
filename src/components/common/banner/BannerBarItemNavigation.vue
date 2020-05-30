@@ -96,6 +96,7 @@
 	/*左侧导航栏*/
 	.navigation_left{
 		position: relative;
+		width: 175px;
 	}
 	/*左侧导航栏中的ul*/
 	.cate_menu{
@@ -118,7 +119,7 @@
 		width: 802px;
 		height: 482px;
 		position: absolute;
-		left: 188px;
+		left: 175px;
     	top: -11px;
 	    border: 1px solid #f7f7f7;
 	    background-color: #fff;

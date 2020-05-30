@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="detail_body">
 		<div class="crumb_wrap">
 			<div class="crumb_container">
 				<div class="crumb clearfix">
@@ -326,12 +326,15 @@
 			}
 		},
 		mounted(){
-			this.loadMinWith();
+			//this.loadMinWith();
 			this.getApplyParams();
 		}
 	}
 </script>
 <style scoped>
+	.detail_body{
+		width: 100%;
+	}
 	.crumb_wrap .item a:hover,
 	.customer_service:hover,
 	.follow span:hover,
@@ -343,12 +346,14 @@
 	}
 	/*头部灰色条*/
 	.crumb_wrap{
+		width: 100%;
 		height: 40px;
 		background: #f2f2f2;
 	}
 	/*居中*/
 	.crumb_container{
-		width: 1210px;
+		width: 90%;
+		height: 40px;
 		margin: 0 auto;
 	}
 	/*左浮*/
@@ -451,18 +456,18 @@
     font-style: normal;
 	}
 	.crumb_body{
-		width: 1160px;
+		width: 86%;
     margin: 0 auto;
 	}
 	/*主要内容部分*/
 	.product_intro {
     margin-top: 10px;
     margin-bottom: 10px;
-    margin-left: 50px;
+    margin-left: 5%;
 	}
 	/*商品图片区*/
 	.preview_wrap{
-		width: 352px;
+		width: 32%;
 		float: left;
     padding-bottom: 15px;
 	}
@@ -522,7 +527,7 @@
 	}
 	/*右侧商品详情*/
 	.itemInfo_wrap{
-		width: 658px;
+		width: 59.7%;
     float: left;
     margin-left: 50px;
 	}

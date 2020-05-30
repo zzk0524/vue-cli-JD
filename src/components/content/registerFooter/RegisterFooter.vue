@@ -25,7 +25,7 @@
 </script>
 <style scoped>
 	.registerfooter{
-		width: 1210px;
+		width: 90%;
 		margin: 0 auto;
 		font-size: 12px;
 	  text-align: center;

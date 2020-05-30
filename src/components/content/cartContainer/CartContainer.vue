@@ -112,10 +112,7 @@
 											<input type="checkbox" class="jdcheckbox" @click="mainCheckBox($event)" id="maincheckbox1">
 										</div>全选
 									</div>
-									<div class="operation">
-										<a href="javascript:void(0)"></a>
-									</div>
-									<div class="clr"></div>
+									<!-- <div class="clr"></div> -->
 									<div class="toolbar_right">
 										<div class="normal">
 											<div class="comm_right">
@@ -243,16 +240,21 @@
 			fixedBottom(){
 				let cartfloatbar = this.getEle("cart_floatbar");
 				let carttoolbar = this.getEle("cart_toolbar");
+				let toolbarwrap = document.getElementsByClassName("toolbar_wrap")[0];
 				if(cartfloatbar.offsetTop>550){
 					carttoolbar.classList.add("fixed_bottom");
+					toolbarwrap.style.width = "74%";
 				}else{
 					carttoolbar.classList.remove("fixed_bottom");
+					toolbarwrap.style.width = "100%";
 				}
 				document.addEventListener("scroll",function(){
 					if(cartfloatbar.offsetTop-document.documentElement.scrollTop<=document.documentElement.clientHeight){
 						carttoolbar.classList.remove("fixed_bottom");
+						toolbarwrap.style.width = "100%";
 					}else{
 						carttoolbar.classList.add("fixed_bottom");
+						toolbarwrap.style.width = "74%";
 					}
 				})
 			},
@@ -532,7 +534,7 @@
 	  	}
 		},
 		mounted(){
-			this.loadMinWith();
+			//this.loadMinWith();
 			this.getMessage();//获得相关信息
 			let that = this;
 			setTimeout(function(){
@@ -564,11 +566,12 @@
 	}
 	/*整个内容部分*/
 	.cart{
+		width: 100%;
 		margin-top: 30px;
 	}
 	/*全部商品内容*/
 	.w {
-    width: 990px;
+    width: 74%;
     margin: 0 auto;
 	}
 	.cart_filter_bar{
@@ -668,6 +671,7 @@
 	}
 	/*商品内容*/
 	.cart_warp {
+		width: 100%;
     background: #fff;
     margin-bottom: 20px;
 	}
@@ -970,15 +974,16 @@
 	}
 	/*结算区*/
 	.cart_floatbar{
+		width: 100%;
 		position: relative;
 	}
 	.ui_ceilinglamp{
-		width: 990px;
+		width: 100%;
     height: 52px;
     
 	}
 	.cart_toolbar {
-		width: 988px;
+		width: 100%;
     height: 50px;
     border: 1px solid #f0f0f0;
     background: #fff;
@@ -986,7 +991,7 @@
 	}
 	.toolbar_wrap {
     position: relative;
-    width: 988px;
+    width: 100%;
     margin: 0 auto;
 	}
 	.options_box {
@@ -1003,7 +1008,6 @@
     font-size: 12px;
 	}
 	.cart_checkbox {
-    position: relative;
     float: left;
     margin-right: 5px;
 	}
@@ -1014,37 +1018,14 @@
     margin: 0 3px 0 0;
     padding: 0;
 	}
-	/*删除商品*/
-	.operation{
-    float: left;
-    height: 50px;
-    width: 310px;
-    line-height: 50px;
-	}
-	.operation a {
-    float: left;
-    margin-left: 5px;
-    color: #666;
-    font-size: 12px;
-	}
 	/*右侧*/
-	.toolbar_right{
-    position: absolute;
-    height: 52px;
-    right: 0;
-    top: -1px;
-    width: 720px;
+	.toolbar_right,
+	.comm_right,
+	.btn_area{
+		float: right;
 	}
 	.normal {
     height: 52px;
-	}
-	.comm_right {
-    float: right;
-    width: 650px;
-	}
-	/*结算按钮*/
-	.btn_area {
-    float: right;
 	}
 	.submit_btn {
     display: block;

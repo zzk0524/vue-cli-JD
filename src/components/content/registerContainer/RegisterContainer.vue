@@ -14,7 +14,7 @@
 </script>
 <style scoped>
 	.registercontainer{
-		width: 1210px;
+		width: 90%;
 		margin: 0 auto;
 	}
 </style>

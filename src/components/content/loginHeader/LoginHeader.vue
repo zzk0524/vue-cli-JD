@@ -21,11 +21,12 @@
 <style scoped>
 	/*头部*/
 	.loginheader {
+		width: 100%;
 	    height: 110px;
 	}
 	/*头部的内层*/
 	.logo_con {
-    width: 1210px;
+    width: 90%;
     margin: 0 auto;
 	}
 	.clearfix:after {

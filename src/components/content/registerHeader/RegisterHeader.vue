@@ -22,12 +22,13 @@
 <style scoped>
 	/*头部*/
 	.registerheader {
+		width: 100%;
 	    height: 110px;
 	    box-shadow:0 3px 3px red;
 	}
 	/*头部的内层*/
 	.logo_con {
-    width: 1210px;
+    width: 90%;
     margin: 0 auto;
 	}
 	.clearfix:after {

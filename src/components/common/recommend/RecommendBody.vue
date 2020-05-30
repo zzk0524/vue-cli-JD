@@ -250,7 +250,7 @@
 <style scoped>
 	.recommendbody {
     margin: 0 auto;
-    width: 1190px;
+    width: 98%;
 	}	
 	.recommendbody:after{
 		display: block;

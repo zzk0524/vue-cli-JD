@@ -181,13 +181,14 @@
 	  	}	
 		},
 		mounted(){
-			this.loadMinWith();
+			//this.loadMinWith();
 		}
 	}
 </script>
 <style scoped>
 	/*footer整体的背景色*/
 	.footer{
+		width: 100%;
 		background-color: rgb(244,244,244);
 	}
 	/*footer中的多快好省区域*/
@@ -199,7 +200,7 @@
 	.footer_service_inner,
 	.footer_help_inner {
     margin: 0 auto;
-    width: 1190px;
+    width: 90%;
 	}	
 	/*ul*/
 	.footer_service_list {
@@ -209,7 +210,7 @@
 	/*每个item*/
 	.footer_service_item {
     float: left;
-    width: 297px;
+    width: 25%;
     list-style: none;
 	}
 	/*li标签的内层*/
@@ -277,7 +278,7 @@
 	/*每一部分*/
 	.footer_help_nav {
     float: left;
-    width: 198px;
+    width: 16.5%;
     line-height: 22px;
 	}
 	/*每一部分的标题*/
@@ -293,7 +294,7 @@
 	/*cover*/
 	.footer_help_cover{
     float: right;
-    width: 200px;
+    width: 17%;
     height: 150px;
 	}
 	/*cover中的标题*/

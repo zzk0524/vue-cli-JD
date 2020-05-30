@@ -304,8 +304,8 @@
   }
 	/*第一个item*/
   .header-bar-item:first-of-type{
-  	margin-left: 80px;
-  	margin-right: 390px;
+  	margin-left: 8%;
+  	margin-right: 26%;
   }
   /*请登录*/
   .header-bar-item:nth-of-type(2) a{

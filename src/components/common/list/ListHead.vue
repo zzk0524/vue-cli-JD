@@ -79,7 +79,7 @@
 	/*展示区的导航栏*/
 	.listhead_wrapper{
     margin: 0 auto;
-    width: 1190px;
+    width: 98%;
     margin-bottom: 10px;
     background: rgb(255, 255, 255);
 	}

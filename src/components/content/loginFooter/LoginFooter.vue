@@ -25,7 +25,7 @@
 </script>
 <style scoped>
 	.loginfooter {
-    width: 990px;
+    width: 73.5%;
     margin: 0 auto;
 	}	
 	.loginfooter_container {

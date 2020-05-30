@@ -23,13 +23,14 @@
 </script>
 <style scoped>
 	.cartheader{
+    width: 100%;
 		height: 75px;
 		box-shadow: 0 3px 3px red;
 	}
 	/*头部*/
 	.cartheaderbody {
 		padding: 10px 0 0;
-		width: 990px;
+		width: 74%;
     margin: 0 auto;
 	}
 	/*头部的内层*/

@@ -301,7 +301,7 @@
 	/*头部内容*/
 	.header_content{
 		position: relative;
-		width: 1190px;
+		width: 86%;
 		height: 100%;
 		margin: auto;
 	}

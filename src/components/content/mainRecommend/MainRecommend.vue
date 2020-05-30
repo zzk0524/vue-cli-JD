@@ -1,9 +1,11 @@
 <template>
 	<div class="recommend">
-		<list-head></list-head>
-		<list-body @listbodyoffsettop="getListbodyoffsettop" :seagood="segood"></list-body>
-		<recommend-head></recommend-head>
-		<recommend-body></recommend-body>
+		<div class="recommend_content">
+			<list-head></list-head>
+			<list-body @listbodyoffsettop="getListbodyoffsettop" :seagood="segood"></list-body>
+			<recommend-head></recommend-head>
+			<recommend-body></recommend-body>
+		</div>
 	</div>
 </template>
 <script>
@@ -50,5 +52,9 @@
 <style scoped>
 	.recommend{
 		background-color: rgb(244,244,244);
+	}
+	.recommend_content{
+		width: 90%;
+		margin: 0 auto;
 	}
 </style>

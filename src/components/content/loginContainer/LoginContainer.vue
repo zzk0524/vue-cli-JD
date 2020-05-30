@@ -235,6 +235,9 @@
 	.divnone{
 		display: none;
 	}
+	.logincontainer{
+		width: 100%;
+	}
 	/*登录内层*/
 	.login_wrap {
 	  position: relative;
@@ -244,7 +247,8 @@
 	}
 	/*表单外层*/
 	.w {
-    width: 990px;
+		height: 475px;
+    width: 73.5%;
     margin: 0 auto;
 	}
 	/*表单*/

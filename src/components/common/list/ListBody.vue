@@ -156,7 +156,7 @@
 <style scoped>
 	.listbody {
     margin: 0 auto;
-    width: 1190px;
+    width: 98%;
 	}	
 	.listbody:after{
 		display: block;
