@@ -171,7 +171,7 @@
 					      	alert(users.message);
 					      }else if(users.message == "登录成功"){
 					      	//console.log(users.data);
-					      	alert(users.message);
+					      	// alert(users.message);
 					      	_this.$router.replace({name:'Home',params:{user:users.data}});
 					      }else{
 					      	alert("服务器错误");

@@ -230,6 +230,9 @@
 				      _this.cartgoods = goodslist.data;
 				      //console.log(_this.cartgoods);
 				      _this.goodsnum = _this.cartgoods.length;
+				      if(_this.goodsnum==0){
+				      	_this.empty = true;
+				      }
 				    }else{
 				      //4.对响应进行解析
 				      alert("服务器错误");
@@ -445,9 +448,17 @@
 	  		let index = $event.target.getAttribute("data-index");
 	  		let _this = this;
 	  		let oAjax = null;
+	  		let checkboxid = "checkbox"+index;
+	  		let checkbox = this.getEle(checkboxid);
+	  		let maincheckbox = this.getEle("maincheckbox");
+	  		let maincheckbox1 = this.getEle("maincheckbox1");
 	  		_this.optgood = [];
 				_this.optgood = _this.cartgoods[index-1];
-				_this.sumprice = (parseInt(_this.sumprice) - parseInt(_this.optgood.goodsumprice)).toFixed(2);
+	  		if(checkbox.checked){//该商品以被选中
+	  			_this.sumprice =(parseInt(_this.sumprice) - parseInt(_this.optgood.goodsumprice)).toFixed(2);
+	  			maincheckbox.checked = false;
+	  			maincheckbox1.checked = false;
+	  		}
 				if(window.XMLHttpRequest){
 				  oAjax = new XMLHttpRequest();
 				}else{

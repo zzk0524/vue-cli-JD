@@ -566,9 +566,9 @@
 	}
 	/*爱好*/
 	.form_item_favourite{
-		position: relative;
+	  position: relative;
 	  border: solid 1px transparent;
-	  width: 400px;
+	  width: 406px;
 	  height: 96px;
 	  line-height: 40px;
 	  padding-left: 20px;
@@ -576,6 +576,10 @@
 	}
 	.form_item_favourite label{
 		margin-right: 33px;
+	}
+	.form_item_favourite label input{
+		vertical-align: middle;
+		margin-right: 2px;
 	}
 	.form_item_favourite_title{
 		margin-top: 10px;

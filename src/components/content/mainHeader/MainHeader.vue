@@ -95,10 +95,10 @@
 				achotword:"抢购机神券",
 				achotwords:["春季家装节","抢购机神券"],
 				placeholder:["金龙鱼大米","扫描仪","联想拯救者","无线路由器","花洒套装","华硕笔记本","奥克斯空调"],
-				search:'',
+				search:'',//搜索框内容
 				goodslist:[],//搜索框聚焦时出现商品列表
-				getuser:[],
-				usercartnum:"0"
+				getuser:[],//用户信息
+				usercartnum:"0"//用户购物车数量,未登录时0
 			}
 		},
 		props:["listbodyhight"],
@@ -141,20 +141,19 @@
 					alert("不能为空");
 				}
 			},
-			searchfocus($event){
+			searchfocus($event){//搜索输入框聚焦时触发
 				let _this = this;
 				let searchlist = _this.getelement("search_list");
 				let oAjax = null;
 				let timer;
-				let num = 0;
-				/*placeholder颜色*/
+				/*改变placeholder颜色*/
 				$event.target.classList.add("text");
 				searchlist.classList.remove("divnone");
-		    $event.target.onkeyup = function(e) {
-		      if(timer){
+		    $event.target.onkeyup = function(e) {//键盘抬起事件
+		      if(timer){//如果连续输入会重启计时器
 		      	clearTimeout(timer);
 		      } 
-		      timer = setTimeout(() => {
+		      timer = setTimeout(() => {//为了不频繁发送请求,延时发送
 		        //发送请求
 		        if(window.XMLHttpRequest){
 							oAjax = new XMLHttpRequest();
@@ -162,16 +161,17 @@
 							oAjax = new ActiveXObject("Microsoft.XMLHTTP");
 						}
 						let pattern = /\s/;
-						if(_this.search&&!pattern.exec(_this.search)){
+						if(_this.search&&!pattern.exec(_this.search)){//如果输入不为空
 							oAjax.open("Get","http://127.0.0.1/goods/selectGoods?title="+_this.search,true);
 							oAjax.send();
 							oAjax.onreadystatechange = function(){
 								if(oAjax.readyState == 4){
 									if(oAjax.status >= 200 && oAjax.status < 300 || oAjax.status == 304){
 										//解析响应
+										let num = 0;
 										let goods = JSON.parse(oAjax.responseText);
 										_this.goodslist = [];//存的时候先置空
-									  while(num<8){
+									  while(num<8){//只放8条数据
 									  	if(goods.data[num]){
 									  		_this.goodslist[num] = goods.data[num];
 									  	}
@@ -182,20 +182,22 @@
 									}
 								}
 							}
+						}else{
+							_this.goodslist = [];//删除输入框中的数据时清空列表
 						}
 		      }, 1000)
 		    }
 			},
-			searchblur($event){
+			searchblur($event){//搜索框的失焦事件
 				if(!this.search){
 					this.goodslist = [];
 				}
-				/*placeholder颜色*/
+				/*改变placeholder颜色*/
 				$event.target.classList.remove("text");
 				let searchlist = this.getelement("search_list");
 				searchlist.classList.add("divnone");
 			},
-			hotwords(){
+			hotwords(){//让placeholder内容动起来
 				let _this = this;
 				let i = 0;
 				let j = 0;
@@ -223,15 +225,10 @@
 					this.getuser = JSON.parse(tempData);
 					this.selectUserCart(this.getuser.id);//查询该用户的购物车商品数
 				}else{
-					if(this.$route.params.user == null){//没登录显示热品
-						this.usercartnum = "0";//购物车数量就为0
-					}else{
-						this.getuser = this.$route.params.user;
-						this.selectUserCart(this.getuser.accountid);//查询该用户的购物车商品数
-					}
+					this.usercartnum = "0";//购物车数量就为0
 				} 
 			},
-			selectUserCart(userid){
+			selectUserCart(userid){//显示用户购物车数量
 				let _this = this;
 				let oAjax = null;
 				if(window.XMLHttpRequest){
@@ -255,29 +252,34 @@
 				  }
 				}
 			},
-			myCart(){
-				window.sessionStorage.removeItem("userid");
-				window.sessionStorage.setItem("userid",JSON.stringify(this.getuser.id));
-					//console.log(window.sessionStorage.getItem("userid"));
-				if(window.sessionStorage.getItem("userid")){
-					let {href} = this.$router.resolve({name:'Cart',params:{currentLogin:this.getuser}});
-					window.open(href, '_blank');//打开购物车页面
-				}
-				let _this = this;
-				setInterval(function(){
-					const tempData = window.sessionStorage.getItem('tempData');
-					if(tempData){//如果内存中有用户数据
-						_this.getuser = JSON.parse(tempData);
-						_this.selectUserCart(_this.getuser.id);//查询该用户的购物车商品数
-					}else{
-						if(_this.$route.params.user == null){//没登录显示热品
-							_this.usercartnum = "0";//购物车数量就为0
+			myCart(){//点击购物车
+				if(this.getuser.id){//登录后
+					window.sessionStorage.removeItem("userid");
+					window.sessionStorage.setItem("userid",JSON.stringify(this.getuser.id));
+						//console.log(window.sessionStorage.getItem("userid"));
+					if(window.sessionStorage.getItem("userid")){
+						let {href} = this.$router.resolve({name:'Cart',params:{currentLogin:this.getuser}});
+						window.open(href, '_blank');//打开购物车页面
+					}
+					let _this = this;
+					setInterval(function(){
+						const tempData = window.sessionStorage.getItem('tempData');
+						if(tempData){//如果内存中有用户数据
+							_this.getuser = JSON.parse(tempData);
+							_this.selectUserCart(_this.getuser.id);//查询该用户的购物车商品数
 						}else{
-							_this.getuser = _this.$route.params.user;
-							_this.selectUserCart(_this.getuser.accountid);//查询该用户的购物车商品数
-						}
-					} 
-				},3000)
+							if(_this.$route.params.user == null){//没登录显示热品
+								_this.usercartnum = "0";//购物车数量就为0
+							}else{
+								_this.getuser = _this.$route.params.user;
+								_this.selectUserCart(_this.getuser.accountid);//查询该用户的购物车商品数
+							}
+						} 
+					},3000)
+				}else{
+					alert("当前没有登录,请登录!");
+					this.$router.replace({name:'Login'});
+				}
 			}
 		},
 		mounted(){

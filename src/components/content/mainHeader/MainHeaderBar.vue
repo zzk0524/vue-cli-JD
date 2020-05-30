@@ -31,6 +31,7 @@
 						<div>{{currentLog.account}}</div>
 					</div>
 					<div class="denglu_list divnone">
+						<a href="javascript:void(0);" @click="pwdUpdate()">修改密码</a>
 						<a href="javascript:location.reload();" @click="exit()">退出登录</a>
 					</div>
 				</div>
@@ -202,7 +203,7 @@
 				hypdItems:["手机","智能数码","玩3C","电脑办公","家用电器","鲸鱼智能","服装城","淘淘生鲜","家装城","母婴","食品","农资频道","整车","图书","劳动防护"],
 				shfwItems:["淘淘众筹","白条","淘淘金融APP","淘淘小金库","理财","话费","水电煤","彩票","旅行","机票酒店","电影票","淘淘到家","游戏","拍拍回收","充值"],
 				gdjxItems:["合作招商","淘淘通信","淘淘E卡","企业采购","服务市场","办公生活馆","乡村招募","校园加盟","淘淘社区","游戏社区","知识产权维权","论坛"],
-				currentLog:{}
+				currentLog:[]
 			}
 		},
 		methods:{
@@ -259,22 +260,26 @@
 				const tempData = window.sessionStorage.getItem('tempData');
 				if(tempData){
 					//console.log(JSON.parse(tempData);
-					this.currentLog = JSON.parse(window.sessionStorage.getItem('tempData'));
-					console.log("mianheader"+this.currentLog);
+					this.currentLog = JSON.parse(tempData);
+					//console.log("mianheader"+this.currentLog);
 					this.displayUsername();
 				}else{
 					if(this.$route.params.user == null){
 						this.morenUsername();
 					}else{
 						this.currentLog = this.$route.params.user;
+						// console.log("mianheader"+this.currentLog.account);
+						// console.log("mianheader"+this.$route.params.user);
 					  window.sessionStorage.setItem('tempData', JSON.stringify(this.$route.params.user));
-					  console.log(JSON.stringify(this.$route.params.user));
 					  this.displayUsername();
 					}
 				} 
 			},
 			exit(){
 				 window.sessionStorage.removeItem('tempData');
+			},
+			pwdUpdate(){//修改密码,带参跳转
+				this.$router.replace({name:'User',params:{currentLog:this.currentLog}});
 			}
 		},
 		mounted(){
@@ -528,8 +533,11 @@
   /*用户名隐藏区*/
   .denglu_list{
 		width: 90px;
-		height: 35px;
+		height: 62px;
 		left: 7px;
+  }
+  .denglu_list a{
+  	display: block;
   }
   /*白条*/
   .denglu_list:before{

@@ -79,4 +79,10 @@ public class GoodsController {
 		System.out.println(cart);
 		return service.deleteCart(cart);
 	}
+	//ĞŞ¸ÄÃÜÂë
+	@PostMapping("/updateUser")
+	public Result updateUser(String id,String password){
+		//System.out.println(cart);
+		return service.updateUser(id,password);
+	}
 }

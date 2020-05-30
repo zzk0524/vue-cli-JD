@@ -284,4 +284,20 @@ public class GoodsService {
 			return result;
 		}
 	}
+	public Result updateUser(String id,String password) {
+		Result result=new Result();
+		try {
+			dao.updateUser(id,password);
+			result.setCode(1);
+			result.setSuccess(true);
+			result.setMessage("修改成功,请用新密码登录!");
+			return result;
+		}catch(Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+			result.setSuccess(false);
+			result.setMessage("服务器错误！！");
+			return result;
+		}
+	}
 }

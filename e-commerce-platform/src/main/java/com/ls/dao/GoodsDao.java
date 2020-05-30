@@ -44,7 +44,7 @@ public interface GoodsDao {
 	@Select("select * from jd_item where title like '%${title}%'")
 	List<Goods> selectGoods(@Param("title")String title);
 	//直接加入购物车
-	@Insert("insert into jd_cart values(null,#{cart.accountid},#{cart.goodid},#{cart.goodtitle},#{cart.goodprice},#{cart.goodpic},#{cart.shopname},#{cart.goodnum},#{cart.goodsumprice})")
+	@Insert("insert into jd_cart values(null,#{cart.accountid},#{cart.goodid},#{cart.goodtitle},#{cart.goodprice},#{cart.goodpic},#{cart.shopname},#{cart.goodnum},#{cart.goodsumprice},#{cart.goodtype})")
 	void addCart(@Param("cart")Cart cart);
 	//购物车的东西只改变数量
 	@Update("update jd_cart set goodnum=goodnum+#{goodnum},goodsumprice=goodsumprice+#{goodsumprice} where accountid=#{accountid} and goodid=#{goodid}")
@@ -52,7 +52,7 @@ public interface GoodsDao {
 	//查询某用户的购物车
 	@Select("select * from jd_cart where accountid=#{accountid}")
 	List<Cart> selectCart(@Param("accountid")String accountid);
-	//查询书否存在该商品
+	//查询是否存在该商品
 	@Select("select * from jd_cart where accountid=#{accountid} and goodid=#{goodid}")
 	List<Cart> selectCartgood(@Param("accountid")int accountid,@Param("goodid")int goodid);
 	//加减购物车商品街
@@ -61,4 +61,7 @@ public interface GoodsDao {
 	//删除购物车某个商品
 	@Delete("delete from jd_cart where accountid=#{accountid} and goodid=#{goodid}")
 	void deleteGood(@Param("accountid")int accountid,@Param("goodid")int goodid);
+	//修改密码
+	@Update("update jd_user set password=#{password} where id=#{id}")
+	void updateUser(@Param("id")String id,@Param("password")String password);
 }

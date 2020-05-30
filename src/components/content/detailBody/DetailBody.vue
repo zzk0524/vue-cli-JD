@@ -281,7 +281,7 @@
 			},
 			addShopCar(){//点击加入购物车
 				//判断有没有用户登录，没有转到登录页，有直接转购物车，用路由在当前页变化
-				if(this.currentUser){//有用户先存数据库去到购物车中,传值商品信息和数量
+				if(this.currentUser.id){//有用户先存数据库去到购物车中,传值商品信息和数量
 					//更新数据请求
 					let _this = this;
 					let oAjax = null;
@@ -294,7 +294,8 @@
 					_this.form.shopname = _this.currentGood.shopname;
 					_this.form.goodnum = buynum.value;
 					_this.form.goodsumprice = (parseInt(_this.currentGood.price)*parseInt(buynum.value)).toFixed(2);
-					console.log(_this.form);
+					_this.form.goodtype = _this.currentGood.type;
+					//console.log(_this.form);
 					console.log(JSON.stringify(_this.form));
 					if(window.XMLHttpRequest){
 						oAjax = new XMLHttpRequest();
@@ -319,6 +320,7 @@
 					  }
 					}
 				}else{//没用户
+					alert("当前未登录,请登录!");
 					this.$router.replace({name:'Login'});
 				}
 			}
