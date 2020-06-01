@@ -3458,6 +3458,7 @@
   	width: 90%;
   	margin: 0 auto;
   	display: flex;
+  	justify-content: center;
   }
   /*调整banner组件的位置*/
   #bannerBar{

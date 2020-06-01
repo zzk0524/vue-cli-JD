@@ -1,187 +1,191 @@
 <template>
 	<div>
 		<header-bar>
-			<header-bar-item>
-				<div class="location">
-					<div class="location_content">	
-						<img src="~assets/img/location.png" alt="位置">
-						<div>山东</div>
-					</div>
-					<div class="location_list divnone list_position" id="location_list">
-						<div class="location_list_first">
-							<div class="location_list_first_item" v-for="item in locationItems" :key="item">{{item}}</div>
+			<div class="first_fl">
+				<header-bar-item>
+					<div class="location">
+						<div class="location_content">	
+							<img src="~assets/img/location.png" alt="位置">
+							<div>山东</div>
 						</div>
-						<div class="location_line"><div>地区专享版本</div></div>
-						<div class="location_list_second">
-							<div class="location_list_second_item">中国港澳</div>
-							<div class="location_list_second_item">中国台湾</div>
-							<div class="location_list_second_item">淘淘全球</div>
-						</div>
-					</div>
-				</div>
-			</header-bar-item>
-			<header-bar-item>
-				<div id="moren">
-					<router-link to="/login">
-						<div>你好，请登录</div>
-					</router-link>
-				</div>
-				<div id="denglu" class="downarrow divnone" v-model="currentLog">
-					<div class="denglu_content">
-						<div>{{currentLog.account}}</div>
-					</div>
-					<div class="denglu_list divnone">
-						<a href="javascript:void(0);" @click="pwdUpdate()">修改密码</a>
-						<a href="javascript:location.reload();" @click="exit()">退出登录</a>
-					</div>
-				</div>
-			</header-bar-item>
-			<header-bar-item>
-				<router-link to="/register" class="register">
-					<div>免费注册</div>
-				</router-link>	
-			</header-bar-item>
-			<header-bar-item>
-				<div class="downarrow mine">
-					<div class="mine_content">
-						<div>我的淘淘</div>
-						<img src="~assets/img/downarrow.png" alt="向下箭头">
-					</div>
-					<div class="mine_list divnone list_position" id="mine_list">
-						<div class="mine_list_first">
-							<div class="mine_list_first_item">待处理订单</div>
-							<div class="mine_list_first_item">消息</div>
-							<div class="mine_list_first_item">返修退换货</div>
-							<div class="mine_list_first_item">我的回答</div>
-							<div class="mine_list_first_item">降价商品</div>
-							<div class="mine_list_first_item">我的关注</div>
-						</div>
-						<div class="mine_line"></div>
-						<div class="mine_list_second">
-							<div class="mine_list_second_item">我的淘豆</div>
-							<div class="mine_list_second_item">我的优惠券</div>
-							<div class="mine_list_second_item">我的白条</div>
-							<div class="mine_list_second_item">我的理财</div>
+						<div class="location_list divnone list_position" id="location_list">
+							<div class="location_list_first">
+								<div class="location_list_first_item" v-for="item in locationItems" :key="item">{{item}}</div>
+							</div>
+							<div class="location_line"><div>地区专享版本</div></div>
+							<div class="location_list_second">
+								<div class="location_list_second_item">中国港澳</div>
+								<div class="location_list_second_item">中国台湾</div>
+								<div class="location_list_second_item">淘淘全球</div>
+							</div>
 						</div>
 					</div>
-				</div>
-			</header-bar-item>
-			<header-bar-item>
-				<div>
-						<div>淘淘会员</div>
-				</div>
-			</header-bar-item>
-			<header-bar-item>
-				<div class="downarrow favorite">
-					<div class="favorite_content">
-						<div>收藏夹</div>
-						<img src="~assets/img/downarrow.png" alt="向下箭头">
+				</header-bar-item>
+			</div>
+			<div class="other_fr">
+				<header-bar-item>
+					<div id="moren">
+						<router-link to="/login">
+							<div>你好，请登录</div>
+						</router-link>
+					</div>
+					<div id="denglu" class="downarrow divnone" v-model="currentLog">
+						<div class="denglu_content">
+							<div>{{currentLog.account}}</div>
+						</div>
+						<div class="denglu_list divnone">
+							<a href="javascript:void(0);" @click="pwdUpdate()">修改密码</a>
+							<a href="javascript:location.reload();" @click="exit()">退出登录</a>
+						</div>
+					</div>
+				</header-bar-item>
+				<header-bar-item>
+					<router-link to="/register" class="register">
+						<div>免费注册</div>
+					</router-link>	
+				</header-bar-item>
+				<header-bar-item>
+					<div class="downarrow mine">
+						<div class="mine_content">
+							<div>我的淘淘</div>
+							<img src="~assets/img/downarrow.png" alt="向下箭头">
+						</div>
+						<div class="mine_list divnone list_position" id="mine_list">
+							<div class="mine_list_first">
+								<div class="mine_list_first_item">待处理订单</div>
+								<div class="mine_list_first_item">消息</div>
+								<div class="mine_list_first_item">返修退换货</div>
+								<div class="mine_list_first_item">我的回答</div>
+								<div class="mine_list_first_item">降价商品</div>
+								<div class="mine_list_first_item">我的关注</div>
+							</div>
+							<div class="mine_line"></div>
+							<div class="mine_list_second">
+								<div class="mine_list_second_item">我的淘豆</div>
+								<div class="mine_list_second_item">我的优惠券</div>
+								<div class="mine_list_second_item">我的白条</div>
+								<div class="mine_list_second_item">我的理财</div>
+							</div>
+						</div>
+					</div>
+				</header-bar-item>
+				<header-bar-item>
+					<div>
+							<div>淘淘会员</div>
+					</div>
+				</header-bar-item>
+				<header-bar-item>
+					<div class="downarrow favorite">
+						<div class="favorite_content">
+							<div>收藏夹</div>
+							<img src="~assets/img/downarrow.png" alt="向下箭头">
+						</div>	
+						<div class="favorite_list list_position divnone" id="favorite_list">
+							<div class="favorite_list_first">
+								<div class="favorite_list_first_item">收藏的宝贝</div>
+								<div class="favorite_list_first_item">收藏的店铺</div>
+							</div>
+						</div>
 					</div>	
-					<div class="favorite_list list_position divnone" id="favorite_list">
-						<div class="favorite_list_first">
-							<div class="favorite_list_first_item">收藏的宝贝</div>
-							<div class="favorite_list_first_item">收藏的店铺</div>
+				</header-bar-item>
+				<header-bar-item>
+					<div class="downarrow service">
+						<div class="service_content">
+							<div>联系客服</div>
+							<img src="~assets/img/downarrow.png" alt="向下箭头">
 						</div>
-					</div>
-				</div>	
-			</header-bar-item>
-			<header-bar-item>
-				<div class="downarrow service">
-					<div class="service_content">
-						<div>联系客服</div>
-						<img src="~assets/img/downarrow.png" alt="向下箭头">
-					</div>
-					<div class="service_list list_position divnone" id="service_list">
-						<div class="kehu">客户</div>
-						<div class="service_list_first">
-							<div class="service_list_first_item">帮助中心</div>
-							<div class="service_list_first_item">售后服务</div>
-							<div class="service_list_first_item">在线客服</div>
-							<div class="service_list_first_item">意见建议</div>
-							<div class="service_list_first_item">电话客服</div>
-							<div class="service_list_first_item">客服邮箱</div>
-							<div class="service_list_first_item">金融资讯</div>
-							<div class="service_list_first_item">全球售客服</div>
-						</div>
-						<div class="service_line"></div>
-						<div class="shanghu">商户</div>
-						<div class="service_list_second">
-							<div class="service_list_second_item">合作招商</div>
-							<div class="service_list_second_item">成长中心</div>
-							<div class="service_list_second_item">商家后台</div>
-							<div class="service_list_second_item">京麦工作台</div>
-							<div class="service_list_second_item">商家帮助</div>
-							<div class="service_list_second_item">规则平台</div>
-						</div>
-					</div>
-				</div>
-			</header-bar-item>
-			<header-bar-item>
-				<div class="downarrow navigation">
-					<div class="navigation_content">
-						<div>网站导航</div>
-						<img src="~assets/img/downarrow.png" alt="向下箭头">
-					</div>
-					<div class="navigation_list divnone list_position" id="navigation_list">
-						<div class="navigation_list_content">
-							<div class="tszt">特色主题</div>
-							<div class="navigation_list_first">
-								<div class="navigation_list_first_item" v-for="item in teztItems" :key="item">{{item}}</div>
+						<div class="service_list list_position divnone" id="service_list">
+							<div class="kehu">客户</div>
+							<div class="service_list_first">
+								<div class="service_list_first_item">帮助中心</div>
+								<div class="service_list_first_item">售后服务</div>
+								<div class="service_list_first_item">在线客服</div>
+								<div class="service_list_first_item">意见建议</div>
+								<div class="service_list_first_item">电话客服</div>
+								<div class="service_list_first_item">客服邮箱</div>
+								<div class="service_list_first_item">金融资讯</div>
+								<div class="service_list_first_item">全球售客服</div>
+							</div>
+							<div class="service_line"></div>
+							<div class="shanghu">商户</div>
+							<div class="service_list_second">
+								<div class="service_list_second_item">合作招商</div>
+								<div class="service_list_second_item">成长中心</div>
+								<div class="service_list_second_item">商家后台</div>
+								<div class="service_list_second_item">京麦工作台</div>
+								<div class="service_list_second_item">商家帮助</div>
+								<div class="service_list_second_item">规则平台</div>
 							</div>
 						</div>
-						<div class="navigation_line"></div>
-						<div class="navigation_list_content">
-							<div class="hypd">行业频道</div>
-							<div class="navigation_list_second">
-								<div class="navigation_list_second_item" v-for="item in hypdItems" :key="item">{{item}}</div>
-							</div>
-						</div>
-						<div class="navigation_line"></div>
-						<div class="navigation_list_content">
-							<div class="shfw">生活服务</div>
-							<div class="navigation_list_third">
-								<div class="navigation_list_third_item" v-for="item in shfwItems" :key="item">{{item}}</div>	
-							</div>
-						</div>
-						<div class="navigation_line"></div>
-						<div class="navigation_list_content">
-							<div class="gdjx">更多精选</div>
-							<div class="navigation_list_fourth">
-								<div class="navigation_list_fourth_item" v-for="item in gdjxItems" :key="item">{{item}}</div>
-							</div>
-						</div>
-					</div>		
-				</div>
-			</header-bar-item>
-			<header-bar-item>
-				<div class="phonett">
-					<div class="phonett_content">
-						<div>手机淘淘</div>
 					</div>
-					<div class="phonett_list list_position divnone" id="phonett_list">
-						<div class="phonett_list_first">
-							<div class="phonett_list_first_item">
-								<img src="~assets/img/phonecode.png" alt="二维码">
-							</div>
-							<div class="phonett_list_first_item">
-									<div>手机淘淘</div>
-									<div>新人专享大礼包</div>
-									<div><img src="~assets/img/iphone.png" alt="安卓苹果"></div>
-							</div>
+				</header-bar-item>
+				<header-bar-item>
+					<div class="downarrow navigation">
+						<div class="navigation_content">
+							<div>网站导航</div>
+							<img src="~assets/img/downarrow.png" alt="向下箭头">
 						</div>
-						<div class="phonett_line"></div>
-						<div class="phonett_list_second">
-							<div class="phonett_list_second_item">
-								<img src="~assets/img/phonecode2.png" alt="二维码2">
-							</div>	
-							<div class="phonett_list_second_item">
-								<div>关注淘淘</div>
-								<div>扫一扫关注参与宠粉大抽奖，限时抽爱奇艺视频月卡</div>	
-							</div>	
+						<div class="navigation_list divnone list_position" id="navigation_list">
+							<div class="navigation_list_content">
+								<div class="tszt">特色主题</div>
+								<div class="navigation_list_first">
+									<div class="navigation_list_first_item" v-for="item in teztItems" :key="item">{{item}}</div>
+								</div>
+							</div>
+							<div class="navigation_line"></div>
+							<div class="navigation_list_content">
+								<div class="hypd">行业频道</div>
+								<div class="navigation_list_second">
+									<div class="navigation_list_second_item" v-for="item in hypdItems" :key="item">{{item}}</div>
+								</div>
+							</div>
+							<div class="navigation_line"></div>
+							<div class="navigation_list_content">
+								<div class="shfw">生活服务</div>
+								<div class="navigation_list_third">
+									<div class="navigation_list_third_item" v-for="item in shfwItems" :key="item">{{item}}</div>	
+								</div>
+							</div>
+							<div class="navigation_line"></div>
+							<div class="navigation_list_content">
+								<div class="gdjx">更多精选</div>
+								<div class="navigation_list_fourth">
+									<div class="navigation_list_fourth_item" v-for="item in gdjxItems" :key="item">{{item}}</div>
+								</div>
+							</div>
+						</div>		
+					</div>
+				</header-bar-item>
+				<header-bar-item>
+					<div class="phonett">
+						<div class="phonett_content">
+							<div>手机淘淘</div>
+						</div>
+						<div class="phonett_list list_position divnone" id="phonett_list">
+							<div class="phonett_list_first">
+								<div class="phonett_list_first_item">
+									<img src="~assets/img/phonecode.png" alt="二维码">
+								</div>
+								<div class="phonett_list_first_item">
+										<div>手机淘淘</div>
+										<div>新人专享大礼包</div>
+										<div><img src="~assets/img/iphone.png" alt="安卓苹果"></div>
+								</div>
+							</div>
+							<div class="phonett_line"></div>
+							<div class="phonett_list_second">
+								<div class="phonett_list_second_item">
+									<img src="~assets/img/phonecode2.png" alt="二维码2">
+								</div>	
+								<div class="phonett_list_second_item">
+									<div>关注淘淘</div>
+									<div>扫一扫关注参与宠粉大抽奖，限时抽爱奇艺视频月卡</div>	
+								</div>	
+							</div>
 						</div>
 					</div>
-				</div>
-			</header-bar-item>
+				</header-bar-item>
+			</div>
 		</header-bar>
 	</div>
 </template>
@@ -294,6 +298,15 @@
 </script>
 
 <style scoped>
+	.first_fl{
+		float: left;
+		margin-left: 8%;
+	}
+	.other_fr{
+		float: right;
+		display: flex;
+		margin-right: 8%;
+	}
   /*添加类切换隐藏和显示*/
   .divnone{
   	display: none !important;
@@ -303,18 +316,18 @@
 		position: relative;
   }
 	/*第一个item*/
-  .header-bar-item:first-of-type{
+  /*.header-bar-item:first-of-type{
   	margin-left: 8%;
   	margin-right: 26%;
-  }
+  }*/
   /*请登录*/
-  .header-bar-item:nth-of-type(2) a{
+  .other_fr>.header-bar-item:first-of-type a{
 		color: #999;
   }
   /*经过你好请登录和免费注册,鼠标经过变成小手和红色的字*/
-  .header-bar-item:nth-of-type(2) a:hover,
-  .header-bar-item:nth-of-type(5):hover,
-  .header-bar-item:nth-of-type(3) a,
+  .other_fr .header-bar-item:nth-of-type(1) a:hover,
+  .other_fr .header-bar-item:nth-of-type(4):hover,
+  .other_fr .header-bar-item:nth-of-type(2) a,
   .location_content:hover,
   .mine_content:hover,
   .location_list_second_item:hover,
@@ -349,11 +362,11 @@
   	border: 1px solid transparent;
   }
   /*可以有子菜单框的那几个的背景色和边框*/
-  .header-bar-item:first-of-type:hover,
-  .header-bar-item:nth-of-type(4):hover,
-  .header-bar-item:nth-of-type(6):hover,
-  .header-bar-item:nth-of-type(7):hover,
-  .header-bar-item:nth-of-type(8):hover,
+  .first_fl .header-bar-item:first-of-type:hover,
+  .other_fr .header-bar-item:nth-of-type(3):hover,
+  .other_fr .header-bar-item:nth-of-type(5):hover,
+  .other_fr .header-bar-item:nth-of-type(6):hover,
+  .other_fr .header-bar-item:nth-of-type(7):hover,
   #denglu:hover{
   	background-color: #fff;
   	border:rgb(204,204,204) solid 1px;

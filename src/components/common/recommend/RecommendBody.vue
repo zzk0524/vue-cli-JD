@@ -267,7 +267,6 @@
 	/*每个商品框*/
 	.recommendbody_item {
     position: relative;
-    float: left;
     width: 230px;
     height: 322px;
     margin: 0 4px 10px;

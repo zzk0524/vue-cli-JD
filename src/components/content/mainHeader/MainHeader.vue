@@ -305,7 +305,7 @@
 	/*头部内容*/
 	.header_content{
 		position: relative;
-		width: 86%;
+		width: 80%;
 		height: 100%;
 		margin: auto;
 	}
@@ -417,7 +417,7 @@
 	/*购物车*/
 	#settleup {
     position: absolute;
-    right: 16%;
+    right: 14%;
     top: 25px;
 	}
 	/*购物车边框*/
@@ -538,7 +538,7 @@
     position: absolute;
     right: 0;
     bottom: 10px;
-    width: 190px;
+    width: 170px;
     height: 120px;
   }
   .promo_lk {
