@@ -3462,7 +3462,7 @@
   }
   /*调整banner组件的位置*/
   #bannerBar{
-  	margin: 1% 1% 1.5% 4%;
+  	margin: 1% 1% 1.5% 0;
   }
   /*组件中每个li*/
   .cate_menu_item{
@@ -3554,7 +3554,7 @@
 	/*banner里的右边的登录模块*/
   .banner_area_right{
   	margin-top: 1%;
-  	width: 17%;
+  	width: 206px;
   	height: 480px;
   }
 	/**banner里的右边用户登录*/

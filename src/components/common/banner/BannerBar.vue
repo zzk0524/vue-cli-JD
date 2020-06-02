@@ -12,7 +12,7 @@
 	/*左侧导航栏+轮播图区*/
 	#bannerBar{
 		display: flex;
-		width: 75%;
+		width: 910px;
 		height: 480px;
 		background-color: rgb(244,244,244);
 	}

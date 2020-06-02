@@ -315,11 +315,6 @@
   .header-bar-item{
 		position: relative;
   }
-	/*第一个item*/
-  /*.header-bar-item:first-of-type{
-  	margin-left: 8%;
-  	margin-right: 26%;
-  }*/
   /*请登录*/
   .other_fr>.header-bar-item:first-of-type a{
 		color: #999;
