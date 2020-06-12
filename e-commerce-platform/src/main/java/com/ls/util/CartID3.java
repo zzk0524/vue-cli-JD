@@ -808,7 +808,7 @@ public class CartID3 {
 	//获取训练数据集
 	public void getDate(String favourite){
 		//String[] favarr = favourite.split(",");//把用户爱好字符串存到数组中去
-		System.out.println(favourite);
+		//System.out.println(favourite);
 		if(favourite.indexOf("老人手机")!=-1||favourite.indexOf("GB")!=-1) {//确认一下是手机
 			String[] labelstr = new String[] {"品牌","目标手机"};
 			for(int i=0;i<labelstr.length;i++){//小米，荣耀，iPhone，华为，Redmi,vivo,OPPO ,魅族，锤子，黑鲨，中兴，诺基亚，三星，杂牌

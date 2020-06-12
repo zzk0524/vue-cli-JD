@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ls.service.GoodsService;
 import com.ls.util.Result;
 import com.ls.bean.Account;
+import com.ls.bean.Admin;
 import com.ls.bean.Cart;
+import com.ls.bean.Goods;
 
 @RestController
 @RequestMapping("/goods")
@@ -85,4 +87,70 @@ public class GoodsController {
 		System.out.println(id+password);
 		return service.updateUser(id,password);
 	}
+	//管理员登录验证
+	@GetMapping("/adminCheck")
+	public Result adminCheck(String account,String password){
+		//System.out.println(account+password);
+		return service.adminCheck(account,password);
+	}
+	//管理员查询所有用户
+	@GetMapping("/adminSelectUser")
+	public Result adminSelectUser(){
+		//System.out.println(account+password);
+		return service.adminSelectUser();
+	}
+	//管理员修改用户信息
+	@PostMapping("/adminUpdateUser")
+	public Result adminUpdateUser(@RequestBody Account user){
+		//System.out.println(id+password);
+		return service.adminUpdateUser(user);
+	}
+	//管理员删除用户信息
+	@PostMapping("/adminDeleteUser")
+	public Result adminDeleteUser(String id){
+		//System.out.println(id+password);
+		return service.adminDeleteUser(id);
+	}
+	//管理员增加用户信息
+	@PostMapping("/adminAddUser")
+	public Result adminAddUser(@RequestBody Account user){
+		//System.out.println(user);
+		return service.adminAddUser(user);
+	}
+	//管理员查询所有商品
+	@GetMapping("/adminSelectGood")
+	public Result adminSelectGood(){
+		//System.out.println(account+password);
+		return service.adminSelectGood();
+	}
+	//管理员增加商品信息
+	@PostMapping("/adminAddGood")
+	public Result adminAddGood(@RequestBody Goods good){
+		//System.out.println(user);
+		return service.adminAddGood(good);
+	}
+	//管理员修改商品信息
+	@PostMapping("/adminUpdateGood")
+	public Result adminUpdateGood(@RequestBody Goods good){
+		//System.out.println(id+password);
+		return service.adminUpdateGood(good);
+	}
+	//管理员删除商品信息
+	@PostMapping("/adminDeleteGood")
+	public Result adminDeleteGood(String id){
+		//System.out.println(id+password);
+		return service.adminDeleteGood(id);
+	}
+	//查询管理员账户
+	@GetMapping("/selectAdmin")
+	public Result selectAdmin(){
+		//System.out.println(account+password);
+		return service.selectAdmin();
+	}
+	//管理员修改个人信息
+		@PostMapping("/updateAdmin")
+		public Result updateAdmin(@RequestBody Admin admin){
+			//System.out.println(id+password);
+			return service.updateAdmin(admin);
+		}
 }

@@ -458,6 +458,7 @@
 				_this.optgood = _this.cartgoods[index-1];
 	  		if(checkbox.checked){//该商品以被选中
 	  			_this.sumprice =(parseInt(_this.sumprice) - parseInt(_this.optgood.goodsumprice)).toFixed(2);
+	  			_this.amountsum=_this.amountsum-1;
 	  			maincheckbox.checked = false;
 	  			maincheckbox1.checked = false;
 	  		}

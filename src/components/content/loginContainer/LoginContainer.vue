@@ -143,44 +143,82 @@
 				}
 			},
 			loginbtn(){
-				if((this.form.loginname == ""&&this.form.loginpwd != "")||(this.form.loginname == ""&&this.form.loginpwd == "")){
+				if(this.form.loginname == ""){
 					alert("请填写用户名！");
-				}else if(this.form.loginnameloginname != ""&&this.form.loginpwd == ""){
+				}else if(this.form.loginname != ""&&this.form.loginpwd == ""){
 					alert("请填写密码！");
-				}else if(this.form.loginnameloginname != ""&&this.form.loginpwd != ""){
-					//发送ajax请求
-					let _this = this;
-					let oAjax = null;
-					if(window.XMLHttpRequest){
-						oAjax = new XMLHttpRequest();
+				}else if(this.form.loginname != ""&&this.form.loginpwd != ""){
+					if(this.form.loginname.length<6){//是管理员
+						//查询管理员
+						//发送ajax请求
+						let _this = this;
+						let oAjax = null;
+						if(window.XMLHttpRequest){
+							oAjax = new XMLHttpRequest();
+						}else{
+							oAjax = new ActiveXObject("Microsoft.XMLHTTP");
+						} 
+						let url = "http://127.0.0.1/goods/adminCheck";
+						let data = "account="+_this.form.loginname+"&password="+_this.form.loginpwd;
+						oAjax.open("GET",url+"?"+data,true);
+						oAjax.send();
+						oAjax.onreadystatechange=function(){
+						  if(oAjax.readyState==4){
+						    if(oAjax.status>=200 && oAjax.status<300 || oAjax.status==304){
+						      //对响应进行解析
+						      let users=JSON.parse(oAjax.responseText);
+						      if(users.message == "用户名不存在"){
+						      	alert(users.message);
+						      }else if(users.message == "密码错误"){
+						      	alert(users.message);
+						      }else if(users.message == "登录成功"){
+						      	//console.log(users.data);
+						      	// alert(users.message);
+						      	_this.$router.replace({name:'Admin',params:{user:users.data}});
+						      }else{
+						      	alert("服务器错误");
+						      } 
+						    }else{
+						      //对响应进行解析
+						      alert("服务器错误");
+						    }
+						  }
+						}
 					}else{
-						oAjax = new ActiveXObject("Microsoft.XMLHTTP");
-					} 
-					let url = "http://127.0.0.1/goods/loginCheck";
-					let data = "account="+_this.form.loginname+"&password="+_this.form.loginpwd;
-					oAjax.open("GET",url+"?"+data,true);
-					oAjax.send();
-					oAjax.onreadystatechange=function(){
-					  if(oAjax.readyState==4){
-					    if(oAjax.status>=200 && oAjax.status<300 || oAjax.status==304){
-					      //对响应进行解析
-					      let users=JSON.parse(oAjax.responseText);
-					      if(users.message == "用户名不存在"){
-					      	alert(users.message);
-					      }else if(users.message == "密码错误"){
-					      	alert(users.message);
-					      }else if(users.message == "登录成功"){
-					      	//console.log(users.data);
-					      	// alert(users.message);
-					      	_this.$router.replace({name:'Home',params:{user:users.data}});
-					      }else{
-					      	alert("服务器错误");
-					      } 
-					    }else{
-					      //对响应进行解析
-					      alert("服务器错误");
-					    }
-					  }
+						//发送ajax请求
+						let _this = this;
+						let oAjax = null;
+						if(window.XMLHttpRequest){
+							oAjax = new XMLHttpRequest();
+						}else{
+							oAjax = new ActiveXObject("Microsoft.XMLHTTP");
+						} 
+						let url = "http://127.0.0.1/goods/loginCheck";
+						let data = "account="+_this.form.loginname+"&password="+_this.form.loginpwd;
+						oAjax.open("GET",url+"?"+data,true);
+						oAjax.send();
+						oAjax.onreadystatechange=function(){
+						  if(oAjax.readyState==4){
+						    if(oAjax.status>=200 && oAjax.status<300 || oAjax.status==304){
+						      //对响应进行解析
+						      let users=JSON.parse(oAjax.responseText);
+						      if(users.message == "用户名不存在"){
+						      	alert(users.message);
+						      }else if(users.message == "密码错误"){
+						      	alert(users.message);
+						      }else if(users.message == "登录成功"){
+						      	//console.log(users.data);
+						      	// alert(users.message);
+						      	_this.$router.replace({name:'Home',params:{user:users.data}});
+						      }else{
+						      	alert("服务器错误");
+						      } 
+						    }else{
+						      //对响应进行解析
+						      alert("服务器错误");
+						    }
+						  }
+						}
 					} 
 				}
 			},

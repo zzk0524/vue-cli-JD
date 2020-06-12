@@ -30,6 +30,7 @@ body {
 a {
   color: var(--color-text);
   text-decoration: none;
+  outline: none ! important;
 }
 
 

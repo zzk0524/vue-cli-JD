@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ls.bean.Account;
+import com.ls.bean.Admin;
 import com.ls.bean.Cart;
 import com.ls.bean.Goods;
 import com.ls.util.CartID3;
@@ -53,6 +54,39 @@ public class GoodsService {
 		}
 	}
 	
+	//管理员登录验证
+	public Result adminCheck(String account,String password){
+		Result result=new Result();
+		try {
+			if(dao.adminAccountCheck(account)==null) {
+				result.setMessage("用户名不存在");
+				result.setCode(0);
+				result.setSuccess(false);
+				return result;
+			}else {
+				Admin usercheck = dao.adminPasswordCheck(account);
+				if(usercheck.getPassword().toString().equals(password)) {
+					result.setData(usercheck);
+					result.setMessage("登录成功");
+					result.setCode(1);
+					result.setSuccess(true);
+					return result;
+				}else {
+					result.setMessage("密码错误");
+					result.setCode(0);
+					result.setSuccess(false);
+					return result;
+				}
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			result.setSuccess(false);
+			result.setMessage("服务器错误！！");
+			//System.out.println(e);
+			return result;
+		}
+	}
+	
 	//查询所有用户名
 	public Result selectAllAccount(){
 		Result result=new Result();
@@ -64,11 +98,65 @@ public class GoodsService {
 			return result;
 		} catch (Exception e) {
 			// TODO: handle exception
+			result.setCode(0);
 			result.setSuccess(false);
 			result.setMessage("服务器错误！！");
 			return result;
 		}
 	}
+	//查询管理员账户
+	public Result selectAdmin(){
+		Result result=new Result();
+		try {
+			result.setCode(1);
+			result.setSuccess(true);
+			result.setMessage("查询成功");
+			result.setData(dao.selectAdmin());
+			return result;
+		} catch (Exception e) {
+			// TODO: handle exception
+			result.setCode(0);
+			result.setSuccess(false);
+			result.setMessage("服务器错误！！");
+			return result;
+		}
+	}
+	//管理员查询所有用户信息
+	public Result adminSelectUser(){
+		Result result=new Result();
+		try {
+			result.setCode(1);
+			result.setSuccess(true);
+			result.setMessage("查询成功");
+			result.setData(dao.adminSelectUser());
+			return result;
+		} catch (Exception e) {
+			// TODO: handle exception
+			result.setCode(0);
+			result.setSuccess(false);
+			result.setMessage("服务器错误！！");
+			return result;
+		}
+	}
+	
+	//管理员查询所有商品信息
+	public Result adminSelectGood(){
+		Result result=new Result();
+		try {
+			result.setCode(1);
+			result.setSuccess(true);
+			result.setMessage("查询成功");
+			result.setData(dao.adminSelectGood());
+			return result;
+		} catch (Exception e) {
+			// TODO: handle exception
+			result.setCode(0);
+			result.setSuccess(false);
+			result.setMessage("服务器错误！！");
+			return result;
+		}
+	}
+	
 	//注册用户
 	public Result registUser(Account user){
 		Result result=new Result();
@@ -85,7 +173,86 @@ public class GoodsService {
 			return result;
 		}
 	}
-		
+	//管理员增加用户信息
+	public Result adminAddUser(Account user){
+		Result result=new Result();
+		try {
+			result.setCode(1);
+			result.setSuccess(true);
+			result.setMessage("增加成功");
+			dao.adminAddUser(user);
+			return result;
+		} catch (Exception e) {
+			// TODO: handle exception
+			result.setSuccess(false);
+			result.setMessage("服务器错误！！");
+			return result;
+		}
+	}
+	//管理员增加商品信息
+	public Result adminAddGood(Goods good){
+		Result result=new Result();
+		try {
+			result.setCode(1);
+			result.setSuccess(true);
+			result.setMessage("增加成功");
+			dao.adminAddGood(good);
+			return result;
+		} catch (Exception e) {
+			// TODO: handle exception
+			result.setSuccess(false);
+			result.setMessage("服务器错误！！");
+			return result;
+		}
+	}
+	//管理员修改用户信息
+	public Result adminUpdateUser(Account user){
+		Result result=new Result();
+		try {
+			result.setCode(1);
+			result.setSuccess(true);
+			result.setMessage("修改成功");
+			dao.adminUpdateUser(user);
+			return result;
+		} catch (Exception e) {
+			// TODO: handle exception
+			result.setSuccess(false);
+			result.setMessage("服务器错误！！");
+			return result;
+		}
+	}
+	//管理员修改商品信息
+	public Result adminUpdateGood(Goods good){
+		Result result=new Result();
+		try {
+			result.setCode(1);
+			result.setSuccess(true);
+			result.setMessage("修改成功");
+			dao.adminUpdateGood(good);
+			return result;
+		} catch (Exception e) {
+			// TODO: handle exception
+			result.setSuccess(false);
+			result.setMessage("服务器错误！！");
+			return result;
+		}
+	}
+	//管理员修改个人信息
+	public Result updateAdmin(Admin admin){
+		Result result=new Result();
+		try {
+			result.setCode(1);
+			result.setSuccess(true);
+			result.setMessage("修改成功");
+			dao.updateAdmin(admin);
+			return result;
+		} catch (Exception e) {
+			// TODO: handle exception
+			result.setSuccess(false);
+			result.setMessage("服务器错误！！");
+			return result;
+		}
+	}
 	//推荐商品
 	public Result recommendGoods(String account) {
 		Result result=new Result();
@@ -289,6 +456,41 @@ public class GoodsService {
 			return result;
 		}
 	}
+	//管理员删除用户信息
+	public Result adminDeleteUser(String id){
+		Result result=new Result();
+		try {
+			dao.adminDeleteUser(id);
+			result.setCode(1);
+			result.setSuccess(true);
+			result.setMessage("删除成功");
+			return result;
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+			result.setSuccess(false);
+			result.setMessage("服务器错误！！");
+			return result;
+		}
+	}
+	//管理员删除商品信息
+	public Result adminDeleteGood(String id){
+		Result result=new Result();
+		try {
+			dao.adminDeleteGood(id);
+			result.setCode(1);
+			result.setSuccess(true);
+			result.setMessage("删除成功");
+			return result;
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+			result.setSuccess(false);
+			result.setMessage("服务器错误！！");
+			return result;
+		}
+	}
+	//修改密码
 	public Result updateUser(String id,String password) {
 		Result result=new Result();
 		try {

@@ -10,10 +10,26 @@ Target Server Type    : MYSQL
 Target Server Version : 50613
 File Encoding         : 65001
 
-Date: 2020-06-01 16:35:09
+Date: 2020-06-12 16:00:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for jd_admin
+-- ----------------------------
+DROP TABLE IF EXISTS `jd_admin`;
+CREATE TABLE `jd_admin` (
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '管理员id',
+  `account` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '管理员账号',
+  `password` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '管理员密码',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of jd_admin
+-- ----------------------------
+INSERT INTO `jd_admin` VALUES ('1', 'zzk1', 'zzk666');
 
 -- ----------------------------
 -- Table structure for jd_cart
@@ -970,17 +986,21 @@ CREATE TABLE `jd_user` (
   `password` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '密码',
   `favourite` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '爱好',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of jd_user
 -- ----------------------------
-INSERT INTO `jd_user` VALUES ('1', '仲召凯', '男', '123456', '潮流服饰');
-INSERT INTO `jd_user` VALUES ('2', '仲召凯01', '男', '123123', '潮流服饰,文学读物');
-INSERT INTO `jd_user` VALUES ('3', '仲召凯02', '男', '123123', '电子设备');
-INSERT INTO `jd_user` VALUES ('4', '仲召凯03', '男', '123123', '居家生活');
-INSERT INTO `jd_user` VALUES ('5', '仲召凯04', '男', '123123', '美味小吃');
-INSERT INTO `jd_user` VALUES ('6', '仲召凯05', '男', '123123', '萌宠乐园');
-INSERT INTO `jd_user` VALUES ('7', '仲召凯06', '男', '123123', '珠宝配饰');
-INSERT INTO `jd_user` VALUES ('8', '仲召凯07', '男', '123123', '玩具城');
-INSERT INTO `jd_user` VALUES ('9', '仲召凯08', '男', '123123', '文学读物,电子设备,居家生活,美味小吃,萌宠乐园,珠宝配饰,玩具城');
+INSERT INTO `jd_user` VALUES ('1', 'zzk111', '男', '123123', '潮流服饰');
+INSERT INTO `jd_user` VALUES ('2', 'zzk222', '男', '123123', '潮流服饰,文学读物');
+INSERT INTO `jd_user` VALUES ('3', 'zzk333', '男', '123123', '电子设备');
+INSERT INTO `jd_user` VALUES ('4', 'zzk444', '男', '123123', '居家生活');
+INSERT INTO `jd_user` VALUES ('5', 'zzk555', '男', '123123', '美味小吃');
+INSERT INTO `jd_user` VALUES ('6', 'zzk666', '男', '123123', '萌宠乐园');
+INSERT INTO `jd_user` VALUES ('7', 'zzk777', '男', '123123', '珠宝配饰');
+INSERT INTO `jd_user` VALUES ('8', 'zzk888', '男', '123123', '玩具城');
+INSERT INTO `jd_user` VALUES ('9', 'zzk999', '男', '123123', '文学读物,电子设备,居家生活,美味小吃,萌宠乐园,珠宝配饰,玩具城');
+INSERT INTO `jd_user` VALUES ('10', 'abcdef', '女', '123123', '玩具城');
+INSERT INTO `jd_user` VALUES ('11', 'aaabbb', '女', '123123', '玩具城');
+INSERT INTO `jd_user` VALUES ('12', 'bbbbbb', '女', '123123', '玩具城');
+INSERT INTO `jd_user` VALUES ('13', 'sdut123', '男', '123456', '萌宠乐园');
