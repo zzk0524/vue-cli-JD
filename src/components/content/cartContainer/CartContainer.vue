@@ -454,13 +454,24 @@
 	  		let checkbox = this.getEle(checkboxid);
 	  		let maincheckbox = this.getEle("maincheckbox");
 	  		let maincheckbox1 = this.getEle("maincheckbox1");
+	  		let jdcheckbox = document.getElementsByClassName("jdcheckbox");
 	  		_this.optgood = [];
 				_this.optgood = _this.cartgoods[index-1];
 	  		if(checkbox.checked){//该商品以被选中
-	  			_this.sumprice =(parseInt(_this.sumprice) - parseInt(_this.optgood.goodsumprice)).toFixed(2);
-	  			_this.amountsum=_this.amountsum-1;
-	  			maincheckbox.checked = false;
-	  			maincheckbox1.checked = false;
+	  			if(maincheckbox.checked == true){//全部选择
+	  				_this.sumprice =(parseInt(_this.sumprice) - parseInt(_this.optgood.goodsumprice)).toFixed(2);//减价格
+	  				_this.amountsum=_this.amountsum-1;//减数量
+	  				if(_this.amountsum==0){
+	  					maincheckbox.checked = false;
+		  				maincheckbox1.checked = false;
+	  				}
+	  			}else{//单独选择
+	  				_this.sumprice =(parseInt(_this.sumprice) - parseInt(_this.optgood.goodsumprice)).toFixed(2);
+	  				_this.amountsum=_this.amountsum-1;
+	  				jdcheckbox.forEach(function(currentValue){
+		  				currentValue.checked = false;
+		  			})
+	  			}	
 	  		}
 				if(window.XMLHttpRequest){
 				  oAjax = new XMLHttpRequest();
